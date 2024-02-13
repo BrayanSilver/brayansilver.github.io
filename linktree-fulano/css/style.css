@@ -1,0 +1,72 @@
+*{margin: 0;
+padding: 0;}
+
+html, body{ 
+    height: 100%;
+}
+
+body{
+
+    background: linear-gradient(180deg, rgba(54,77,204,1) 0%, rgba(22,35,105,1) 100%);
+    color: white;
+    font-family: 'Raleway', sans-serif;
+}
+
+.avatar{
+
+    width: 80px;
+    border-radius: 50px;
+    border: 3px solid white;
+    box-shadow: 0 0 20px white;
+
+}
+
+h1{   font-family: 'Architects Daughter';
+      font-weight: 100;
+      font-size: 24px;}
+      
+h2{
+    font-size: 16px;
+}
+.profile{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    margin: 20px 0 ;
+}
+
+.social img { 
+    width: 33px;
+}
+
+.links-list{
+    list-style: none;
+}
+
+.links-list li{
+
+    margin: 10px 20px;
+
+}
+
+.links-list li a{
+    background-color: white;
+    border-radius: 4px;
+    padding: 15px 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-shadow: 0 0 10px white;
+    text-decoration: none; 
+    display: block;
+    color:linear-gradient(180deg, rgba(54,77,204,1) 0%, rgba(22,35,105,1) 100%);
+    font-weight: bold;
+}
+
+.links-list li a span{ 
+    color: gray;
+    display: block;
+}
