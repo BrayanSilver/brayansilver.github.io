@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuidados - Lari Beauty</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e662d4;
+            --secondary-color: #ff9cee;
+            --accent-color: #ffd6f7;
+            --dark-color: #5a0b4d;
+            --light-color: #fff9fd;
+            --text-color: #333;
+            --text-light: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fce4ff, #ffd6f7, #f8bbf1);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-color);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-20px, -20px) rotate(5deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin: 30px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 i {
+            color: var(--primary-color);
+        }
+
+        .care-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .care-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .care-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+        }
+
+        .care-list {
+            list-style-type: none;
+        }
+
+        .care-list li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            line-height: 1.6;
+            border-bottom: 1px dashed rgba(230, 98, 212, 0.2);
+        }
+
+        .care-list li:last-child {
+            border-bottom: none;
+        }
+
+        .care-list li::before {
+            content: '♥';
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 5px;
+            top: 12px;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(230, 98, 212, 0.4);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 98, 212, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.1;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            animation: floatIcon 15s linear infinite;
+        }
+
+        @keyframes floatIcon {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.1;
+            }
+
+            90% {
+                opacity: 0.1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .container {
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Cuidados Especiais</h1>
+
+        <div class="care-section">
+            <h2><i class="fas fa-spa"></i> Cuidados com a Pele</h2>
+            <ul class="care-list">
+                <li>Limpe a pele duas vezes ao dia com um produto adequado para seu tipo de pele</li>
+                <li>Use protetor solar diariamente, mesmo em dias nublados</li>
+                <li>Mantenha a pele hidratada com produtos específicos para seu tipo</li>
+                <li>Faça esfoliação 1-2 vezes por semana para renovar as células</li>
+                <li>Nunca durma com maquiagem - sempre remova completamente</li>
+                <li>Beba bastante água para manter a hidratação de dentro para fora</li>
+                <li>Evite tocar o rosto com as mãos sujas</li>
+            </ul>
+        </div>
+
+        <div class="care-section">
+            <h2><i class="fas fa-eye-brow"></i> Cuidados com as Sobrancelhas</h2>
+            <ul class="care-list">
+                <li>Não retire pelos em excesso - deixe para profissionais</li>
+                <li>Use um sérum para crescimento para manter os pelos saudáveis</li>
+                <li>Penteie diariamente com uma escovinha para estimular a circulação</li>
+                <li>Evite tinturas caseiras - produtos inadequados podem causar alergias</li>
+                <li>Hidrate com óleos naturais como rícino ou óleo de amêndoas</li>
+                <li>Não force a retirada de pelos encravados - procure um profissional</li>
+                <li>Proteja do sol com protetor solar ou chapéu em exposição prolongada</li>
+            </ul>
+        </div>
+
+        <div class="care-section">
+            <h2><i class="fas fa-eye"></i> Cuidados com os Cílios</h2>
+            <ul class="care-list">
+                <li>Remova a máscara de cílios todas as noites com demaquilante suave</li>
+                <li>Use um removedor oil-free se tiver extensões de cílios</li>
+                <li>Evite esfregar os olhos para não quebrar os cílios</li>
+                <li>Aplique sérum para cílios à noite para fortalecer</li>
+                <li>Não use máscara de cílios vencida - pode causar irritação</li>
+                <li>Para quem tem extensões: evite óleo na região dos olhos</li>
+                <li>Durma de lado ou de costas para não pressionar os cílios</li>
+                <li>Agende o retoque de extensões a cada 2-3 semanas</li>
+            </ul>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://wa.me/5541995283370" class="btn">
+                <i class="fab fa-whatsapp"></i> Entre em Contato
+            </a>
+        </div>
+    </div>
+
+    <div class="floating-icons" id="floatingIcons"></div>
+
+    <script>
+        // Cria ícones flutuantes
+        function createFloatingIcons() {
+            const container = document.getElementById('floatingIcons');
+            const icons = ['fas fa-spa', 'fas fa-eye', 'fas fa-eye-brow', 'fas fa-heart', 'fas fa-hand-sparkles', 'fas fa-magic'];
+
+            for (let i = 0; i < 15; i++) {
+                const icon = document.createElement('i');
+                icon.className = icons[Math.floor(Math.random() * icons.length)] + ' floating-icon';
+
+                // Posição e animação aleatórias
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.top = Math.random() * 100 + '%';
+                icon.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                icon.style.animationDelay = (Math.random() * 5) + 's';
+                icon.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+
+                container.appendChild(icon);
+            }
+        }
+
+        // Inicia os ícones flutuantes quando a página carrega
+        window.addEventListener('load', createFloatingIcons);
+
+        // Efeito de hover para as seções
+        document.querySelectorAll('.care-section').forEach(section => {
+            section.addEventListener('mouseenter', () => {
+                section.style.transform = 'translateY(-5px)';
+            });
+
+            section.addEventListener('mouseleave', () => {
+                section.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+
+</html>
