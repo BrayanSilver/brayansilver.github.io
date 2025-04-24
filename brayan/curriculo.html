@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo - Brayan Rosa da Silveira</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --light-text: #7f8c8d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--light-color);
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 5px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 5px;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .skill-category {
+            margin-bottom: 15px;
+        }
+
+        .skill-category h4 {
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-item {
+            background-color: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .objective {
+            font-style: italic;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 25px;
+        }
+
+        .summary {
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Brayan Rosa da Silveira</h1>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Rua Euclides Bandeira, 322 B — São José dos Pinhais – PR</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>brayansilver.teen@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <span>(41) 99881-2928</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>💼</span>
+                        <span>https://www.linkedin.com/in/brayan-rosa-da-silveira-b80636150/</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>💻</span>
+                        <span>https://github.com/BrayanSilver?tab=repositories</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section>
+                <h2>Objetivo</h2>
+                <div class="objective">
+                    Atuar como Analista de Sistemas ou Desenvolvedor Full Stack, contribuindo com habilidades em
+                    desenvolvimento web, rápido aprendizado e forte interesse em tecnologias como Spring Boot, React e
+                    segurança em aplicações.
+                </div>
+            </section>
+
+            <section>
+                <h2>Resumo Profissional</h2>
+                <div class="summary">
+                    Analista de Sistemas com <strong>11 meses de experiência na Lumicenter Lighting</strong>, atuando na
+                    área de Sistemas de Informação. Paralelamente, trabalhei como <strong>freelancer</strong> no
+                    desenvolvimento de aplicações web com foco em JavaScript, HTML e CSS, além de frameworks como
+                    Angular e Vue.js. Possuo conhecimento em linguagens de backend como Java e Node.js, integrando
+                    aplicações a bancos de dados SQL Server e Oracle.
+                    <br><br>
+                    Possuo um perfil proativo, com <strong>rápido aprendizado</strong>, <strong>fluência em
+                        inglês</strong> e <strong>forte interesse nas áreas de Spring Boot, Spring Security,
+                        Hibernate/JPA e React</strong>. Atualmente aprofundando seus conhecimentos através de um curso
+                    Full Stack em JavaScript para aprimorar a interação com o usuário.
+                </div>
+            </section>
+
+            <section>
+                <h2>Experiência Profissional</h2>
+
+                <div class="job">
+                    <div class="job-title">
+                        <h3>Analista de Sistemas</h3>
+                        <span>Lumicenter Lighting</span>
+                    </div>
+                    <div class="job-details">
+                        <span>📍 São José dos Pinhais – PR</span>
+                        <span>📅 Junho de 2024 – Atual</span>
+                    </div>
+                    <ul>
+                        <li>Atuação na área de Sistemas de Informação com foco em manutenção e suporte a sistemas
+                            internos.</li>
+                        <li>Análise e desenvolvimento de soluções para otimização de processos.</li>
+                        <li>Apoio em integração de sistemas e base de dados corporativas (SQL Server e Oracle).</li>
+                    </ul>
+                </div>
+
+                <div class="job">
+                    <div class="job-title">
+                        <h3>Desenvolvedor Web Full Stack</h3>
+                        <span>Freelancer</span>
+                    </div>
+                    <div class="job-details">
+                        <span></span>
+                        <span>📅 2023 – Atual</span>
+                    </div>
+                    <ul>
+                        <li>Desenvolvimento de aplicações web com HTML, CSS e JavaScript.</li>
+                        <li>Utilização de frameworks como Angular e Vue.js para frontend.</li>
+                        <li>Backend com Java e Node.js, com integração a bancos SQL Server e Oracle.</li>
+                        <li>Participação em projetos variados, desde landing pages até sistemas de controle interno.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Formação Acadêmica</h2>
+                <h3>Análise e Desenvolvimento de Sistemas</h3>
+                <div class="job-details">
+                    <span>Instituição: Santa Cruz </span>
+                    <span>Previsão de Conclusão: Dezembro de 2025</span>
+                </div>
+            </section>
+
+            <section>
+                <h2>Cursos Complementares</h2>
+                <ul>
+                    <li>Curso de Full Stack em JavaScript – Em andamento</li>
+                    <li>Curso de Web Design – Concluído</li>
+                    <li>Curso de Inglês – Concluído (nível avançado)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Habilidades Técnicas</h2>
+
+                <div class="skill-category">
+                    <h4>Frontend:</h4>
+                    <div class="skills-list">
+                        <span class="skill-item">HTML5</span>
+                        <span class="skill-item">CSS3</span>
+                        <span class="skill-item">JavaScript ES6+</span>
+                        <span class="skill-item">Angular(intermediário)</span>
+                        <span class="skill-item">Vue.js</span>
+                        <span class="skill-item">React (iniciante)</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Backend:</h4>
+                    <div class="skills-list">
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Java</span>
+                        <span class="skill-item">Spring Boot (básico)</span>
+                        <span class="skill-item">Spring Security (interesse)</span>
+                        <span class="skill-item">Hibernate/JPA (interesse)</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Banco de Dados:</h4>
+                    <div class="skills-list">
+                        <span class="skill-item">SQL Server</span>
+                        <span class="skill-item">Oracle</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Outros:</h4>
+                    <div class="skills-list">
+                        <span class="skill-item">Git/GitHub</span>
+                        <span class="skill-item">Metodologias Ágeis (Scrum)</span>
+                        <span class="skill-item">Inglês fluente</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Informações Adicionais</h2>
+                <ul>
+                    <li>Idade: 23 anos</li>
+                    <li>Nacionalidade: Brasileiro</li>
+                    <li>Disponibilidade para trabalho presencial ou remoto</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
