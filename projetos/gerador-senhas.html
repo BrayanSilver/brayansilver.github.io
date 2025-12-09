@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .password-display {
+            background: #1a1a1a;
+            color: #22d3ee;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        label {
+            color: #333;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            flex: 1;
+            margin: 0 15px;
+        }
+        .length-display {
+            color: #667eea;
+            font-weight: bold;
+            min-width: 30px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .copy-btn {
+            background: #22d3ee;
+            color: #0a0a0a;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Gerador de Senhas</h1>
+        <div class="password-display" id="password">Clique em Gerar</div>
+        <div class="controls">
+            <div class="control-group">
+                <label>Tamanho:</label>
+                <input type="range" id="length" min="8" max="32" value="16" oninput="updateLength()">
+                <span class="length-display" id="lengthDisplay">16</span>
+            </div>
+            <div class="options">
+                <div class="option">
+                    <input type="checkbox" id="uppercase" checked>
+                    <label for="uppercase">Maiúsculas (A-Z)</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="lowercase" checked>
+                    <label for="lowercase">Minúsculas (a-z)</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="numbers" checked>
+                    <label for="numbers">Números (0-9)</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="symbols" checked>
+                    <label for="symbols">Símbolos (!@#$%)</label>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="generate-btn" onclick="generatePassword()">Gerar Senha</button>
+            <button class="copy-btn" onclick="copyPassword()">Copiar</button>
+        </div>
+    </div>
+    <script>
+        function updateLength() {
+            document.getElementById('lengthDisplay').textContent = document.getElementById('length').value;
+        }
+
+        function generatePassword() {
+            const length = parseInt(document.getElementById('length').value);
+            const uppercase = document.getElementById('uppercase').checked;
+            const lowercase = document.getElementById('lowercase').checked;
+            const numbers = document.getElementById('numbers').checked;
+            const symbols = document.getElementById('symbols').checked;
+            
+            let chars = '';
+            if (uppercase) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (lowercase) chars += 'abcdefghijklmnopqrstuvwxyz';
+            if (numbers) chars += '0123456789';
+            if (symbols) chars += '!@#$%&*()_+-=[]{}|;:,.<>?';
+            
+            if (!chars) {
+                alert('Selecione pelo menos uma opção!');
+                return;
+            }
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            document.getElementById('password').textContent = password;
+        }
+
+        function copyPassword() {
+            const password = document.getElementById('password').textContent;
+            if (password === 'Clique em Gerar') return;
+            
+            navigator.clipboard.writeText(password).then(() => {
+                alert('Senha copiada!');
+            });
+        }
+
+        // Gerar senha inicial
+        generatePassword();
+    </script>
+</body>
+</html>
+

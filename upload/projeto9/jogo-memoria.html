@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 50%, #00f2fe 75%, #43e97b 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 650px;
+            width: 100%;
+        }
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .info div {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            color: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.4s;
+        }
+        .card.flipped::before {
+            opacity: 0;
+        }
+        .card:hover {
+            transform: scale(1.05) rotateY(5deg);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+        .card.flipped {
+            background: #f0f0f0;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+        .card.matched {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            cursor: default;
+            animation: match 0.6s;
+        }
+        @keyframes match {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .reset-btn {
+            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Jogo da Memória</h1>
+        <div class="info">
+            <div>Movimentos: <span id="moves">0</span></div>
+            <div>Pares: <span id="pairs">0/8</span></div>
+        </div>
+        <div class="board" id="board"></div>
+        <button class="reset-btn" onclick="resetGame()">Novo Jogo</button>
+    </div>
+    <script>
+        const emojis = ['🎮', '🎯', '🎨', '🎪', '🎭', '🎬', '🎤', '🎧'];
+        let cards = [];
+        let flippedCards = [];
+        let moves = 0;
+        let pairsFound = 0;
+
+        function createBoard() {
+            const board = document.getElementById('board');
+            const pairs = [...emojis, ...emojis];
+            pairs.sort(() => Math.random() - 0.5);
+            
+            cards = pairs.map((emoji, index) => ({
+                emoji,
+                index,
+                flipped: false,
+                matched: false
+            }));
+            
+            board.innerHTML = cards.map((card, i) => `
+                <div class="card" data-index="${i}" onclick="flipCard(${i})">
+                    <span style="opacity: 0;">${card.emoji}</span>
+                </div>
+            `).join('');
+        }
+
+        function flipCard(index) {
+            const card = cards[index];
+            if (card.flipped || card.matched || flippedCards.length === 2) return;
+            
+            card.flipped = true;
+            flippedCards.push(card);
+            
+            const cardElement = document.querySelector(`[data-index="${index}"]`);
+            cardElement.classList.add('flipped');
+            const span = cardElement.querySelector('span');
+            span.style.opacity = '1';
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                
+                setTimeout(() => {
+                    if (flippedCards[0].emoji === flippedCards[1].emoji) {
+                        flippedCards[0].matched = true;
+                        flippedCards[1].matched = true;
+                        pairsFound++;
+                        document.getElementById('pairs').textContent = `${pairsFound}/8`;
+                        
+                        flippedCards.forEach(c => {
+                            const el = document.querySelector(`[data-index="${c.index}"]`);
+                            el.classList.add('matched');
+                        });
+                        
+                        if (pairsFound === 8) {
+                            setTimeout(() => alert(`🎉 Parabéns! Você completou em ${moves} movimentos!`), 500);
+                        }
+                    } else {
+                        flippedCards.forEach(c => {
+                            c.flipped = false;
+                            const el = document.querySelector(`[data-index="${c.index}"]`);
+                            el.classList.remove('flipped');
+                            const span = el.querySelector('span');
+                            span.style.opacity = '0';
+                        });
+                    }
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function resetGame() {
+            moves = 0;
+            pairsFound = 0;
+            flippedCards = [];
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('pairs').textContent = '0/8';
+            createBoard();
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

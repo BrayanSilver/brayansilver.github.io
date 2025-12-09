@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Portfólio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <h1>Painel Administrativo</h1>
+                <a href="index.html" class="btn-back">Voltar ao Portfólio</a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <div class="admin-sidebar">
+                <nav class="admin-nav">
+                    <a href="#info" class="nav-item active" data-section="info">
+                        <span>📝</span> Informações Pessoais
+                    </a>
+                    <a href="#projects" class="nav-item" data-section="projects">
+                        <span>💼</span> Projetos
+                    </a>
+                    <a href="#contact" class="nav-item" data-section="contact">
+                        <span>📧</span> Contato
+                    </a>
+                </nav>
+            </div>
+
+            <div class="admin-main">
+                <!-- Seção Informações Pessoais -->
+                <section id="info-section" class="admin-section active">
+                    <h2>Informações Pessoais</h2>
+                    <div class="form-group">
+                        <label for="aboutText">Sobre Mim</label>
+                        <textarea id="aboutText" rows="6" placeholder="Descreva sobre você..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="heroTitle">Título Principal</label>
+                        <input type="text" id="heroTitle" placeholder="Ex: Desenvolvedor Full Stack">
+                    </div>
+                    <div class="form-group">
+                        <label for="heroSubtitle">Subtítulo</label>
+                        <input type="text" id="heroSubtitle" placeholder="Ex: Transformando ideias em realidade">
+                    </div>
+                    <div class="form-group">
+                        <label>Foto Pessoal</label>
+                        <div style="background: var(--bg-darker); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                Para adicionar sua foto, coloque uma imagem na pasta <code>upload/foto-pessoal/</code><br>
+                                Nomes aceitos: foto.jpg, foto.png, foto.jpeg, image.jpg, image.png, image.jpeg
+                            </p>
+                            <div id="personalPhotoPreview"></div>
+                        </div>
+                    </div>
+                    <button class="btn-save" onclick="savePersonalInfo()">Salvar Informações</button>
+                </section>
+
+                <!-- Seção Projetos -->
+                <section id="projects-section" class="admin-section">
+                    <div class="section-header">
+                        <h2>Projetos</h2>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-primary" onclick="loadProjectsFromFolders()">🔄 Atualizar</button>
+                            <button class="btn-secondary" onclick="exportProjectsJSON()">💾 Exportar JSON</button>
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-darker); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;"><strong>📁 Como funciona:</strong></p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                            1. Coloque até 5 imagens em cada pasta (projeto1 a projeto10) dentro de <code>upload/</code><br>
+                            2. Edite o arquivo <code>upload/projetos.json</code> para configurar os detalhes<br>
+                            3. Clique em "Atualizar Projetos" para carregar as imagens
+                        </p>
+                    </div>
+                    <div class="projects-list" id="projectsList">
+                        <!-- Projetos serão inseridos aqui -->
+                    </div>
+                </section>
+
+                <!-- Seção Contato -->
+                <section id="contact-section" class="admin-section">
+                    <h2>Informações de Contato</h2>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="text" id="phone" placeholder="(00) 00000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn</label>
+                        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/seu-perfil">
+                    </div>
+                    <div class="form-group">
+                        <label for="github">GitHub</label>
+                        <input type="url" id="github" placeholder="https://github.com/seu-usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="url" id="website" placeholder="https://seusite.com">
+                    </div>
+                    <button class="btn-save" onclick="saveContactInfo()">Salvar Contato</button>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Projeto -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Editar Projeto</h2>
+                <button class="modal-close" onclick="closeProjectModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="projectTitle">Título do Projeto</label>
+                    <input type="text" id="projectTitle" placeholder="Nome do projeto">
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Descrição</label>
+                    <textarea id="projectDescription" rows="4" placeholder="Descreva o projeto..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="projectTech">Tecnologias (separadas por vírgula)</label>
+                    <input type="text" id="projectTech" placeholder="HTML, CSS, JavaScript">
+                </div>
+                <div class="form-group">
+                    <label for="projectLink">Link do Projeto</label>
+                    <input type="url" id="projectLink" placeholder="https://projeto.com">
+                </div>
+                <div class="form-group">
+                    <label for="projectGithub">Link do GitHub</label>
+                    <input type="url" id="projectGithub" placeholder="https://github.com/usuario/projeto">
+                </div>
+                
+                <div class="form-group">
+                    <label>Imagens do Projeto</label>
+                    <div style="background: var(--bg-darker); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                            As imagens são carregadas automaticamente da pasta do projeto em <code>upload/</code>
+                        </p>
+                        <div class="uploaded-files" id="uploadedImages"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeProjectModal()">Cancelar</button>
+                <button class="btn-primary" onclick="saveProject()">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
+

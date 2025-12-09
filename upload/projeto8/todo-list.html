@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            top: -250px;
+            left: -250px;
+            animation: rotate 20s linear infinite;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+            bottom: -250px;
+            right: -250px;
+            animation: rotate 15s linear infinite reverse;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .container {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        h1 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        input {
+            flex: 1;
+            padding: 16px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            color: #fff;
+            transition: all 0.3s;
+        }
+        input::placeholder {
+            color: #64748b;
+        }
+        input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+        }
+        .add-btn {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .add-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .add-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+        .add-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        .todo-list {
+            list-style: none;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        .todo-item {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .todo-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+        .todo-item:hover {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateX(8px);
+        }
+        .todo-item:hover::before {
+            transform: scaleY(1);
+        }
+        .todo-item.completed {
+            opacity: 0.7;
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .todo-item.completed span {
+            text-decoration: line-through;
+            color: #64748b;
+        }
+        .todo-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #8b5cf6;
+            position: relative;
+            z-index: 1;
+        }
+        .todo-item span {
+            flex: 1;
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.5);
+            transform: scale(1.05);
+        }
+        .stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            color: #e2e8f0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .stats-number {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Todo List</h1>
+            <p class="subtitle">Organize suas tarefas com estilo</p>
+        </div>
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="Adicione uma nova tarefa..." onkeypress="if(event.key === 'Enter') addTodo()">
+            <button class="add-btn" onclick="addTodo()">
+                <span>+ Adicionar</span>
+            </button>
+        </div>
+        <ul class="todo-list" id="todoList"></ul>
+        <div class="stats" id="stats">
+            <div>Total: <span class="stats-number" id="total">0</span> | Concluídas: <span class="stats-number" id="completed">0</span></div>
+        </div>
+    </div>
+    <script>
+        let todos = JSON.parse(localStorage.getItem('todos') || '[]');
+        
+        function renderTodos() {
+            const list = document.getElementById('todoList');
+            const totalEl = document.getElementById('total');
+            const completedEl = document.getElementById('completed');
+            
+            list.innerHTML = todos.map((todo, index) => `
+                <li class="todo-item ${todo.completed ? 'completed' : ''}">
+                    <input type="checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo(${index})">
+                    <span>${todo.text}</span>
+                    <button class="delete-btn" onclick="deleteTodo(${index})">Excluir</button>
+                </li>
+            `).join('');
+            
+            const completed = todos.filter(t => t.completed).length;
+            totalEl.textContent = todos.length;
+            completedEl.textContent = completed;
+        }
+        
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                todos.push({ text, completed: false });
+                localStorage.setItem('todos', JSON.stringify(todos));
+                input.value = '';
+                renderTodos();
+            }
+        }
+        
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
+        
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
+        
+        renderTodos();
+    </script>
+</body>
+</html>

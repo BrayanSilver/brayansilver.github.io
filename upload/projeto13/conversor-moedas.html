@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Moedas - Python</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .python-badge {
+            display: inline-block;
+            background: #3776ab;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .converter {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        input, select {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s;
+        }
+        input {
+            flex: 1;
+            font-weight: 600;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1);
+        }
+        select {
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .swap-btn {
+            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+        .swap-btn:hover {
+            transform: rotate(180deg) scale(1.1);
+        }
+        .result {
+            text-align: center;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4facfe;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .convert-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+        .convert-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="python-badge">🐍 Python</div>
+        <h1>💱 Conversor de Moedas</h1>
+        <p class="subtitle">Conversão em tempo real</p>
+        
+        <div class="converter">
+            <div class="input-group">
+                <input type="number" id="amount" placeholder="0.00" value="100" step="0.01" min="0">
+                <select id="fromCurrency">
+                    <option value="USD">USD - Dólar</option>
+                    <option value="BRL" selected>BRL - Real</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - Libra</option>
+                    <option value="JPY">JPY - Iene</option>
+                </select>
+            </div>
+
+            <div style="text-align: center; margin: 15px 0;">
+                <button class="swap-btn" onclick="swapCurrencies()">⇅</button>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="result" readonly placeholder="0.00" style="background: white; cursor: default;">
+                <select id="toCurrency">
+                    <option value="USD" selected>USD - Dólar</option>
+                    <option value="BRL">BRL - Real</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - Libra</option>
+                    <option value="JPY">JPY - Iene</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="convert-btn" onclick="convertCurrency()">Converter</button>
+    </div>
+    <script>
+        // Taxas de câmbio aproximadas (em produção, use uma API real)
+        const exchangeRates = {
+            USD: { BRL: 5.20, EUR: 0.92, GBP: 0.79, JPY: 150.00, USD: 1 },
+            BRL: { USD: 0.19, EUR: 0.18, GBP: 0.15, JPY: 28.85, BRL: 1 },
+            EUR: { USD: 1.09, BRL: 5.67, GBP: 0.86, JPY: 163.04, EUR: 1 },
+            GBP: { USD: 1.27, BRL: 6.60, EUR: 1.16, JPY: 189.87, GBP: 1 },
+            JPY: { USD: 0.0067, BRL: 0.035, EUR: 0.0061, GBP: 0.0053, JPY: 1 }
+        };
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount) || amount < 0) {
+                alert('Por favor, insira um valor válido!');
+                return;
+            }
+
+            const rate = exchangeRates[from][to];
+            const result = (amount * rate).toFixed(2);
+            
+            document.getElementById('result').value = result;
+        }
+
+        function swapCurrencies() {
+            const from = document.getElementById('fromCurrency');
+            const to = document.getElementById('toCurrency');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convertCurrency();
+        }
+
+        // Converter automaticamente ao mudar valores
+        document.getElementById('amount').addEventListener('input', convertCurrency);
+        document.getElementById('fromCurrency').addEventListener('change', convertCurrency);
+        document.getElementById('toCurrency').addEventListener('change', convertCurrency);
+
+        // Converter ao carregar
+        window.addEventListener('load', convertCurrency);
+    </script>
+</body>
+</html>
+

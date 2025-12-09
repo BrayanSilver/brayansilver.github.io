@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card.flipped {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .card.matched {
+            background: #4ade80;
+            cursor: default;
+        }
+        .reset-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Jogo da Memória</h1>
+        <div class="info">
+            <div>Movimentos: <span id="moves">0</span></div>
+            <div>Pares: <span id="pairs">0/8</span></div>
+        </div>
+        <div class="board" id="board"></div>
+        <button class="reset-btn" onclick="resetGame()">Novo Jogo</button>
+    </div>
+    <script>
+        const emojis = ['🎮', '🎯', '🎨', '🎪', '🎭', '🎬', '🎤', '🎧'];
+        let cards = [];
+        let flippedCards = [];
+        let moves = 0;
+        let pairsFound = 0;
+
+        function createBoard() {
+            const board = document.getElementById('board');
+            const pairs = [...emojis, ...emojis];
+            pairs.sort(() => Math.random() - 0.5);
+            
+            cards = pairs.map((emoji, index) => ({
+                emoji,
+                index,
+                flipped: false,
+                matched: false
+            }));
+            
+            board.innerHTML = cards.map((card, i) => `
+                <div class="card" data-index="${i}" onclick="flipCard(${i})"></div>
+            `).join('');
+        }
+
+        function flipCard(index) {
+            const card = cards[index];
+            if (card.flipped || card.matched || flippedCards.length === 2) return;
+            
+            card.flipped = true;
+            flippedCards.push(card);
+            
+            const cardElement = document.querySelector(`[data-index="${index}"]`);
+            cardElement.classList.add('flipped');
+            cardElement.textContent = card.emoji;
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                
+                setTimeout(() => {
+                    if (flippedCards[0].emoji === flippedCards[1].emoji) {
+                        flippedCards[0].matched = true;
+                        flippedCards[1].matched = true;
+                        pairsFound++;
+                        document.getElementById('pairs').textContent = `${pairsFound}/8`;
+                        
+                        flippedCards.forEach(c => {
+                            const el = document.querySelector(`[data-index="${c.index}"]`);
+                            el.classList.add('matched');
+                        });
+                        
+                        if (pairsFound === 8) {
+                            setTimeout(() => alert(`🎉 Parabéns! Você completou em ${moves} movimentos!`), 500);
+                        }
+                    } else {
+                        flippedCards.forEach(c => {
+                            c.flipped = false;
+                            const el = document.querySelector(`[data-index="${c.index}"]`);
+                            el.classList.remove('flipped');
+                            el.textContent = '';
+                        });
+                    }
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function resetGame() {
+            moves = 0;
+            pairsFound = 0;
+            flippedCards = [];
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('pairs').textContent = '0/8';
+            createBoard();
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
+
