@@ -1,172 +1,253 @@
 {
-    "projetos": [
-      {
-        "id": 3,
-        "pasta": "projeto3",
-        "titulo": "RF Consultoria -  Site Expositivo",
-        "descricao": "Site Expositivo",
-        "tecnologias": "Wordpress, PHP e Bibliotecas como EmailJS",
-        "link": "https://rfconsultoriaalimentos.com.br/home/",
-        "github": "",
-        "imagens": [
-          "image.png",
-          "image1.png",
-          "image2.png"
-        ]
-      },
-      {
-        "id": 4,
-        "pasta": "projeto4",
-        "titulo": "Linktree - Bio",
-        "descricao": "Árvore de Links - BIO",
-        "tecnologias": "HTML, CSS, JavaScript",
-        "link": "https://brayansilver.github.io/brayan/brayan/",
-        "github": "",
-        "imagens": [
-          "image.png"
-        ]
-      },
-      {
-        "id": 5,
-        "pasta": "projeto5",
-        "titulo": "Sistema de Gestão de Documentos",
-        "descricao": "Sistema de SGI",
-        "tecnologias": "HTML, CSS, JavaScript, Node.js, PL-SQL, Express...",
-        "link": "",
-        "github": "",
-        "imagens": [
-          "image.png",
-          "image1.png",
-          "image2.png",
-          "image3.png"
-        ]
-      },
-      {
-        "id": 6,
-        "pasta": "projeto6",
-        "titulo": "Jogo da Velha",
-        "descricao": "Jogo interativo da velha desenvolvido com HTML, CSS e JavaScript puro. Interface moderna com gradientes e animações suaves. Dois jogadores podem competir alternando entre X e O.",
-        "tecnologias": "HTML, CSS, JavaScript",
-        "link": "upload/projeto6/jogo-velha.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 7,
-        "pasta": "projeto7",
-        "titulo": "Calculadora Moderna",
-        "descricao": "Calculadora com design dark mode elegante. Suporta operações básicas (soma, subtração, multiplicação, divisão) com interface intuitiva e feedback visual.",
-        "tecnologias": "HTML, CSS, JavaScript",
-        "link": "upload/projeto7/calculadora.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 8,
-        "pasta": "projeto8",
-        "titulo": "Todo List App",
-        "descricao": "Aplicativo de lista de tarefas com persistência local. Permite adicionar, marcar como concluída e excluir tarefas. Interface limpa e responsiva.",
-        "tecnologias": "HTML, CSS, JavaScript, LocalStorage",
-        "link": "upload/projeto8/todo-list.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 9,
-        "pasta": "projeto9",
-        "titulo": "Jogo da Memória",
-        "descricao": "Jogo de memória clássico com 8 pares de cartas. Desafie sua memória encontrando todos os pares em menos movimentos. Interface colorida e animada.",
-        "tecnologias": "HTML, CSS, JavaScript",
-        "link": "upload/projeto9/jogo-memoria.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 10,
-        "pasta": "projeto10",
-        "titulo": "Gerador de Senhas",
-        "descricao": "Gerador de senhas seguras com opções personalizáveis. Permite escolher tamanho, incluir maiúsculas, minúsculas, números e símbolos. Função de copiar para área de transferência.",
-        "tecnologias": "HTML, CSS, JavaScript",
-        "link": "upload/projeto10/gerador-senhas.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 1,
-        "pasta": "projeto1",
-        "titulo": "Lumisoft",
-        "descricao": "Sistema de Cálculo e Renderização de Heatmap Luminotécnico",
-        "tecnologias": "HTML, CSS, JavaScript, Node.js, Frameworks e Bibliotecas Avançadas",
-        "link": "https://lumisoft.lumicenter.com/",
-        "github": "",
-        "imagens": [
-          "image1.png",
-          "image2.png",
-          "image3.png",
-          "image4.png",
-          "image5.png"
-        ]
-      },
-      {
-        "id": 2,
-        "pasta": "projeto2",
-        "titulo": "Landing Page - Ebook",
-        "descricao": "Landing Page - Ebook",
-        "tecnologias": "HTML, CSS, JavaScript",
-        "link": "https://iluminacaopratica.lumicenter.com/",
-        "github": "",
-        "imagens": [
-          "image.png",
-          "image1.png",
-          "image2.png",
-          "image3.png"
-        ]
-      },
-      {
-        "id": 11,
-        "pasta": "projeto11",
-        "titulo": "Pedra, Papel e Tesoura",
-        "descricao": "Jogo clássico desenvolvido em Python. Teste sua sorte contra o computador em partidas emocionantes. Interface moderna e intuitiva com sistema de pontuação.",
-        "tecnologias": "Python, HTML, CSS, JavaScript",
-        "link": "upload/projeto11/pedra-papel-tesoura.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1606166188517-c4be8fb64e21?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 12,
-        "pasta": "projeto12",
-        "titulo": "Gerador de QR Code",
-        "descricao": "Sistema desenvolvido em PHP para geração rápida de QR Codes. Converta textos, URLs ou dados em QR Codes personalizáveis com diferentes tamanhos. Download direto da imagem gerada.",
-        "tecnologias": "PHP, HTML, CSS, JavaScript, QRCode.js",
-        "link": "upload/projeto12/gerador-qrcode.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3?w=800&h=600&fit=crop"
-        ]
-      },
-      {
-        "id": 13,
-        "pasta": "projeto13",
-        "titulo": "Conversor de Moedas",
-        "descricao": "Aplicativo desenvolvido em Python para conversão de moedas em tempo real. Suporta múltiplas moedas (USD, BRL, EUR, GBP, JPY) com interface elegante e conversão instantânea.",
-        "tecnologias": "Python, HTML, CSS, JavaScript",
-        "link": "upload/projeto13/conversor-moedas.html",
-        "github": "",
-        "imagens": [
-          "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=600&fit=crop"
-        ]
-      }
-    ]
-  }
+  "projetos": [
+    {
+      "id": 3,
+      "pasta": "projeto3",
+      "titulo": "RF Consultoria -  Site Expositivo",
+      "descricao": "Site Expositivo",
+      "tecnologias": "Wordpress, PHP e Bibliotecas como EmailJS",
+      "link": "https://rfconsultoriaalimentos.com.br/home/",
+      "github": "",
+      "imagens": [
+        "image.png",
+        "image1.png",
+        "image2.png"
+      ],
+      "loadedImages": [
+        "upload/projeto3/image.png",
+        "upload/projeto3/image1.png",
+        "upload/projeto3/image2.png"
+      ]
+    },
+    {
+      "id": 4,
+      "pasta": "projeto4",
+      "titulo": "Linktree - Bio",
+      "descricao": "Árvore de Links - BIO",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "",
+      "github": "",
+      "imagens": [
+        "image.png"
+      ],
+      "loadedImages": [
+        "upload/projeto4/image.png"
+      ]
+    },
+    {
+      "id": 5,
+      "pasta": "projeto5",
+      "titulo": "Sistema de Gestão de Documentos",
+      "descricao": "Sistema de SGI",
+      "tecnologias": "HTML, CSS, JavaScript, Node.js, PL-SQL, Express...",
+      "link": "",
+      "github": "",
+      "imagens": [
+        "image.png",
+        "image1.png",
+        "image2.png",
+        "image3.png"
+      ],
+      "loadedImages": [
+        "upload/projeto5/image.png",
+        "upload/projeto5/image1.png",
+        "upload/projeto5/image2.png",
+        "upload/projeto5/image3.png"
+      ]
+    },
+    {
+      "id": 6,
+      "pasta": "projeto6",
+      "titulo": "Jogo da Velha",
+      "descricao": "Jogo interativo da velha desenvolvido com HTML, CSS e JavaScript puro. Interface moderna com gradientes e animações suaves. Dois jogadores podem competir alternando entre X e O.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto6/jogo-velha.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 7,
+      "pasta": "projeto7",
+      "titulo": "Calculadora Moderna",
+      "descricao": "Calculadora com design dark mode elegante. Suporta operações básicas (soma, subtração, multiplicação, divisão) com interface intuitiva e feedback visual.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto7/calculadora.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 8,
+      "pasta": "projeto8",
+      "titulo": "Todo List App",
+      "descricao": "Aplicativo de lista de tarefas com persistência local. Permite adicionar, marcar como concluída e excluir tarefas. Interface limpa e responsiva.",
+      "tecnologias": "HTML, CSS, JavaScript, LocalStorage",
+      "link": "upload/projeto8/todo-list.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 9,
+      "pasta": "projeto9",
+      "titulo": "Jogo da Memória",
+      "descricao": "Jogo de memória clássico com 8 pares de cartas. Desafie sua memória encontrando todos os pares em menos movimentos. Interface colorida e animada.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto9/jogo-memoria.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 10,
+      "pasta": "projeto10",
+      "titulo": "Gerador de Senhas",
+      "descricao": "Gerador de senhas seguras com opções personalizáveis. Permite escolher tamanho, incluir maiúsculas, minúsculas, números e símbolos. Função de copiar para área de transferência.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto10/gerador-senhas.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 1,
+      "pasta": "projeto1",
+      "titulo": "Lumisoft",
+      "descricao": "Sistema de Cálculo e Renderização de Heatmap Luminotécnico",
+      "tecnologias": "HTML, CSS, JavaScript, Node.js, Frameworks e Bibliotecas Avançadas",
+      "link": "https://lumisoft.lumicenter.com/",
+      "github": "",
+      "imagens": [
+        "image1.png",
+        "image2.png",
+        "image3.png",
+        "image4.png",
+        "image5.png"
+      ],
+      "loadedImages": [
+        "upload/projeto1/image1.png",
+        "upload/projeto1/image2.png",
+        "upload/projeto1/image3.png",
+        "upload/projeto1/image4.png",
+        "upload/projeto1/image5.png"
+      ]
+    },
+    {
+      "id": 2,
+      "pasta": "projeto2",
+      "titulo": "Landing Page - Ebook",
+      "descricao": "Landing Page - Ebook",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "https://iluminacaopratica.lumicenter.com/",
+      "github": "",
+      "imagens": [
+        "image.png",
+        "image1.png",
+        "image2.png",
+        "image3.png"
+      ],
+      "loadedImages": [
+        "upload/projeto2/image.png",
+        "upload/projeto2/image1.png",
+        "upload/projeto2/image2.png",
+        "upload/projeto2/image3.png"
+      ]
+    },
+    {
+      "id": 11,
+      "pasta": "projeto11",
+      "titulo": "Pedra, Papel e Tesoura",
+      "descricao": "Jogo clássico desenvolvido em Python. Teste sua sorte contra o computador em partidas emocionantes. Interface moderna e intuitiva com sistema de pontuação.",
+      "tecnologias": "Python, HTML, CSS, JavaScript",
+      "link": "upload/projeto11/pedra-papel-tesoura.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1526374965328-7f61d4ec18b5?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1526374965328-7f61d4ec18b5?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 12,
+      "pasta": "projeto12",
+      "titulo": "Gerador de QR Code",
+      "descricao": "Sistema desenvolvido em PHP para geração rápida de QR Codes. Converta textos, URLs ou dados em QR Codes personalizáveis com diferentes tamanhos. Download direto da imagem gerada.",
+      "tecnologias": "PHP, HTML, CSS, JavaScript, QRCode.js",
+      "link": "upload/projeto12/gerador-qrcode.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 13,
+      "pasta": "projeto13",
+      "titulo": "Conversor de Moedas",
+      "descricao": "Aplicativo desenvolvido em Python para conversão de moedas em tempo real. Suporta múltiplas moedas (USD, BRL, EUR, GBP, JPY) com interface elegante e conversão instantânea.",
+      "tecnologias": "Python, HTML, CSS, JavaScript",
+      "link": "upload/projeto13/conversor-moedas.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 14,
+      "pasta": "projeto14",
+      "titulo": "Mais Projetos Realizados",
+      "descricao": "Explore uma coleção completa de projetos desenvolvidos com HTML, CSS e JavaScript. Inclui exemplos de login, páginas de captura, listas de tarefas, exercícios práticos e muito mais.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "https://github.com/BrayanSilver/JS-HTML_Brayan",
+      "github": "https://github.com/BrayanSilver/JS-HTML_Brayan",
+      "imagens": [
+        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 15,
+      "pasta": "projeto15",
+      "titulo": "Projetos em Java",
+      "descricao": "Repositório com projetos e exercícios desenvolvidos em Java. Inclui sistemas bancários, cadastros, calculadoras, gerenciamento de tarefas e diversos desafios de programação orientada a objetos.",
+      "tecnologias": "Java",
+      "link": "https://github.com/BrayanSilver/Java_Brayan",
+      "github": "https://github.com/BrayanSilver/Java_Brayan",
+      "imagens": [
+        "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
+      ]
+    }
+  ]
+}

@@ -210,9 +210,10 @@ function displayProjects(projects) {
         const techTags = project.tech ? project.tech.split(',').map(t => t.trim()).filter(t => t) : [];
         const techHTML = techTags.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
         
-        // Verificar se o link é um arquivo HTML local (projeto interativo)
+        // Verificar se o link é um arquivo HTML local (projeto interativo) ou link externo
         const isInteractiveProject = project.link && project.link.endsWith('.html');
-        const cardClickHandler = isInteractiveProject 
+        const isExternalLink = project.link && (project.link.startsWith('http://') || project.link.startsWith('https://'));
+        const cardClickHandler = (isInteractiveProject || isExternalLink)
             ? `onclick="window.open('${project.link}', '_blank')"`
             : `onclick="openProjectModal(${index})"`;
 
@@ -225,7 +226,7 @@ function displayProjects(projects) {
                     ${techHTML ? `<div class="tech-tags">${techHTML}</div>` : ''}
                     <div class="project-links">
                         ${project.link ? `<a href="${project.link}" target="_blank" class="project-link" onclick="event.stopPropagation()">
-                            ${isInteractiveProject ? '🎮 Jogar' : 'Ver projeto'}
+                            ${isInteractiveProject ? '🎮 Jogar' : isExternalLink ? '🔗 Ver repositório' : 'Ver projeto'}
                             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                         </a>` : ''}
                         ${project.github ? `<a href="${project.github}" target="_blank" class="project-link" onclick="event.stopPropagation()">
