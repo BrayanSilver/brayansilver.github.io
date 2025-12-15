@@ -3,11 +3,365 @@ let projetosData = [];
 let personalInfoData = {};
 let contactData = {};
 
-// Carregar dados ao iniciar
+// Configuração de autenticação
+const ADMIN_PASSWORD = 'admin123';
+const SESSION_KEY = 'admin_authenticated';
+
+let sequenceState = {
+    leftClicks: 0,
+    rightClicks: 0,
+    keyA: false,
+    keyZ: false,
+    resetTimeout: null,
+    isComplete: false, // Flag para indicar que a sequência está completa e protegida
+    isProtected: false // Flag para proteger durante o submit
+};
+
+// Verificar autenticação ao carregar
 document.addEventListener('DOMContentLoaded', () => {
+    checkAuthentication();
+    setupLoginForm();
+    setupSequenceDetection();
+});
+
+// Verificar se já está autenticado
+function checkAuthentication() {
+    const isAuthenticated = sessionStorage.getItem(SESSION_KEY) === 'true';
+    if (isAuthenticated) {
+        showAdminContent();
+    } else {
+        showLoginScreen();
+    }
+}
+
+// Mostrar tela de login
+function showLoginScreen() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminContent').style.display = 'none';
+    resetSequence();
+}
+
+// Mostrar conteúdo do admin
+function showAdminContent() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
     loadAllData();
     setupNavigation();
-});
+}
+
+// Configurar formulário de login
+function setupLoginForm() {
+    const loginForm = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('password');
+    const submitButton = document.querySelector('.btn-login');
+    
+    // NÃO resetar sequência quando digita - permitir que execute a sequência antes ou depois de digitar
+    // A sequência só será resetada se a senha estiver errada
+    
+    // Proteger o estado da sequência quando o botão é clicado
+    if (submitButton) {
+        submitButton.addEventListener('mousedown', (e) => {
+            e.stopPropagation(); // Impedir que o evento chegue ao listener global
+        }, true); // Usar capture phase para interceptar antes
+            
+        submitButton.addEventListener('click', (e) => {
+            e.stopPropagation(); // Impedir propagação
+        }, true);
+    }
+    
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Parar propagação para evitar que outros eventos interfiram
+        
+        // PROTEGER a sequência durante o submit
+        sequenceState.isProtected = true;
+        
+        const password = passwordInput.value;
+        
+        // Salvar estado da sequência IMEDIATAMENTE no submit, antes de qualquer coisa
+        // Usar uma cópia profunda para garantir que não seja alterada
+        const savedSequenceState = JSON.parse(JSON.stringify({
+            leftClicks: sequenceState.leftClicks,
+            rightClicks: sequenceState.rightClicks,
+            keyA: sequenceState.keyA,
+            keyZ: sequenceState.keyZ,
+            isComplete: sequenceState.isComplete
+        }));
+        
+        if (password === ADMIN_PASSWORD) {
+            const sequenceComplete = savedSequenceState.leftClicks === 2 &&
+                                    savedSequenceState.rightClicks === 2 &&
+                                    savedSequenceState.keyA === true &&
+                                    savedSequenceState.keyZ === true;
+            
+            if (sequenceComplete) {
+                sessionStorage.setItem(SESSION_KEY, 'true');
+                showAdminContent();
+                passwordInput.value = '';
+                sequenceState.isProtected = false;
+                resetSequence();
+            } else {
+                showError('Acesso negado. Verifique suas credenciais.');
+                sequenceState.isProtected = false;
+            }
+        } else {
+            showError('Senha incorreta!');
+            passwordInput.value = '';
+            sequenceState.isProtected = false; // Remover proteção antes de resetar
+            resetSequence();
+        }
+    });
+}
+
+// Configurar detecção de autenticação
+function setupSequenceDetection() {
+    let sequenceTimeout = null;
+    
+    // Detectar cliques do mouse
+    document.addEventListener('mousedown', (e) => {
+        const loginScreen = document.getElementById('loginScreen');
+        if (loginScreen && loginScreen.style.display !== 'none') {
+            // Ignorar cliques no botão de submit ou outros elementos do formulário
+            const target = e.target;
+            const isSubmitButton = target.type === 'submit' || 
+                                  target.classList.contains('btn-login') ||
+                                  (target.tagName === 'BUTTON' && target.closest('form'));
+            
+            // SEMPRE ignorar cliques no botão de submit
+            if (isSubmitButton) {
+                return;
+            }
+            
+            // Ignorar cliques em elementos do formulário (inputs, labels, etc)
+            if (target.tagName === 'INPUT' || target.tagName === 'LABEL' || target.closest('.login-form')) {
+                return;
+            }
+            
+            // Se a sequência já está completa, não resetar com novos cliques (exceto se for parte da sequência)
+            if (checkSequence() && (sequenceState.leftClicks >= 2 || sequenceState.rightClicks >= 2)) {
+                // Se já completou, só aceitar novos cliques se for para reiniciar explicitamente
+                // Mas não resetar automaticamente
+                return;
+            }
+            
+            if (e.button === 0) { // Clique esquerdo
+                if (sequenceState.rightClicks > 0 || sequenceState.keyA || sequenceState.keyZ) {
+                    // Reset se já passou para próxima etapa (mas não se já completou)
+                    resetSequence();
+                }
+                
+                sequenceState.leftClicks++;
+                
+                if (sequenceState.leftClicks === 2) {
+                    updateSequenceState();
+                } else if (sequenceState.leftClicks > 2) {
+                    resetSequence();
+                }
+                
+                // Reset após 10 segundos sem completar a sequência
+                clearTimeout(sequenceTimeout);
+                sequenceTimeout = setTimeout(() => {
+                    if (!checkSequence()) {
+                        resetSequence();
+                    }
+                }, 10000);
+            } else if (e.button === 2) { // Clique direito
+                if (sequenceState.leftClicks === 2) {
+                    sequenceState.rightClicks++;
+                    
+                    if (sequenceState.rightClicks === 2) {
+                        updateSequenceState();
+                    } else if (sequenceState.rightClicks > 2) {
+                        resetSequence();
+                    }
+                    
+                    clearTimeout(sequenceTimeout);
+                    sequenceTimeout = setTimeout(() => {
+                        if (!checkSequence()) {
+                            resetSequence();
+                        }
+                    }, 10000);
+                } else {
+                    resetSequence();
+                }
+            }
+        }
+    });
+    
+    // Prevenir menu de contexto no clique direito
+    document.addEventListener('contextmenu', (e) => {
+        const loginScreen = document.getElementById('loginScreen');
+        if (loginScreen && loginScreen.style.display !== 'none') {
+            e.preventDefault();
+        }
+    });
+    
+    // Detectar teclas
+    document.addEventListener('keydown', (e) => {
+        const loginScreen = document.getElementById('loginScreen');
+        const passwordInput = document.getElementById('password');
+        
+        if (loginScreen && loginScreen.style.display !== 'none') {
+            // Se pressionar Enter, deixar o form submit acontecer SEM interferir
+            if (e.key.toLowerCase() === 'enter') {
+                return; // Deixa o form submit acontecer normalmente
+            }
+            
+            // Se já completou os cliques, capturar 'a' e 'z' mesmo se o campo estiver focado
+            if (sequenceState.leftClicks === 2 && sequenceState.rightClicks === 2) {
+                if (e.key.toLowerCase() === 'a' && !sequenceState.keyA) {
+                    e.preventDefault(); // Prevenir inserir 'a' no campo
+                    e.stopPropagation(); // Parar propagação
+                    sequenceState.keyA = true;
+                    updateSequenceState();
+                    // Remover foco do campo se estiver focado
+                    if (document.activeElement === passwordInput) {
+                        passwordInput.blur();
+                    }
+                    clearTimeout(sequenceTimeout);
+                    sequenceTimeout = setTimeout(() => {
+                        if (!checkSequence()) {
+                            resetSequence();
+                        }
+                    }, 10000);
+                } else if (e.key.toLowerCase() === 'z' && sequenceState.keyA && !sequenceState.keyZ) {
+                    e.preventDefault(); // Prevenir inserir 'z' no campo
+                    e.stopPropagation(); // Parar propagação
+                    sequenceState.keyZ = true;
+                    updateSequenceState();
+                    // Remover foco do campo se estiver focado
+                    if (document.activeElement === passwordInput) {
+                        passwordInput.blur();
+                    }
+                    clearTimeout(sequenceTimeout);
+                } else if (e.key.toLowerCase() !== 'a' && e.key.toLowerCase() !== 'z') {
+                    // Não resetar para outras teclas (exceto se for tecla de texto e não estiver no campo)
+                    const isTextKey = e.key.length === 1 && !['tab', 'shift', 'control', 'alt', 'meta', 'escape', 'backspace', 'delete', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(e.key.toLowerCase());
+                    if (isTextKey && document.activeElement !== passwordInput) {
+                        // Só resetar se não estiver digitando no campo
+                        resetSequence();
+                    }
+                }
+            } else {
+                // Se ainda não completou cliques, resetar se pressionar 'a' ou 'z' fora da sequência
+                if (e.key.toLowerCase() === 'a' || e.key.toLowerCase() === 'z') {
+                    // Só resetar se não estiver digitando no campo
+                    if (document.activeElement !== passwordInput) {
+                        resetSequence();
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Atualizar estado da sequência
+function updateSequenceState() {
+    const hint = document.getElementById('sequenceHint');
+    const progressEl = document.getElementById('sequenceProgress');
+    
+    if (hint) {
+        let progress = [];
+        let details = [];
+        
+        if (sequenceState.leftClicks >= 2) {
+            progress.push('✓ 2 cliques esquerdo');
+        } else if (sequenceState.leftClicks > 0) {
+            details.push(`${sequenceState.leftClicks}/2 cliques esquerdo`);
+        }
+        
+        if (sequenceState.rightClicks >= 2) {
+            progress.push('✓ 2 cliques direito');
+        } else if (sequenceState.rightClicks > 0 && sequenceState.leftClicks >= 2) {
+            details.push(`${sequenceState.rightClicks}/2 cliques direito`);
+        }
+        
+        if (sequenceState.keyA) {
+            progress.push('✓ Tecla A');
+        }
+        
+        if (sequenceState.keyZ) {
+            progress.push('✓ Tecla Z');
+        }
+        
+        if (progress.length > 0) {
+            hint.innerHTML = `<p style="color: var(--primary-blue); font-weight: 600;">${progress.join(' → ')}</p>`;
+            if (details.length > 0 && progressEl) {
+                progressEl.textContent = `Em progresso: ${details.join(', ')}`;
+                progressEl.style.color = 'var(--primary-blue)';
+            } else if (progressEl && checkSequence()) {
+                progressEl.textContent = '✅ Sequência completa! Pode pressionar Enter.';
+                progressEl.style.color = '#10b981';
+            } else if (progressEl) {
+                progressEl.textContent = '';
+            }
+        } else {
+            const hintEl = document.getElementById('sequenceHint');
+            if (hintEl) {
+                hintEl.style.display = 'none';
+            }
+            if (progressEl) {
+                progressEl.textContent = '';
+            }
+        }
+    }
+}
+
+// Verificar se a sequência está completa
+function checkSequence() {
+    const isComplete = sequenceState.leftClicks === 2 &&
+                       sequenceState.rightClicks === 2 &&
+                       sequenceState.keyA === true &&
+                       sequenceState.keyZ === true;
+    
+    // Atualizar flag
+    if (isComplete && !sequenceState.isComplete) {
+        sequenceState.isComplete = true;
+        setTimeout(() => {
+            if (sequenceState.isComplete && !sequenceState.isProtected) {
+                // Proteção expirada
+            }
+        }, 30000);
+    }
+    
+    return isComplete;
+}
+
+// Resetar sequência
+function resetSequence() {
+    // Não resetar se estiver protegida (durante submit)
+    if (sequenceState.isProtected) {
+        return;
+    }
+    
+    sequenceState = {
+        leftClicks: 0,
+        rightClicks: 0,
+        keyA: false,
+        keyZ: false,
+        resetTimeout: null,
+        isComplete: false,
+        isProtected: false
+    };
+    
+    updateSequenceState();
+}
+
+// Mostrar erro de login
+function showError(message) {
+    const errorDiv = document.getElementById('loginError');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+        errorDiv.style.display = 'none';
+    }, 5000);
+}
+
+// Logout
+function logout() {
+    sessionStorage.removeItem(SESSION_KEY);
+    showLoginScreen();
+}
 
 // Navegação entre seções
 function setupNavigation() {
