@@ -132,7 +132,7 @@ function displayPersonalPhoto(photoName) {
     // Se há nome da foto no JSON, usar ele
     if (photoName) {
         const photoPath = `upload/foto-pessoal/${photoName}`;
-        aboutImage.innerHTML = `<img src="${photoPath}" alt="Foto pessoal" style="width: 100%; height: 100%; object-fit: cover;">`;
+        aboutImage.innerHTML = `<img src="${photoPath}" alt="Brayan Rosa da Silveira - Dev Brayan, Desenvolvedor Web Full Stack" style="width: 100%; height: 100%; object-fit: cover;">`;
         return;
     }
     
@@ -156,7 +156,7 @@ function displayPersonalPhoto(photoName) {
         }
         
         img.onload = () => {
-            aboutImage.innerHTML = `<img src="${photoPaths[currentIndex]}" alt="Foto pessoal" style="width: 100%; height: 100%; object-fit: cover;">`;
+            aboutImage.innerHTML = `<img src="${photoPaths[currentIndex]}" alt="Brayan Rosa da Silveira - Dev Brayan, Desenvolvedor Web Full Stack" style="width: 100%; height: 100%; object-fit: cover;">`;
         };
         
         img.onerror = () => {
@@ -194,7 +194,7 @@ function displayProjects(projects) {
         if (firstImage) {
             mediaHTML = `
                 <div class="project-image">
-                    <img src="${firstImage}" alt="${project.title}">
+                    <img src="${firstImage}" alt="${project.title} - Projeto desenvolvido por Dev Brayan, Desenvolvedor Web Full Stack">
                     <div class="project-overlay ${overlayClass}"></div>
                 </div>
             `;
@@ -385,7 +385,7 @@ function openProjectModal(index) {
                                     <div class="carousel-track" id="carouselTrack">
                                         ${carouselImages.map((img, i) => `
                                             <div class="carousel-slide ${i === 0 ? 'active' : ''}">
-                                                <img src="${img}" alt="Imagem ${i + 1}" class="carousel-image">
+                                                <img src="${img}" alt="${project.title} - Imagem ${i + 1} do projeto desenvolvido por Dev Brayan" class="carousel-image">
                                             </div>
                                         `).join('')}
                                     </div>
