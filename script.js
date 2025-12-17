@@ -13,6 +13,9 @@ async function loadPortfolio() {
         const projetosResponse = await fetch('upload/projetos.json');
         const projetosData = projetosResponse.ok ? await projetosResponse.json() : { projetos: [] };
         
+        // Armazenar dados dos projetos globalmente para uso no modal
+        globalProjectsData = projetosData;
+        
         // Carregar imagens de cada projeto
         const projects = [];
         for (let projeto of projetosData.projetos || []) {
@@ -212,12 +215,42 @@ function displayProjects(projects) {
         const techTags = project.tech ? project.tech.split(',').map(t => t.trim()).filter(t => t) : [];
         const techHTML = techTags.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
         
-        // Verificar se o link é um arquivo HTML local (projeto interativo) ou link externo
+        // Verificar se é um jogo (arquivos HTML que contêm palavras-chave de jogos)
+        const isGame = project.link && project.link.endsWith('.html') && (
+            project.link.toLowerCase().includes('jogo') ||
+            project.link.toLowerCase().includes('game') ||
+            project.link.toLowerCase().includes('shooter') ||
+            project.link.toLowerCase().includes('velha') ||
+            project.link.toLowerCase().includes('memoria') ||
+            project.link.toLowerCase().includes('pedra') ||
+            project.link.toLowerCase().includes('space-shooter')
+        );
+        
+        // Verificar se o link é um arquivo HTML local ou link externo
         const isInteractiveProject = project.link && project.link.endsWith('.html');
         const isExternalLink = project.link && (project.link.startsWith('http://') || project.link.startsWith('https://'));
+        const hasImages = project.images && project.images.length > 0;
+        
+        // Determinar o handler do card
         const cardClickHandler = (isInteractiveProject || isExternalLink)
             ? `onclick="window.open('${project.link}', '_blank')"`
-            : `onclick="openProjectModal(${index})"`;
+            : hasImages
+            ? `onclick="openProjectModal(${index})"`
+            : '';
+
+        // Determinar o texto do botão
+        let linkText = '';
+        if (project.link) {
+            if (isGame) {
+                linkText = '🎮 Jogar';
+            } else if (isExternalLink) {
+                linkText = '🔗 Ver repositório';
+            } else {
+                linkText = 'Ver projeto';
+            }
+        } else if (hasImages) {
+            linkText = '📷 Ver fotos';
+        }
 
         return `
             <div class="project-card" ${cardClickHandler}>
@@ -228,8 +261,11 @@ function displayProjects(projects) {
                     ${techHTML ? `<div class="tech-tags">${techHTML}</div>` : ''}
                     <div class="project-links">
                         ${project.link ? `<a href="${project.link}" target="_blank" class="project-link" onclick="event.stopPropagation()">
-                            ${isInteractiveProject ? '🎮 Jogar' : isExternalLink ? '🔗 Ver repositório' : 'Ver projeto'}
+                            ${linkText}
                             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                        </a>` : hasImages ? `<a href="#" class="project-link" onclick="event.stopPropagation(); openProjectModal(${index}); return false;">
+                            ${linkText}
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </a>` : ''}
                         ${project.github ? `<a href="${project.github}" target="_blank" class="project-link" onclick="event.stopPropagation()">
                             GitHub
@@ -362,136 +398,145 @@ function displaySocialLinks(contact) {
 // Variável global para controlar o carrossel
 let currentCarouselIndex = 0;
 let carouselImages = [];
+let globalProjectsData = null; // Armazenar dados dos projetos carregados
 
 // Modal de projeto (visualização completa com carrossel)
 function openProjectModal(index) {
-    // Carregar projetos do JSON
-    fetch('upload/projetos.json')
-        .then(response => response.json())
-        .then(projetosData => {
-            const projeto = projetosData.projetos[index];
-            if (!projeto) return;
-            
-            // Carregar imagens do projeto
-            carouselImages = [];
-            projeto.imagens.forEach(imgName => {
-                // Verificar se é URL (começa com http)
-                if (imgName.startsWith('http://') || imgName.startsWith('https://')) {
-                    carouselImages.push(imgName);
-                } else {
-                    // Usar caminho local
-                    const imgPath = `upload/${projeto.pasta}/${imgName}`;
-                    carouselImages.push(imgPath);
-                }
-            });
-            
-            currentCarouselIndex = 0;
-            
-            // Criar modal dinamicamente
-            const modal = document.createElement('div');
-            modal.className = 'modal active';
-            modal.id = 'projectViewModal';
-            modal.innerHTML = `
-                <div class="modal-content modal-project">
-                    <div class="modal-header">
-                        <h2>${projeto.titulo || 'Projeto'}</h2>
-                        <button class="modal-close" onclick="closeProjectViewModal()">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        ${projeto.descricao ? `<p style="margin-bottom: 1.5rem; color: var(--zinc-400); line-height: 1.8;">${projeto.descricao}</p>` : ''}
-                        
-                        ${projeto.tecnologias ? `
-                            <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                                ${projeto.tecnologias.split(',').map(t => `<span class="tech-tag">${t.trim()}</span>`).join('')}
-                            </div>
-                        ` : ''}
+    // Usar dados já carregados ou carregar do JSON
+    const loadProjectData = () => {
+        if (globalProjectsData) {
+            return Promise.resolve(globalProjectsData);
+        }
+        return fetch('upload/projetos.json').then(response => response.json());
+    };
+    
+    loadProjectData().then(projetosData => {
+        const projeto = projetosData.projetos[index];
+        if (!projeto) {
+            console.error('Projeto não encontrado no índice:', index);
+            return;
+        }
+        
+        // Carregar imagens do projeto
+        carouselImages = [];
+        projeto.imagens.forEach(imgName => {
+            // Verificar se é URL (começa com http)
+            if (imgName.startsWith('http://') || imgName.startsWith('https://')) {
+                carouselImages.push(imgName);
+            } else {
+                // Usar caminho local
+                const imgPath = `upload/${projeto.pasta}/${imgName}`;
+                carouselImages.push(imgPath);
+            }
+        });
+        
+        currentCarouselIndex = 0;
+        
+        // Criar modal dinamicamente
+        const modal = document.createElement('div');
+        modal.className = 'modal active';
+        modal.id = 'projectViewModal';
+        modal.innerHTML = `
+            <div class="modal-content modal-project">
+                <div class="modal-header">
+                    <h2>${projeto.titulo || 'Projeto'}</h2>
+                    <button class="modal-close" onclick="closeProjectViewModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    ${projeto.descricao ? `<p style="margin-bottom: 1.5rem; color: var(--zinc-400); line-height: 1.8;">${projeto.descricao}</p>` : ''}
+                    
+                    ${projeto.tecnologias ? `
+                        <div class="tech-tags" style="margin-bottom: 1.5rem;">
+                            ${projeto.tecnologias.split(',').map(t => `<span class="tech-tag">${t.trim()}</span>`).join('')}
+                        </div>
+                    ` : ''}
 
-                        ${carouselImages.length > 0 ? `
-                            <div class="carousel-container">
-                                <div class="carousel-wrapper">
-                                    <div class="carousel-track" id="carouselTrack">
-                                        ${carouselImages.map((img, i) => `
-                                            <div class="carousel-slide ${i === 0 ? 'active' : ''}">
-                                                <img src="${img}" alt="${project.title} - Imagem ${i + 1} do projeto desenvolvido por Dev Brayan" class="carousel-image">
-                                            </div>
+                    ${carouselImages.length > 0 ? `
+                        <div class="carousel-container">
+                            <div class="carousel-wrapper">
+                                <div class="carousel-track" id="carouselTrack">
+                                    ${carouselImages.map((img, i) => `
+                                        <div class="carousel-slide ${i === 0 ? 'active' : ''}">
+                                            <img src="${img}" alt="${projeto.titulo} - Imagem ${i + 1} do projeto desenvolvido por Dev Brayan" class="carousel-image">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                ${carouselImages.length > 1 ? `
+                                    <button class="carousel-btn carousel-prev" onclick="changeCarouselSlide(-1)" aria-label="Anterior">
+                                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                        </svg>
+                                    </button>
+                                    <button class="carousel-btn carousel-next" onclick="changeCarouselSlide(1)" aria-label="Próximo">
+                                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </button>
+                                    <div class="carousel-indicators">
+                                        ${carouselImages.map((_, i) => `
+                                            <button class="carousel-indicator ${i === 0 ? 'active' : ''}" onclick="goToCarouselSlide(${i})" aria-label="Slide ${i + 1}"></button>
                                         `).join('')}
                                     </div>
-                                    ${carouselImages.length > 1 ? `
-                                        <button class="carousel-btn carousel-prev" onclick="changeCarouselSlide(-1)" aria-label="Anterior">
-                                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                            </svg>
-                                        </button>
-                                        <button class="carousel-btn carousel-next" onclick="changeCarouselSlide(1)" aria-label="Próximo">
-                                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                            </svg>
-                                        </button>
-                                        <div class="carousel-indicators">
-                                            ${carouselImages.map((_, i) => `
-                                                <button class="carousel-indicator ${i === 0 ? 'active' : ''}" onclick="goToCarouselSlide(${i})" aria-label="Slide ${i + 1}"></button>
-                                            `).join('')}
-                                        </div>
-                                    ` : ''}
-                                </div>
+                                ` : ''}
                             </div>
-                        ` : ''}
-
-                        <div class="project-links" style="margin-top: 2rem;">
-                            ${projeto.link ? `<a href="${projeto.link}" target="_blank" class="btn-primary">Ver Projeto</a>` : ''}
-                            ${projeto.github ? `<a href="${projeto.github}" target="_blank" class="btn-secondary">Ver no GitHub</a>` : ''}
                         </div>
+                    ` : ''}
+
+                    <div class="project-links" style="margin-top: 2rem;">
+                        ${projeto.link ? `<a href="${projeto.link}" target="_blank" class="btn-primary">Ver Projeto</a>` : ''}
+                        ${projeto.github ? `<a href="${projeto.github}" target="_blank" class="btn-secondary">Ver no GitHub</a>` : ''}
                     </div>
                 </div>
-            `;
+            </div>
+        `;
 
-            document.body.appendChild(modal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeProjectViewModal();
-                }
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeProjectViewModal();
+            }
+        });
+        
+        // Adicionar suporte a teclado
+        document.addEventListener('keydown', handleCarouselKeyboard);
+        
+        // Adicionar suporte a touch/swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const carouselWrapper = modal.querySelector('.carousel-wrapper');
+        if (carouselWrapper) {
+            carouselWrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
             });
             
-            // Adicionar suporte a teclado
-            document.addEventListener('keydown', handleCarouselKeyboard);
+            carouselWrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+        }
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
             
-            // Adicionar suporte a touch/swipe
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            const carouselWrapper = modal.querySelector('.carousel-wrapper');
-            if (carouselWrapper) {
-                carouselWrapper.addEventListener('touchstart', (e) => {
-                    touchStartX = e.changedTouches[0].screenX;
-                });
-                
-                carouselWrapper.addEventListener('touchend', (e) => {
-                    touchEndX = e.changedTouches[0].screenX;
-                    handleSwipe();
-                });
-            }
-            
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                const diff = touchStartX - touchEndX;
-                
-                if (Math.abs(diff) > swipeThreshold) {
-                    if (diff > 0) {
-                        // Swipe left - próximo
-                        changeCarouselSlide(1);
-                    } else {
-                        // Swipe right - anterior
-                        changeCarouselSlide(-1);
-                    }
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - próximo
+                    changeCarouselSlide(1);
+                } else {
+                    // Swipe right - anterior
+                    changeCarouselSlide(-1);
                 }
             }
-            
-            // Inicializar carrossel
-            updateCarousel();
-        })
-        .catch(error => {
-            console.error('Erro ao carregar projeto:', error);
-        });
+        }
+        
+        // Inicializar carrossel
+        updateCarousel();
+    })
+    .catch(error => {
+        console.error('Erro ao carregar projeto:', error);
+    });
 }
 
 // Mudar slide do carrossel

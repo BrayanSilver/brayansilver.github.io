@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Racing - Jogo React</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        const CarRacing = () => {
+            const canvasRef = useRef(null);
+            const gameLoopRef = useRef(null);
+            const [gameState, setGameState] = useState('menu');
+            const [score, setScore] = useState(0);
+            const [highScore, setHighScore] = useState(0);
+            const [speed, setSpeed] = useState(0);
+            
+            const gameRef = useRef({
+                player: { x: 400, y: 500, width: 50, height: 80, angle: 0 },
+                road: { offset: 0, lines: [] },
+                obstacles: [],
+                coins: [],
+                particles: [],
+                keys: {},
+                gameSpeed: 5
+            });
+
+            useEffect(() => {
+                try {
+                    const saved = localStorage.getItem('car-racing-highscore');
+                    if (saved) {
+                        setHighScore(parseInt(saved));
+                    }
+                } catch (error) {
+                    console.log('No high score found');
+                }
+            }, []);
+
+            const saveHighScore = (score) => {
+                try {
+                    localStorage.setItem('car-racing-highscore', score.toString());
+                } catch (error) {
+                    console.error('Failed to save high score:', error);
+                }
+            };
+
+            const startGame = () => {
+                setGameState('playing');
+                setScore(0);
+                setSpeed(0);
+                
+                const game = gameRef.current;
+                game.player = { x: 400, y: 500, width: 50, height: 80, angle: 0 };
+                game.road = { offset: 0, lines: [] };
+                game.obstacles = [];
+                game.coins = [];
+                game.particles = [];
+                game.gameSpeed = 5;
+                
+                // Initialize road lines
+                for (let i = 0; i < 20; i++) {
+                    game.road.lines.push(i * 100);
+                }
+            };
+
+            const createParticles = (x, y, color, count = 15) => {
+                const game = gameRef.current;
+                for (let i = 0; i < count; i++) {
+                    game.particles.push({
+                        x, y,
+                        vx: (Math.random() - 0.5) * 10,
+                        vy: (Math.random() - 0.5) * 10,
+                        life: 40,
+                        color,
+                        size: Math.random() * 5 + 3
+                    });
+                }
+            };
+
+            const spawnObstacle = () => {
+                const game = gameRef.current;
+                const lanes = [150, 300, 450, 600];
+                const lane = lanes[Math.floor(Math.random() * lanes.length)];
+                
+                game.obstacles.push({
+                    x: lane,
+                    y: -100,
+                    width: 60,
+                    height: 100,
+                    type: Math.random() > 0.7 ? 'truck' : 'car',
+                    color: `hsl(${Math.random() * 360}, 70%, 50%)`
+                });
+            };
+
+            const spawnCoin = () => {
+                const game = gameRef.current;
+                const lanes = [150, 300, 450, 600];
+                const lane = lanes[Math.floor(Math.random() * lanes.length)];
+                
+                game.coins.push({
+                    x: lane,
+                    y: -50,
+                    width: 40,
+                    height: 40,
+                    rotation: 0,
+                    collected: false
+                });
+            };
+
+            const checkCollision = (a, b) => {
+                return a.x < b.x + b.width &&
+                       a.x + a.width > b.x &&
+                       a.y < b.y + b.height &&
+                       a.y + a.height > b.y;
+            };
+
+            const gameLoop = useCallback(() => {
+                if (gameState !== 'playing') return;
+
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+
+                const ctx = canvas.getContext('2d');
+                const game = gameRef.current;
+                const { player, keys } = game;
+
+                // Increase game speed over time
+                game.gameSpeed += 0.01;
+                if (game.gameSpeed > 15) game.gameSpeed = 15;
+                setSpeed(Math.floor(game.gameSpeed * 10));
+
+                // Update score
+                setScore(s => s + 1);
+
+                // Clear canvas
+                ctx.fillStyle = '#2d5016';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw road
+                ctx.fillStyle = '#404040';
+                ctx.fillRect(100, 0, 600, canvas.height);
+
+                // Draw road lines
+                ctx.strokeStyle = '#FFFF00';
+                ctx.lineWidth = 4;
+                ctx.setLineDash([20, 20]);
+                
+                game.road.offset += game.gameSpeed;
+                if (game.road.offset > 100) game.road.offset = 0;
+                
+                for (let i = -2; i < 20; i++) {
+                    const y = i * 100 - game.road.offset;
+                    ctx.beginPath();
+                    ctx.moveTo(400, y);
+                    ctx.lineTo(400, y + 50);
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+
+                // Draw road borders
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(95, 0, 10, canvas.height);
+                ctx.fillRect(695, 0, 10, canvas.height);
+
+                // Player movement
+                if (keys.ArrowLeft || keys.a || keys.A) {
+                    player.x -= 8;
+                    player.angle = -0.2;
+                } else if (keys.ArrowRight || keys.d || keys.D) {
+                    player.x += 8;
+                    player.angle = 0.2;
+                } else {
+                    player.angle *= 0.8;
+                }
+
+                // Keep player on road
+                if (player.x < 120) player.x = 120;
+                if (player.x > canvas.width - player.width - 120) player.x = canvas.width - player.width - 120;
+
+                // Spawn obstacles
+                if (Math.random() < 0.02) {
+                    spawnObstacle();
+                }
+
+                // Spawn coins
+                if (Math.random() < 0.015) {
+                    spawnCoin();
+                }
+
+                // Update and draw obstacles
+                game.obstacles = game.obstacles.filter(obstacle => {
+                    obstacle.y += game.gameSpeed;
+
+                    const ox = obstacle.x;
+                    const oy = obstacle.y;
+
+                    // Draw obstacle
+                    ctx.save();
+                    ctx.translate(ox + obstacle.width / 2, oy + obstacle.height / 2);
+                    ctx.fillStyle = obstacle.color;
+                    ctx.fillRect(-obstacle.width / 2, -obstacle.height / 2, obstacle.width, obstacle.height);
+                    
+                    // Draw windows
+                    ctx.fillStyle = '#87CEEB';
+                    if (obstacle.type === 'truck') {
+                        ctx.fillRect(-obstacle.width / 2 + 5, -obstacle.height / 2 + 5, obstacle.width - 10, 30);
+                    } else {
+                        ctx.fillRect(-obstacle.width / 2 + 5, -obstacle.height / 2 + 5, obstacle.width - 10, 20);
+                    }
+                    
+                    // Draw wheels
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(-obstacle.width / 2 - 5, obstacle.height / 2 - 15, 10, 15);
+                    ctx.fillRect(obstacle.width / 2 - 5, obstacle.height / 2 - 15, 10, 15);
+                    ctx.restore();
+
+                    // Check collision with player
+                    if (checkCollision(player, obstacle)) {
+                        createParticles(player.x + player.width / 2, player.y + player.height / 2, '#FF0000', 30);
+                        setGameState('gameOver');
+                        if (score > highScore) {
+                            setHighScore(score);
+                            saveHighScore(score);
+                        }
+                        return false;
+                    }
+
+                    return obstacle.y < canvas.height + 100;
+                });
+
+                // Update and draw coins
+                game.coins.forEach(coin => {
+                    if (!coin.collected) {
+                        coin.y += game.gameSpeed;
+                        coin.rotation += 0.15;
+
+                        const cx = coin.x;
+                        const cy = coin.y;
+
+                        ctx.save();
+                        ctx.translate(cx + coin.width / 2, cy + coin.height / 2);
+                        ctx.rotate(coin.rotation);
+                        ctx.fillStyle = '#FFD700';
+                        ctx.shadowColor = '#FFD700';
+                        ctx.shadowBlur = 15;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, coin.width / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = '#FFA500';
+                        ctx.beginPath();
+                        ctx.arc(0, 0, coin.width / 3, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                        ctx.restore();
+
+                        if (checkCollision(player, coin)) {
+                            coin.collected = true;
+                            createParticles(coin.x + coin.width / 2, coin.y + coin.height / 2, '#FFD700', 15);
+                            setScore(s => s + 500);
+                        }
+                    }
+                });
+
+                // Update and draw particles
+                game.particles = game.particles.filter(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life--;
+                    
+                    if (p.life > 0) {
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = p.life / 40;
+                        ctx.fillRect(p.x, p.y, p.size, p.size);
+                        ctx.globalAlpha = 1;
+                        return true;
+                    }
+                    return false;
+                });
+
+                // Draw player car
+                ctx.save();
+                ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
+                ctx.rotate(player.angle);
+                
+                // Car body
+                ctx.fillStyle = '#FF0000';
+                ctx.fillRect(-player.width / 2, -player.height / 2, player.width, player.height);
+                
+                // Car windows
+                ctx.fillStyle = '#87CEEB';
+                ctx.fillRect(-player.width / 2 + 5, -player.height / 2 + 5, player.width - 10, 25);
+                
+                // Car details
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(-player.width / 2, -player.height / 2, player.width, 5);
+                ctx.fillRect(-player.width / 2, player.height / 2 - 5, player.width, 5);
+                
+                // Wheels
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(-player.width / 2 - 8, player.height / 2 - 20, 12, 20);
+                ctx.fillRect(player.width / 2 - 4, player.height / 2 - 20, 12, 20);
+                ctx.fillRect(-player.width / 2 - 8, -player.height / 2, 12, 20);
+                ctx.fillRect(player.width / 2 - 4, -player.height / 2, 12, 20);
+                
+                ctx.restore();
+
+                gameLoopRef.current = requestAnimationFrame(gameLoop);
+            }, [gameState, score, highScore]);
+
+            useEffect(() => {
+                if (gameState === 'playing') {
+                    gameLoopRef.current = requestAnimationFrame(gameLoop);
+                }
+                return () => {
+                    if (gameLoopRef.current) {
+                        cancelAnimationFrame(gameLoopRef.current);
+                    }
+                };
+            }, [gameState, gameLoop]);
+
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (['ArrowLeft', 'ArrowRight', 'a', 'A', 'd', 'D'].includes(e.key)) {
+                        e.preventDefault();
+                    }
+                    gameRef.current.keys[e.key] = true;
+                };
+
+                const handleKeyUp = (e) => {
+                    gameRef.current.keys[e.key] = false;
+                };
+
+                window.addEventListener('keydown', handleKeyDown);
+                window.addEventListener('keyup', handleKeyUp);
+
+                return () => {
+                    window.removeEventListener('keydown', handleKeyDown);
+                    window.removeEventListener('keyup', handleKeyUp);
+                };
+            }, [gameState]);
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black flex items-center justify-center p-4" style={{ fontFamily: "'Press Start 2P', cursive" }}>
+                    <div className="relative">
+                        {/* HUD */}
+                        <div className="absolute top-0 left-0 right-0 flex justify-between items-start p-4 text-white z-10 text-xs">
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-yellow-400">💰</span>
+                                    <span className="text-white">{score}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-cyan-400">⚡</span>
+                                    <span className="text-white">{speed} km/h</span>
+                                </div>
+                            </div>
+                            
+                            <div className="text-right space-y-2">
+                                <div className="text-xs text-gray-300">RECORDE</div>
+                                <div className="text-yellow-400">{highScore}</div>
+                            </div>
+                        </div>
+
+                        <canvas
+                            ref={canvasRef}
+                            width={800}
+                            height={600}
+                            className="border-4 border-gray-600 shadow-2xl bg-gray-800"
+                            style={{ boxShadow: '0 0 30px rgba(0, 0, 0, 0.5)' }}
+                        />
+
+                        {/* Menu Overlay */}
+                        {gameState === 'menu' && (
+                            <div className="absolute inset-0 bg-black bg-opacity-90 flex items-center justify-center backdrop-blur-sm">
+                                <div className="text-center space-y-8 p-8">
+                                    <h1 className="text-5xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-400 to-red-500 animate-pulse">
+                                        CAR<br/>RACING
+                                    </h1>
+                                    
+                                    <div className="space-y-4 text-xs text-cyan-300">
+                                        <p>A/D ou SETAS - Mover</p>
+                                        <p>Evite os obstáculos!</p>
+                                        <p>Colete moedas para pontos extras!</p>
+                                    </div>
+
+                                    <button
+                                        onClick={startGame}
+                                        className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-white px-8 py-4 text-sm border-4 border-white shadow-lg transition-all hover:scale-110 active:scale-95"
+                                        style={{ boxShadow: '0 0 20px rgba(239, 68, 68, 0.5)' }}
+                                    >
+                                        INICIAR
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Game Over Overlay */}
+                        {gameState === 'gameOver' && (
+                            <div className="absolute inset-0 bg-black bg-opacity-90 flex items-center justify-center backdrop-blur-sm">
+                                <div className="text-center space-y-6 p-8">
+                                    <h2 className="text-4xl text-red-500 animate-pulse">GAME OVER</h2>
+                                    
+                                    <div className="space-y-4 text-xl">
+                                        <div>
+                                            <div className="text-xs text-gray-400 mb-1">PONTUAÇÃO</div>
+                                            <div className="text-yellow-400">{score}</div>
+                                        </div>
+                                        
+                                        {score === highScore && score > 0 && (
+                                            <div className="text-yellow-400 text-sm animate-bounce">
+                                                🏆 NOVO RECORDE! 🏆
+                                            </div>
+                                        )}
+                                        
+                                        <div>
+                                            <div className="text-xs text-gray-400 mb-1">RECORDE</div>
+                                            <div className="text-yellow-400">{highScore}</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3 pt-4">
+                                        <button
+                                            onClick={startGame}
+                                            className="block w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white px-8 py-3 text-xs border-2 border-white transition-all hover:scale-105"
+                                        >
+                                            JOGAR NOVAMENTE
+                                        </button>
+                                        <button
+                                            onClick={() => setGameState('menu')}
+                                            className="block w-full bg-red-700 hover:bg-red-600 text-white px-8 py-3 text-xs border-2 border-red-400"
+                                        >
+                                            MENU
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(React.createElement(CarRacing), document.getElementById('root'));
+    </script>
+</body>
+</html>
+

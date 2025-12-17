@@ -4,9 +4,10 @@ let personalInfoData = {};
 let contactData = {};
 
 // Configuração de autenticação
-const ADMIN_PASSWORD = 'admin123';
+const ADMIN_PASSWORD = 'admin123'; // Altere esta senha
 const SESSION_KEY = 'admin_authenticated';
 
+// Sequência especial: 2 cliques esquerdo, 2 cliques direito, tecla 'a', tecla 'z'
 let sequenceState = {
     leftClicks: 0,
     rightClicks: 0,
@@ -88,21 +89,40 @@ function setupLoginForm() {
             isComplete: sequenceState.isComplete
         }));
         
+        // Debug: mostrar estado ANTES de qualquer processamento
+        console.log('=== SUBMIT INICIADO ===');
+        console.log('Estado da sequência no momento do submit:', savedSequenceState);
+        console.log('Estado atual do sequenceState:', JSON.parse(JSON.stringify(sequenceState)));
+        
         if (password === ADMIN_PASSWORD) {
+            // Verificar se a sequência especial foi executada usando o estado salvo
             const sequenceComplete = savedSequenceState.leftClicks === 2 &&
                                     savedSequenceState.rightClicks === 2 &&
                                     savedSequenceState.keyA === true &&
                                     savedSequenceState.keyZ === true;
             
+            console.log('Sequência completa?', sequenceComplete);
+            
             if (sequenceComplete) {
+                // Autenticação bem-sucedida
+                console.log('✅ Autenticação bem-sucedida!');
                 sessionStorage.setItem(SESSION_KEY, 'true');
                 showAdminContent();
                 passwordInput.value = '';
-                sequenceState.isProtected = false;
+                sequenceState.isProtected = false; // Remover proteção antes de resetar
                 resetSequence();
             } else {
-                showError('Acesso negado. Verifique suas credenciais.');
+                let missingSteps = [];
+                if (savedSequenceState.leftClicks < 2) missingSteps.push('2 cliques esquerdo');
+                if (savedSequenceState.rightClicks < 2) missingSteps.push('2 cliques direito');
+                if (!savedSequenceState.keyA) missingSteps.push('tecla A');
+                if (!savedSequenceState.keyZ) missingSteps.push('tecla Z');
+                
+                console.log('❌ Sequência incompleta. Faltam:', missingSteps);
+                showError(`Senha correta, mas a sequência especial não foi completada. Faltam: ${missingSteps.join(', ')}`);
+                // Remover proteção para permitir nova tentativa
                 sequenceState.isProtected = false;
+                // NÃO resetar a sequência aqui - deixar o usuário tentar novamente
             }
         } else {
             showError('Senha incorreta!');
@@ -113,7 +133,7 @@ function setupLoginForm() {
     });
 }
 
-// Configurar detecção de autenticação
+// Configurar detecção da sequência especial
 function setupSequenceDetection() {
     let sequenceTimeout = null;
     
@@ -129,7 +149,8 @@ function setupSequenceDetection() {
             
             // SEMPRE ignorar cliques no botão de submit
             if (isSubmitButton) {
-                return;
+                console.log('Clique no botão de submit ignorado');
+                return; // Deixa o submit acontecer sem interferir
             }
             
             // Ignorar cliques em elementos do formulário (inputs, labels, etc)
@@ -296,15 +317,21 @@ function updateSequenceState() {
                 progressEl.textContent = '';
             }
         } else {
-            const hintEl = document.getElementById('sequenceHint');
-            if (hintEl) {
-                hintEl.style.display = 'none';
-            }
+            hint.innerHTML = '<p>💡 Dica: Após digitar a senha, execute a sequência especial</p>';
             if (progressEl) {
                 progressEl.textContent = '';
             }
         }
     }
+    
+    // Log para debug
+    console.log('Estado da sequência atualizado:', {
+        leftClicks: sequenceState.leftClicks,
+        rightClicks: sequenceState.rightClicks,
+        keyA: sequenceState.keyA,
+        keyZ: sequenceState.keyZ,
+        complete: checkSequence()
+    });
 }
 
 // Verificar se a sequência está completa
@@ -316,10 +343,13 @@ function checkSequence() {
     
     // Atualizar flag
     if (isComplete && !sequenceState.isComplete) {
+        console.log('✅ Sequência completa detectada!');
         sequenceState.isComplete = true;
+        // Proteger a sequência por 30 segundos após completar
         setTimeout(() => {
             if (sequenceState.isComplete && !sequenceState.isProtected) {
-                // Proteção expirada
+                console.log('⏰ Proteção da sequência expirada');
+                // Não resetar, apenas remover proteção se não estiver em submit
             }
         }, 30000);
     }
@@ -331,6 +361,7 @@ function checkSequence() {
 function resetSequence() {
     // Não resetar se estiver protegida (durante submit)
     if (sequenceState.isProtected) {
+        console.log('🛡️ Sequência protegida, não resetando');
         return;
     }
     
