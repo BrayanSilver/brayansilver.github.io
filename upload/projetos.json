@@ -9,14 +9,10 @@
       "link": "https://rfconsultoriaalimentos.com.br/home/",
       "github": "",
       "imagens": [
-        "image.png",
-        "image1.png",
-        "image2.png"
+        "https://unsplash.com/photos/hGV2TfOh0ns/download?force=true&w=800"
       ],
       "loadedImages": [
-        "upload/projeto3/image.png",
-        "upload/projeto3/image1.png",
-        "upload/projeto3/image2.png"
+        "https://unsplash.com/photos/hGV2TfOh0ns/download?force=true&w=800"
       ]
     },
     {
@@ -28,10 +24,10 @@
       "link": "",
       "github": "",
       "imagens": [
-        "image.png"
+        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
       ],
       "loadedImages": [
-        "upload/projeto4/image.png"
+        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
       ]
     },
     {
@@ -43,16 +39,10 @@
       "link": "",
       "github": "",
       "imagens": [
-        "image.png",
-        "image1.png",
-        "image2.png",
-        "image3.png"
+        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
       ],
       "loadedImages": [
-        "upload/projeto5/image.png",
-        "upload/projeto5/image1.png",
-        "upload/projeto5/image2.png",
-        "upload/projeto5/image3.png"
+        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
       ]
     },
     {
@@ -223,7 +213,7 @@
       "id": 14,
       "pasta": "projeto14",
       "titulo": "Mais Projetos Realizados",
-      "descricao": "Explore uma coleção completa de projetos desenvolvidos com HTML, CSS e JavaScript. Inclui exemplos de login, páginas de captura, listas de tarefas, exercícios práticos e muito mais.",
+      "descricao": "Repositório com projetos profissionais em HTML, CSS e JavaScript. Inclui sistemas como Aprovação de Empréstimo, Cadastro de Farmácia, Calculadora de Consumo de Água e Controle de Funcionários. Desenvolvidos com alta qualidade técnica e boas práticas de programação.",
       "tecnologias": "HTML, CSS, JavaScript",
       "link": "https://github.com/BrayanSilver/JS-HTML_Brayan",
       "github": "https://github.com/BrayanSilver/JS-HTML_Brayan",
@@ -238,7 +228,7 @@
       "id": 15,
       "pasta": "projeto15",
       "titulo": "Projetos em Java",
-      "descricao": "Repositório com projetos e exercícios desenvolvidos em Java. Inclui sistemas bancários, cadastros, calculadoras, gerenciamento de tarefas e diversos desafios de programação orientada a objetos.",
+      "descricao": "Repositório com projetos profissionais em Java utilizando POO. Inclui sistemas como Aprovação de Empréstimo, Cadastro de Farmácia, Calculadora de Consumo de Água e Controle de Funcionários. Implementados seguindo padrões de qualidade e arquitetura de software.",
       "tecnologias": "Java",
       "link": "https://github.com/BrayanSilver/Java_Brayan",
       "github": "https://github.com/BrayanSilver/Java_Brayan",
