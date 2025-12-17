@@ -3,12 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Shooter - Jogo React</title>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- SEO Meta Tags -->
+    <title>Space Shooter - Jogo React | Dev Brayan - Portfolio</title>
+    <meta name="title" content="Space Shooter - Jogo React | Dev Brayan">
+    <meta name="description" content="Jogue Space Shooter, um jogo de tiro espacial desenvolvido em React. Controle sua nave, elimine inimigos, colete power-ups e alcance a maior pontuação. Desenvolvido por Dev Brayan.">
+    <meta name="description:en" content="Play Space Shooter, a space shooting game developed in React. Control your ship, eliminate enemies, collect power-ups and reach the highest score. Developed by Dev Brayan.">
+    <meta name="keywords" content="Space Shooter, Jogo React, Game React, Space Game, Shooting Game, React Game, Dev Brayan, Brayan Silveira, Portfolio Game, Interactive Game, Browser Game, HTML5 Game, Canvas Game, JavaScript Game, React Developer, Game Developer, Web Game, Online Game, Free Game, Play Game">
+    <meta name="author" content="Brayan Rosa da Silveira - Dev Brayan">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Portuguese, English">
+    
+    <!-- Multilingual Support -->
+    <link rel="alternate" hreflang="pt-BR" href="https://brayansilver.github.io/projetos/space-shooter.html">
+    <link rel="alternate" hreflang="en" href="https://brayansilver.github.io/projetos/space-shooter.html">
+    <link rel="alternate" hreflang="x-default" href="https://brayansilver.github.io/projetos/space-shooter.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Space Shooter - Jogo React | Dev Brayan">
+    <meta property="og:description" content="Jogue Space Shooter, um jogo de tiro espacial desenvolvido em React. Desenvolvido por Dev Brayan.">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Space Shooter - Jogo React | Dev Brayan">
+    <meta name="twitter:description" content="Jogue Space Shooter, um jogo de tiro espacial desenvolvido em React.">
+    
+    <!-- Performance Optimizations -->
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
+    <!-- Load fonts asynchronously -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Load React and dependencies asynchronously -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js" async></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" async></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" async></script>
+    <script src="https://cdn.tailwindcss.com" async></script>
     <style>
         body {
             margin: 0;
@@ -85,9 +122,19 @@
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100vh; background: #000814; color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">
+            Carregando jogo...
+        </div>
+    </div>
 
     <script type="text/babel">
+        // Wait for dependencies to load
+        function initGame() {
+            if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
+                setTimeout(initGame, 50);
+                return;
+            }
         const { useState, useEffect, useRef, useCallback } = React;
 
         // Ícones SVG simples para substituir lucide-react
@@ -849,7 +896,11 @@
             );
         };
 
-        ReactDOM.render(React.createElement(SpaceShooter), document.getElementById('root'));
+            ReactDOM.render(React.createElement(SpaceShooter), document.getElementById('root'));
+        }
+        
+        // Start initialization
+        initGame();
     </script>
 </body>
 </html>
