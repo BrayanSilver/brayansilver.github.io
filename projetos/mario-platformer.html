@@ -14,6 +14,73 @@
             margin: 0;
             padding: 0;
             font-family: 'Press Start 2P', cursive;
+            touch-action: none;
+            overflow: hidden;
+        }
+        #root {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        canvas {
+            max-width: 100%;
+            max-height: 100vh;
+            width: auto !important;
+            height: auto !important;
+        }
+        @media (max-width: 768px) {
+            canvas {
+                width: 100vw !important;
+                height: auto !important;
+            }
+        }
+        .touch-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            pointer-events: none;
+        }
+        .touch-controls button {
+            pointer-events: all;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .touch-controls .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            width: 180px;
+            height: 180px;
+        }
+        .touch-controls .dpad button {
+            width: 58px;
+            height: 58px;
+            border-radius: 8px;
+        }
+        .touch-controls .dpad .up { grid-column: 2; grid-row: 1; }
+        .touch-controls .dpad .left { grid-column: 1; grid-row: 2; }
+        .touch-controls .dpad .down { grid-column: 2; grid-row: 3; }
+        .touch-controls .dpad .right { grid-column: 3; grid-row: 2; }
+        @media (min-width: 769px) {
+            .touch-controls {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -30,6 +97,8 @@
             const [score, setScore] = useState(0);
             const [highScore, setHighScore] = useState(0);
             const [lives, setLives] = useState(3);
+            const [isMobile, setIsMobile] = useState(false);
+            const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
             
             const gameRef = useRef({
                 player: { x: 100, y: 400, width: 40, height: 50, vx: 0, vy: 0, speed: 5, jumpPower: -15, onGround: false },
@@ -41,6 +110,26 @@
                 camera: { x: 0, y: 0 },
                 level: 1
             });
+
+            // Detect mobile and adjust canvas size
+            useEffect(() => {
+                const checkMobile = () => {
+                    const mobile = window.innerWidth <= 768;
+                    setIsMobile(mobile);
+                    if (mobile) {
+                        const maxWidth = window.innerWidth - 40;
+                        const aspectRatio = 800 / 600;
+                        const width = Math.min(maxWidth, 600);
+                        const height = width / aspectRatio;
+                        setCanvasSize({ width, height });
+                    } else {
+                        setCanvasSize({ width: 800, height: 600 });
+                    }
+                };
+                checkMobile();
+                window.addEventListener('resize', checkMobile);
+                return () => window.removeEventListener('resize', checkMobile);
+            }, []);
 
             useEffect(() => {
                 try {
@@ -375,6 +464,25 @@
                 };
             }, [gameState, gameLoop]);
 
+            // Touch controls handlers
+            const handleTouchStart = (direction) => {
+                const game = gameRef.current;
+                if (direction === 'left' || direction === 'a') game.keys.ArrowLeft = true;
+                if (direction === 'right' || direction === 'd') game.keys.ArrowRight = true;
+                if (direction === 'jump' || direction === 'w' || direction === ' ') {
+                    if (game.player.onGround) {
+                        game.player.vy = game.player.jumpPower;
+                        game.player.onGround = false;
+                    }
+                }
+            };
+
+            const handleTouchEnd = (direction) => {
+                const game = gameRef.current;
+                if (direction === 'left' || direction === 'a') game.keys.ArrowLeft = false;
+                if (direction === 'right' || direction === 'd') game.keys.ArrowRight = false;
+            };
+
             useEffect(() => {
                 const handleKeyDown = (e) => {
                     if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'a', 'A', 'd', 'D', 'w', 'W', ' '].includes(e.key)) {
@@ -421,11 +529,41 @@
 
                         <canvas
                             ref={canvasRef}
-                            width={800}
-                            height={600}
+                            width={canvasSize.width}
+                            height={canvasSize.height}
                             className="border-4 border-blue-600 shadow-2xl bg-blue-300"
-                            style={{ boxShadow: '0 0 30px rgba(37, 99, 235, 0.5)' }}
+                            style={{ boxShadow: '0 0 30px rgba(37, 99, 235, 0.5)', maxWidth: '100%', height: 'auto' }}
                         />
+
+                        {/* Touch Controls for Mobile */}
+                        {isMobile && gameState === 'playing' && (
+                            <div className="touch-controls">
+                                <div className="dpad">
+                                    <button 
+                                        className="up"
+                                        onTouchStart={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
+                                        onMouseDown={() => handleTouchStart('jump')}
+                                    >↑</button>
+                                    <button 
+                                        className="left"
+                                        onTouchStart={(e) => { e.preventDefault(); handleTouchStart('left'); }}
+                                        onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
+                                        onMouseDown={() => handleTouchStart('left')}
+                                        onMouseUp={() => handleTouchEnd('left')}
+                                        onMouseLeave={() => handleTouchEnd('left')}
+                                    >←</button>
+                                    <div></div>
+                                    <button 
+                                        className="right"
+                                        onTouchStart={(e) => { e.preventDefault(); handleTouchStart('right'); }}
+                                        onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
+                                        onMouseDown={() => handleTouchStart('right')}
+                                        onMouseUp={() => handleTouchEnd('right')}
+                                        onMouseLeave={() => handleTouchEnd('right')}
+                                    >→</button>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Menu Overlay */}
                         {gameState === 'menu' && (

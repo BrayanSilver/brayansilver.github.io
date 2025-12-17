@@ -16,48 +16,54 @@
       ]
     },
     {
-      "id": 4,
-      "pasta": "projeto4",
-      "titulo": "Linktree - Bio",
-      "descricao": "Árvore de Links - BIO",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "",
+      "id": 16,
+      "pasta": "projeto16",
+      "titulo": "Space Shooter",
+      "descricao": "Jogo de nave espacial desenvolvido em React. Controle sua nave, destrua inimigos e asteroides, colete power-ups e tente alcançar a maior pontuação. Sistema de vidas, recordes e efeitos visuais impressionantes.",
+      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
+      "link": "projetos/space-shooter.html",
       "github": "",
       "imagens": [
-        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
+        "https://unsplash.com/photos/YOy-ek-aBR0/download?force=true&w=800"
       ],
       "loadedImages": [
-        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
+        "https://unsplash.com/photos/YOy-ek-aBR0/download?force=true&w=800"
       ]
     },
     {
-      "id": 5,
-      "pasta": "projeto5",
-      "titulo": "Sistema de Gestão de Documentos",
-      "descricao": "Sistema de SGI",
-      "tecnologias": "HTML, CSS, JavaScript, Node.js, PL-SQL, Express...",
-      "link": "",
+      "id": 2,
+      "pasta": "projeto2",
+      "titulo": "Landing Page - Ebook",
+      "descricao": "Landing Page - Ebook",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "https://iluminacaopratica.lumicenter.com/",
       "github": "",
       "imagens": [
-        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
+        "image.png",
+        "image1.png",
+        "image2.png",
+        "image3.png"
       ],
       "loadedImages": [
-        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
+        "upload/projeto2/image.png",
+        "upload/projeto2/image1.png",
+        "upload/projeto2/image2.png",
+        "upload/projeto2/image3.png"
       ]
     },
     {
-      "id": 6,
-      "pasta": "projeto6",
-      "titulo": "Jogo da Velha",
-      "descricao": "Jogo interativo da velha desenvolvido com HTML, CSS e JavaScript puro. Interface moderna com gradientes e animações suaves. Dois jogadores podem competir alternando entre X e O.",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "upload/projeto6/jogo-velha.html",
+      "id": 17,
+      "pasta": "projeto17",
+      "titulo": "Mario Platformer",
+      "descricao": "Jogo de plataforma estilo Mario desenvolvido em React. Pule entre plataformas, colete moedas, elimine inimigos pulando sobre eles e tente alcançar a maior pontuação possível. Sistema de vidas, física realista e efeitos visuais.",
+      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
+      "link": "projetos/mario-platformer.html",
       "github": "",
       "imagens": [
-        "https://unsplash.com/photos/TIUyoNGM0no/download?force=true&w=800"
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
       ],
       "loadedImages": [
-        "https://unsplash.com/photos/TIUyoNGM0no/download?force=true&w=800"
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
       ]
     },
     {
@@ -76,48 +82,33 @@
       ]
     },
     {
-      "id": 8,
-      "pasta": "projeto8",
-      "titulo": "Todo List App",
-      "descricao": "Aplicativo de lista de tarefas com persistência local. Permite adicionar, marcar como concluída e excluir tarefas. Interface limpa e responsiva.",
-      "tecnologias": "HTML, CSS, JavaScript, LocalStorage",
-      "link": "upload/projeto8/todo-list.html",
+      "id": 13,
+      "pasta": "projeto13",
+      "titulo": "Conversor de Moedas",
+      "descricao": "Aplicativo desenvolvido em Python para conversão de moedas em tempo real. Suporta múltiplas moedas (USD, BRL, EUR, GBP, JPY) com interface elegante e conversão instantânea.",
+      "tecnologias": "Python, HTML, CSS, JavaScript",
+      "link": "upload/projeto13/conversor-moedas.html",
       "github": "",
       "imagens": [
-        "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop"
       ],
       "loadedImages": [
-        "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop"
       ]
     },
     {
-      "id": 9,
-      "pasta": "projeto9",
-      "titulo": "Jogo da Memória",
-      "descricao": "Jogo de memória clássico com 8 pares de cartas. Desafie sua memória encontrando todos os pares em menos movimentos. Interface colorida e animada.",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "upload/projeto9/jogo-memoria.html",
+      "id": 12,
+      "pasta": "projeto12",
+      "titulo": "Gerador de QR Code",
+      "descricao": "Sistema desenvolvido em PHP para geração rápida de QR Codes. Converta textos, URLs ou dados em QR Codes personalizáveis com diferentes tamanhos. Download direto da imagem gerada.",
+      "tecnologias": "PHP, HTML, CSS, JavaScript, QRCode.js",
+      "link": "upload/projeto12/gerador-qrcode.html",
       "github": "",
       "imagens": [
-        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop"
+        "https://unsplash.com/photos/AmaUFhjnEBE/download?force=true&w=800"
       ],
       "loadedImages": [
-        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 10,
-      "pasta": "projeto10",
-      "titulo": "Gerador de Senhas",
-      "descricao": "Gerador de senhas seguras com opções personalizáveis. Permite escolher tamanho, incluir maiúsculas, minúsculas, números e símbolos. Função de copiar para área de transferência.",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "upload/projeto10/gerador-senhas.html",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&h=600&fit=crop"
+        "https://unsplash.com/photos/AmaUFhjnEBE/download?force=true&w=800"
       ]
     },
     {
@@ -144,24 +135,93 @@
       ]
     },
     {
-      "id": 2,
-      "pasta": "projeto2",
-      "titulo": "Landing Page - Ebook",
-      "descricao": "Landing Page - Ebook",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "https://iluminacaopratica.lumicenter.com/",
+      "id": 5,
+      "pasta": "projeto5",
+      "titulo": "Sistema de Gestão de Documentos",
+      "descricao": "Sistema de SGI",
+      "tecnologias": "HTML, CSS, JavaScript, Node.js, PL-SQL, Express...",
+      "link": "",
       "github": "",
       "imagens": [
-        "image.png",
-        "image1.png",
-        "image2.png",
-        "image3.png"
+        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
       ],
       "loadedImages": [
-        "upload/projeto2/image.png",
-        "upload/projeto2/image1.png",
-        "upload/projeto2/image2.png",
-        "upload/projeto2/image3.png"
+        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 4,
+      "pasta": "projeto4",
+      "titulo": "Linktree - Bio",
+      "descricao": "Árvore de Links - BIO",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 8,
+      "pasta": "projeto8",
+      "titulo": "Todo List App",
+      "descricao": "Aplicativo de lista de tarefas com persistência local. Permite adicionar, marcar como concluída e excluir tarefas. Interface limpa e responsiva.",
+      "tecnologias": "HTML, CSS, JavaScript, LocalStorage",
+      "link": "upload/projeto8/todo-list.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 10,
+      "pasta": "projeto10",
+      "titulo": "Gerador de Senhas",
+      "descricao": "Gerador de senhas seguras com opções personalizáveis. Permite escolher tamanho, incluir maiúsculas, minúsculas, números e símbolos. Função de copiar para área de transferência.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto10/gerador-senhas.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 6,
+      "pasta": "projeto6",
+      "titulo": "Jogo da Velha",
+      "descricao": "Jogo interativo da velha desenvolvido com HTML, CSS e JavaScript puro. Interface moderna com gradientes e animações suaves. Dois jogadores podem competir alternando entre X e O.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto6/jogo-velha.html",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/TIUyoNGM0no/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/TIUyoNGM0no/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 9,
+      "pasta": "projeto9",
+      "titulo": "Jogo da Memória",
+      "descricao": "Jogo de memória clássico com 8 pares de cartas. Desafie sua memória encontrando todos os pares em menos movimentos. Interface colorida e animada.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto9/jogo-memoria.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop"
       ]
     },
     {
@@ -180,33 +240,18 @@
       ]
     },
     {
-      "id": 12,
-      "pasta": "projeto12",
-      "titulo": "Gerador de QR Code",
-      "descricao": "Sistema desenvolvido em PHP para geração rápida de QR Codes. Converta textos, URLs ou dados em QR Codes personalizáveis com diferentes tamanhos. Download direto da imagem gerada.",
-      "tecnologias": "PHP, HTML, CSS, JavaScript, QRCode.js",
-      "link": "upload/projeto12/gerador-qrcode.html",
+      "id": 18,
+      "pasta": "projeto18",
+      "titulo": "Car Racing",
+      "descricao": "Jogo de corrida de carros desenvolvido em React. Evite obstáculos, colete moedas e tente sobreviver o máximo de tempo possível. Velocidade aumenta progressivamente, tornando o jogo cada vez mais desafiador. Sistema de pontuação e recordes.",
+      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
+      "link": "projetos/car-racing.html",
       "github": "",
       "imagens": [
-        "https://unsplash.com/photos/AmaUFhjnEBE/download?force=true&w=800"
+        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
       ],
       "loadedImages": [
-        "https://unsplash.com/photos/AmaUFhjnEBE/download?force=true&w=800"
-      ]
-    },
-    {
-      "id": 13,
-      "pasta": "projeto13",
-      "titulo": "Conversor de Moedas",
-      "descricao": "Aplicativo desenvolvido em Python para conversão de moedas em tempo real. Suporta múltiplas moedas (USD, BRL, EUR, GBP, JPY) com interface elegante e conversão instantânea.",
-      "tecnologias": "Python, HTML, CSS, JavaScript",
-      "link": "upload/projeto13/conversor-moedas.html",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop"
+        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
       ]
     },
     {
@@ -237,51 +282,6 @@
       ],
       "loadedImages": [
         "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 16,
-      "pasta": "projeto16",
-      "titulo": "Space Shooter",
-      "descricao": "Jogo de nave espacial desenvolvido em React. Controle sua nave, destrua inimigos e asteroides, colete power-ups e tente alcançar a maior pontuação. Sistema de vidas, recordes e efeitos visuais impressionantes.",
-      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
-      "link": "projetos/space-shooter.html",
-      "github": "",
-      "imagens": [
-        "https://unsplash.com/photos/YOy-ek-aBR0/download?force=true&w=800"
-      ],
-      "loadedImages": [
-        "https://unsplash.com/photos/YOy-ek-aBR0/download?force=true&w=800"
-      ]
-    },
-    {
-      "id": 17,
-      "pasta": "projeto17",
-      "titulo": "Mario Platformer",
-      "descricao": "Jogo de plataforma estilo Mario desenvolvido em React. Pule entre plataformas, colete moedas, elimine inimigos pulando sobre eles e tente alcançar a maior pontuação possível. Sistema de vidas, física realista e efeitos visuais.",
-      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
-      "link": "projetos/mario-platformer.html",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 18,
-      "pasta": "projeto18",
-      "titulo": "Car Racing",
-      "descricao": "Jogo de corrida de carros desenvolvido em React. Evite obstáculos, colete moedas e tente sobreviver o máximo de tempo possível. Velocidade aumenta progressivamente, tornando o jogo cada vez mais desafiador. Sistema de pontuação e recordes.",
-      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
-      "link": "projetos/car-racing.html",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
       ]
     }
   ]

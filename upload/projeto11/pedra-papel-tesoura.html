@@ -137,6 +137,33 @@
             font-size: 0.8rem;
             margin-bottom: 20px;
         }
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .choices {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .choice-btn {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .choice-btn {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>

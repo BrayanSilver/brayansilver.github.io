@@ -13,52 +13,43 @@
         }
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 50%, #00f2fe 75%, #43e97b 100%);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+            background: #f5f5f5;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
+            background: #ffffff;
+            border-radius: 8px;
             padding: 40px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
             max-width: 650px;
             width: 100%;
+            border: 1px solid #e0e0e0;
         }
         h1 {
-            font-family: 'Fredoka One', cursive;
-            color: #333;
+            font-family: 'Nunito', sans-serif;
+            color: #1a1a1a;
             margin-bottom: 10px;
-            font-size: 3rem;
-            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: 700;
         }
         .info {
             display: flex;
             justify-content: space-around;
             margin-bottom: 25px;
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
         .info div {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            padding: 10px 20px;
+            background: #2d3748;
             color: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            font-weight: 500;
         }
         .board {
             display: grid;
@@ -68,8 +59,8 @@
         }
         .card {
             aspect-ratio: 1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
+            background: #4a5568;
+            border-radius: 4px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -77,10 +68,9 @@
             font-size: 2.5rem;
             color: white;
             font-weight: bold;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-color 0.2s;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 1px solid #2d3748;
         }
         .card::before {
             content: '';
@@ -89,52 +79,79 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: all 0.4s;
+            background: #4a5568;
+            transition: opacity 0.2s;
         }
         .card.flipped::before {
             opacity: 0;
         }
         .card:hover {
-            transform: scale(1.05) rotateY(5deg);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            background: #2d3748;
         }
         .card.flipped {
             background: #f0f0f0;
             color: #333;
-            transform: rotateY(180deg);
         }
         .card.matched {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            background: #2d3748;
             cursor: default;
-            animation: match 0.6s;
-        }
-        @keyframes match {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            border-color: #1a202c;
         }
         .reset-btn {
-            background: linear-gradient(135deg, #f5576c 0%, #4facfe 100%);
+            background: #2d3748;
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             margin-top: 25px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
+            transition: background-color 0.2s;
         }
         .reset-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #1a202c;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .info {
+                font-size: 0.9rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .info div {
+                padding: 8px 15px;
+            }
+            .board {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            .card {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            .board {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .card {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🧠 Jogo da Memória</h1>
+        <h1>Jogo da Memória</h1>
         <div class="info">
             <div>Movimentos: <span id="moves">0</span></div>
             <div>Pares: <span id="pairs">0/8</span></div>
@@ -197,7 +214,7 @@
                         });
                         
                         if (pairsFound === 8) {
-                            setTimeout(() => alert(`🎉 Parabéns! Você completou em ${moves} movimentos!`), 500);
+                            setTimeout(() => alert(`Parabéns! Você completou em ${moves} movimentos!`), 500);
                         }
                     } else {
                         flippedCards.forEach(c => {
