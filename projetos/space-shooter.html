@@ -35,17 +35,15 @@
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     
     <!-- Load fonts asynchronously -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Load React and dependencies asynchronously -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js" async></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" async></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js" async></script>
-    <script src="https://cdn.tailwindcss.com" async></script>
+    <!-- Load React and dependencies in correct order -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -119,14 +117,38 @@
                 display: none;
             }
         }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body>
     <div id="root">
-        <div style="display: flex; align-items: center; justify-content: center; height: 100vh; background: #000814; color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">
-            Carregando jogo...
+        <div id="loading-screen" style="display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(to bottom right, #0f172a, #581c87, #0f172a); color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">
+            <div style="text-align: center;">
+                <div style="width: 50px; height: 50px; border: 4px solid rgba(0,255,255,0.3); border-top-color: #00ffff; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                <div>Carregando jogo...</div>
+            </div>
         </div>
     </div>
+
+    <script>
+        // Hide loading screen when React is ready
+        function hideLoading() {
+            const loading = document.getElementById('loading-screen');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
 
     <script type="text/babel">
         // Wait for dependencies to load
@@ -173,7 +195,7 @@
             const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
             
             const gameRef = useRef({
-                player: { x: 400, y: 500, width: 40, height: 40, speed: 6 },
+                player: { x: 400, y: 500, width: 40, height: 40, speed: 6, invulnerable: 0 },
                 bullets: [],
                 enemies: [],
                 asteroids: [],
@@ -217,7 +239,8 @@
                         setHighScore(parseInt(saved));
                     }
                 } catch (error) {
-                    console.log('No high score found');
+                    // Tracking Prevention or localStorage blocked
+                    console.log('High score not available:', error.message);
                 }
             }, []);
 
@@ -226,7 +249,8 @@
                 try {
                     localStorage.setItem('space-shooter-highscore', score.toString());
                 } catch (error) {
-                    console.error('Failed to save high score:', error);
+                    // Tracking Prevention or localStorage blocked - silently fail
+                    console.log('High score save not available:', error.message);
                 }
             };
 
@@ -239,7 +263,7 @@
                 const canvas = canvasRef.current;
                 const centerX = canvas ? canvas.width / 2 : 400;
                 const startY = canvas ? canvas.height - 100 : 500;
-                game.player = { x: centerX - 20, y: startY, width: 40, height: 40, speed: 6 };
+                game.player = { x: centerX - 20, y: startY, width: 40, height: 40, speed: 6, invulnerable: 0 };
                 game.bullets = [];
                 game.enemies = [];
                 game.asteroids = [];
@@ -271,6 +295,8 @@
             const shoot = () => {
                 const game = gameRef.current;
                 const { player } = game;
+                
+                if (!player) return;
                 
                 if (game.doubleShotActive) {
                     game.bullets.push({
@@ -364,6 +390,7 @@
 
                 const ctx = canvas.getContext('2d');
                 const game = gameRef.current;
+                const { player, keys } = game;
 
                 // Clear canvas
                 ctx.fillStyle = '#000814';
@@ -393,37 +420,45 @@
                     return false;
                 });
 
-                // Player movement
-                const { player, keys } = game;
-                if (keys.ArrowLeft && player.x > 0) player.x -= player.speed;
-                if (keys.ArrowRight && player.x < canvas.width - player.width) player.x += player.speed;
-                if (keys.ArrowUp && player.y > 0) player.y -= player.speed;
-                if (keys.ArrowDown && player.y < canvas.height - player.height) player.y += player.speed;
-
-                // Draw player
-                ctx.save();
-                ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
-                
-                if (game.shieldActive) {
-                    ctx.strokeStyle = '#00ff88';
-                    ctx.lineWidth = 3;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, player.width / 2 + 10, 0, Math.PI * 2);
-                    ctx.stroke();
+                // Update invulnerability timer
+                if (player && player.invulnerable > 0) {
+                    player.invulnerable--;
                 }
+
+                // Player movement
+                if (player) {
+                    if (keys.ArrowLeft && player.x > 0) player.x -= player.speed;
+                    if (keys.ArrowRight && player.x < canvas.width - player.width) player.x += player.speed;
+                    if (keys.ArrowUp && player.y > 0) player.y -= player.speed;
+                    if (keys.ArrowDown && player.y < canvas.height - player.height) player.y += player.speed;
+
+                    // Draw player (piscar quando invulnerável)
+                    ctx.save();
+                    ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
                 
-                ctx.fillStyle = '#ff006e';
-                ctx.beginPath();
-                ctx.moveTo(0, -player.height / 2);
-                ctx.lineTo(-player.width / 2, player.height / 2);
-                ctx.lineTo(0, player.height / 3);
-                ctx.lineTo(player.width / 2, player.height / 2);
-                ctx.closePath();
-                ctx.fill();
-                
-                ctx.fillStyle = '#ffbe0b';
-                ctx.fillRect(-4, player.height / 3, 8, 8);
+                if (player.invulnerable <= 0 || Math.floor(player.invulnerable / 10) % 2 === 0) {
+                    if (game.shieldActive) {
+                        ctx.strokeStyle = '#00ff88';
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, player.width / 2 + 10, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                    
+                    ctx.fillStyle = '#ff006e';
+                    ctx.beginPath();
+                    ctx.moveTo(0, -player.height / 2);
+                    ctx.lineTo(-player.width / 2, player.height / 2);
+                    ctx.lineTo(0, player.height / 3);
+                    ctx.lineTo(player.width / 2, player.height / 2);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#ffbe0b';
+                    ctx.fillRect(-4, player.height / 3, 8, 8);
+                }
                 ctx.restore();
+                }
 
                 // Update and draw bullets
                 game.bullets = game.bullets.filter(bullet => {
@@ -524,13 +559,14 @@
                     return asteroid.y < canvas.height + 50;
                 });
 
-                // Check enemy bullet collisions with player
+                // Check enemy bullet collisions with player (apenas se não estiver invulnerável)
                 for (let i = game.bullets.length - 1; i >= 0; i--) {
                     const bullet = game.bullets[i];
-                    if (bullet.isEnemy && checkCollision(bullet, player)) {
+                    if (bullet.isEnemy && player && checkCollision(bullet, player) && player.invulnerable <= 0) {
                         game.bullets.splice(i, 1);
                         
                         if (!game.shieldActive) {
+                            player.invulnerable = 120; // 2 segundos de invulnerabilidade
                             setLives(l => {
                                 const newLives = l - 1;
                                 if (newLives <= 0) {
@@ -549,10 +585,11 @@
                     }
                 }
 
-                // Check collisions with enemies and asteroids
+                // Check collisions with enemies and asteroids (apenas se não estiver invulnerável)
                 [...game.enemies, ...game.asteroids].forEach(obj => {
-                    if (checkCollision(player, obj)) {
+                    if (player && checkCollision(player, obj) && player.invulnerable <= 0) {
                         if (!game.shieldActive) {
+                            player.invulnerable = 120; // 2 segundos de invulnerabilidade
                             setLives(l => {
                                 const newLives = l - 1;
                                 if (newLives <= 0) {
@@ -698,39 +735,39 @@
 
             const getPowerUpIcon = () => {
                 const game = gameRef.current;
-                if (game.doubleShotActive) return React.createElement(IconZap, { className: "w-5 h-5" });
-                if (game.shieldActive) return React.createElement(IconShield, { className: "w-5 h-5" });
-                if (game.powerUpActive === 'speed') return React.createElement(IconRocket, { className: "w-5 h-5" });
+                if (game.doubleShotActive) return React.createElement(IconZap, { style: { width: '20px', height: '20px' } });
+                if (game.shieldActive) return React.createElement(IconShield, { style: { width: '20px', height: '20px' } });
+                if (game.powerUpActive === 'speed') return React.createElement(IconRocket, { style: { width: '20px', height: '20px' } });
                 return null;
             };
 
             return (
-                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4" style={{ fontFamily: "'Press Start 2P', cursive" }}>
-                    <div className="relative">
+                <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom right, #0f172a, #581c87, #0f172a)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', fontFamily: "'Press Start 2P', cursive" }}>
+                    <div style={{ position: 'relative' }}>
                         {/* HUD */}
-                        <div className="absolute top-0 left-0 right-0 flex justify-between items-start p-4 text-white z-10 text-xs">
-                            <div className="space-y-2">
-                                <div className="flex items-center gap-2">
-                                    <IconStar className="w-4 h-4 text-yellow-400" />
-                                    <span className="text-cyan-400">{score}</span>
+                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '1rem', color: 'white', zIndex: 10, fontSize: '12px', pointerEvents: 'none' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <IconStar style={{ width: '16px', height: '16px', color: '#facc15' }} />
+                                    <span style={{ color: '#22d3ee' }}>{score}</span>
                                 </div>
-                                <div className="flex gap-1">
+                                <div style={{ display: 'flex', gap: '0.25rem' }}>
                                     {[...Array(lives)].map((_, i) => (
-                                        <div key={i} className="w-6 h-6 bg-red-500 border-2 border-red-300" />
+                                        <div key={i} style={{ width: '24px', height: '24px', backgroundColor: '#ef4444', border: '2px solid #fca5a5' }} />
                                     ))}
                                 </div>
                             </div>
                             
-                            {gameRef.current.powerUpActive && (
-                                <div className="bg-purple-900 bg-opacity-80 px-3 py-2 rounded border-2 border-purple-400 flex items-center gap-2 animate-pulse">
+                            {gameRef.current.powerUpActive && gameState === 'playing' && (
+                                <div style={{ position: 'absolute', top: '1rem', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'rgba(88, 28, 135, 0.9)', padding: '0.5rem 0.75rem', borderRadius: '4px', border: '2px solid #a855f7', display: 'flex', alignItems: 'center', gap: '0.5rem', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', zIndex: 15 }}>
                                     {getPowerUpIcon()}
-                                    <span className="text-xs">{Math.ceil(gameRef.current.powerUpTimer / 60)}s</span>
+                                    <span style={{ fontSize: '12px' }}>{Math.ceil(gameRef.current.powerUpTimer / 60)}s</span>
                                 </div>
                             )}
                             
-                            <div className="text-right space-y-2">
-                                <div className="text-xs text-gray-400">RECORDE</div>
-                                <div className="text-yellow-400">{highScore}</div>
+                            <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ fontSize: '12px', color: '#9ca3af' }}>RECORDE</div>
+                                <div style={{ color: '#facc15' }}>{highScore}</div>
                             </div>
                         </div>
 
@@ -738,8 +775,7 @@
                             ref={canvasRef}
                             width={canvasSize.width}
                             height={canvasSize.height}
-                            className="border-4 border-cyan-500 shadow-2xl bg-slate-950"
-                            style={{ boxShadow: '0 0 30px rgba(6, 182, 212, 0.5)', maxWidth: '100%', height: 'auto' }}
+                            style={{ border: '4px solid #06b6d4', boxShadow: '0 0 30px rgba(6, 182, 212, 0.5), 0 25px 50px -12px rgba(0, 0, 0, 0.25)', backgroundColor: '#020617', maxWidth: '100%', height: 'auto' }}
                         />
 
                         {/* Touch Controls for Mobile */}
@@ -789,37 +825,40 @@
 
                         {/* Menu Overlay */}
                         {gameState === 'menu' && (
-                            <div className="absolute inset-0 bg-black bg-opacity-90 flex items-center justify-center backdrop-blur-sm">
-                                <div className="text-center space-y-8 p-8">
-                                    <h1 className="text-5xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-pulse">
+                            <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)', zIndex: 20 }}>
+                                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem', maxWidth: '500px', width: '100%' }}>
+                                    <h1 style={{ fontSize: '3rem', background: 'linear-gradient(to right, #22d3ee, #a855f7, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', lineHeight: '1.2' }}>
                                         SPACE<br/>SHOOTER
                                     </h1>
                                     
-                                    <div className="space-y-4 text-xs text-cyan-300">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '12px', color: '#67e8f9' }}>
                                         <p>SETAS - Mover</p>
                                         <p>ESPAÇO - Atirar</p>
                                         <p>ESC - Pausar</p>
                                     </div>
 
-                                    <div className="space-y-3 text-xs text-left bg-slate-900 bg-opacity-50 p-4 rounded border-2 border-purple-500">
-                                        <div className="flex items-center gap-2 text-cyan-400">
-                                            <IconZap className="w-4 h-4" />
+                                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '1rem', fontSize: '11px', backgroundColor: 'rgba(15, 23, 42, 0.5)', padding: '1rem', borderRadius: '4px', border: '2px solid #a855f7' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#22d3ee' }}>
+                                            <IconZap style={{ width: '14px', height: '14px' }} />
                                             <span>Tiro Duplo</span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-green-400">
-                                            <IconShield className="w-4 h-4" />
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#4ade80' }}>
+                                            <IconShield style={{ width: '14px', height: '14px' }} />
                                             <span>Escudo</span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-yellow-400">
-                                            <IconRocket className="w-4 h-4" />
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#facc15' }}>
+                                            <IconRocket style={{ width: '14px', height: '14px' }} />
                                             <span>Velocidade</span>
                                         </div>
                                     </div>
 
                                     <button
                                         onClick={startGame}
-                                        className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-8 py-4 text-sm border-4 border-white shadow-lg transition-all hover:scale-110 active:scale-95"
-                                        style={{ boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)' }}
+                                        style={{ background: 'linear-gradient(to right, #06b6d4, #9333ea)', color: 'white', padding: '1rem 2rem', fontSize: '14px', border: '4px solid white', boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)', cursor: 'pointer', transition: 'all 0.3s', alignSelf: 'center' }}
+                                        onMouseEnter={(e) => { e.target.style.transform = 'scale(1.1)'; e.target.style.background = 'linear-gradient(to right, #22d3ee, #a855f7)'; }}
+                                        onMouseLeave={(e) => { e.target.style.transform = 'scale(1)'; e.target.style.background = 'linear-gradient(to right, #06b6d4, #9333ea)'; }}
+                                        onMouseDown={(e) => { e.target.style.transform = 'scale(0.95)'; }}
+                                        onMouseUp={(e) => { e.target.style.transform = 'scale(1.1)'; }}
                                     >
                                         INICIAR
                                     </button>
@@ -829,19 +868,23 @@
 
                         {/* Pause Overlay */}
                         {gameState === 'paused' && (
-                            <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center backdrop-blur-sm">
-                                <div className="text-center space-y-6">
-                                    <h2 className="text-4xl text-cyan-400 animate-pulse">PAUSADO</h2>
-                                    <div className="space-y-4">
+                            <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+                                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <h2 style={{ fontSize: '2.25rem', color: '#22d3ee', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}>PAUSADO</h2>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                         <button
                                             onClick={() => setGameState('playing')}
-                                            className="block w-full bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 text-xs border-2 border-cyan-300"
+                                            style={{ width: '100%', backgroundColor: '#0891b2', color: 'white', padding: '0.75rem 1.5rem', fontSize: '12px', border: '2px solid #67e8f9', cursor: 'pointer', transition: 'background-color 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.backgroundColor = '#06b6d4'; }}
+                                            onMouseLeave={(e) => { e.target.style.backgroundColor = '#0891b2'; }}
                                         >
                                             CONTINUAR
                                         </button>
                                         <button
                                             onClick={() => setGameState('menu')}
-                                            className="block w-full bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 text-xs border-2 border-purple-300"
+                                            style={{ width: '100%', backgroundColor: '#9333ea', color: 'white', padding: '0.75rem 1.5rem', fontSize: '12px', border: '2px solid #c084fc', cursor: 'pointer', transition: 'background-color 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.backgroundColor = '#a855f7'; }}
+                                            onMouseLeave={(e) => { e.target.style.backgroundColor = '#9333ea'; }}
                                         >
                                             MENU
                                         </button>
@@ -852,38 +895,42 @@
 
                         {/* Game Over Overlay */}
                         {gameState === 'gameOver' && (
-                            <div className="absolute inset-0 bg-black bg-opacity-90 flex items-center justify-center backdrop-blur-sm">
-                                <div className="text-center space-y-6 p-8">
-                                    <h2 className="text-4xl text-red-500 animate-pulse">GAME OVER</h2>
+                            <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+                                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+                                    <h2 style={{ fontSize: '2.25rem', color: '#ef4444', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}>GAME OVER</h2>
                                     
-                                    <div className="space-y-4 text-xl">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.25rem' }}>
                                         <div>
-                                            <div className="text-xs text-gray-400 mb-1">PONTUAÇÃO</div>
-                                            <div className="text-cyan-400">{score}</div>
+                                            <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '0.25rem' }}>PONTUAÇÃO</div>
+                                            <div style={{ color: '#22d3ee' }}>{score}</div>
                                         </div>
                                         
                                         {score === highScore && score > 0 && (
-                                            <div className="text-yellow-400 text-sm animate-bounce">
+                                            <div style={{ color: '#facc15', fontSize: '14px', animation: 'bounce 1s infinite' }}>
                                                 🏆 NOVO RECORDE! 🏆
                                             </div>
                                         )}
                                         
                                         <div>
-                                            <div className="text-xs text-gray-400 mb-1">RECORDE</div>
-                                            <div className="text-yellow-400">{highScore}</div>
+                                            <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '0.25rem' }}>RECORDE</div>
+                                            <div style={{ color: '#facc15' }}>{highScore}</div>
                                         </div>
                                     </div>
 
-                                    <div className="space-y-3 pt-4">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem' }}>
                                         <button
                                             onClick={startGame}
-                                            className="block w-full bg-gradient-to-r from-green-600 to-cyan-600 hover:from-green-500 hover:to-cyan-500 text-white px-8 py-3 text-xs border-2 border-white transition-all hover:scale-105"
+                                            style={{ width: '100%', background: 'linear-gradient(to right, #16a34a, #0891b2)', color: 'white', padding: '0.75rem 2rem', fontSize: '12px', border: '2px solid white', cursor: 'pointer', transition: 'all 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.transform = 'scale(1.05)'; e.target.style.background = 'linear-gradient(to right, #22c55e, #06b6d4)'; }}
+                                            onMouseLeave={(e) => { e.target.style.transform = 'scale(1)'; e.target.style.background = 'linear-gradient(to right, #16a34a, #0891b2)'; }}
                                         >
                                             JOGAR NOVAMENTE
                                         </button>
                                         <button
                                             onClick={() => setGameState('menu')}
-                                            className="block w-full bg-purple-700 hover:bg-purple-600 text-white px-8 py-3 text-xs border-2 border-purple-400"
+                                            style={{ width: '100%', backgroundColor: '#7e22ce', color: 'white', padding: '0.75rem 2rem', fontSize: '12px', border: '2px solid #a855f7', cursor: 'pointer', transition: 'background-color 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.backgroundColor = '#9333ea'; }}
+                                            onMouseLeave={(e) => { e.target.style.backgroundColor = '#7e22ce'; }}
                                         >
                                             MENU
                                         </button>
@@ -897,6 +944,7 @@
         };
 
             ReactDOM.render(React.createElement(SpaceShooter), document.getElementById('root'));
+            hideLoading();
         }
         
         // Start initialization

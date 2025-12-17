@@ -117,7 +117,16 @@ function displayPortfolio(data) {
     if (data.personalInfo && data.personalInfo.about) {
         const aboutContent = document.getElementById('aboutContent');
         const paragraphs = data.personalInfo.about.split('\n').filter(p => p.trim());
+        if (paragraphs.length > 0) {
         aboutContent.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+        } else {
+            // Manter spinner se não houver conteúdo
+            aboutContent.innerHTML = '<div class="loading-spinner-container"><div class="loading-spinner"></div></div>';
+        }
+    } else {
+        // Manter spinner se não houver dados
+        const aboutContent = document.getElementById('aboutContent');
+        aboutContent.innerHTML = '<div class="loading-spinner-container"><div class="loading-spinner"></div></div>';
     }
 
     // Exibir foto pessoal

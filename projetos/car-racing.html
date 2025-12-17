@@ -35,17 +35,15 @@
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     
     <!-- Load fonts asynchronously -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Load React and dependencies asynchronously -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js" async></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" async></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js" async></script>
-    <script src="https://cdn.tailwindcss.com" async></script>
+    <!-- Load React and dependencies in correct order -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -117,10 +115,50 @@
                 display: none;
             }
         }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div id="loading-screen" style="display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(to bottom right, #1f2937, #111827, #000000); color: white; font-family: 'Press Start 2P', cursive; font-size: 12px;">
+            <div style="text-align: center;">
+                <div style="width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                <div>Carregando jogo...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loading screen when React is ready
+        function hideLoading() {
+            const loading = document.getElementById('loading-screen');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+        }
+        
+        // Check if React is loaded
+        function checkReactLoaded() {
+            if (typeof React !== 'undefined' && typeof ReactDOM !== 'undefined') {
+                hideLoading();
+            } else {
+                setTimeout(checkReactLoaded, 50);
+            }
+        }
+        
+        // Start checking
+        window.addEventListener('load', checkReactLoaded);
+    </script>
 
     <script type="text/babel">
         const { useState, useEffect, useRef, useCallback } = React;
@@ -136,13 +174,13 @@
             const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
             
             const gameRef = useRef({
-                player: { x: 400, y: 500, width: 50, height: 80, angle: 0 },
+                player: { x: 400, y: 500, width: 50, height: 80, angle: 0, invulnerable: 0 },
                 road: { offset: 0, lines: [] },
                 obstacles: [],
                 coins: [],
                 particles: [],
                 keys: {},
-                gameSpeed: 5
+                gameSpeed: 3
             });
 
             // Detect mobile and adjust canvas size
@@ -180,7 +218,8 @@
                 try {
                     localStorage.setItem('car-racing-highscore', score.toString());
                 } catch (error) {
-                    console.error('Failed to save high score:', error);
+                    // Tracking Prevention or localStorage blocked - silently fail
+                    console.log('High score save not available:', error.message);
                 }
             };
 
@@ -190,12 +229,12 @@
                 setSpeed(0);
                 
                 const game = gameRef.current;
-                game.player = { x: 400, y: 500, width: 50, height: 80, angle: 0 };
+                game.player = { x: 400, y: 500, width: 50, height: 80, angle: 0, invulnerable: 0 };
                 game.road = { offset: 0, lines: [] };
                 game.obstacles = [];
                 game.coins = [];
                 game.particles = [];
-                game.gameSpeed = 5;
+                game.gameSpeed = 3;
                 
                 // Initialize road lines
                 for (let i = 0; i < 20; i++) {
@@ -264,9 +303,14 @@
                 const game = gameRef.current;
                 const { player, keys } = game;
 
-                // Increase game speed over time
-                game.gameSpeed += 0.01;
-                if (game.gameSpeed > 15) game.gameSpeed = 15;
+                // Update invulnerability timer
+                if (player.invulnerable > 0) {
+                    player.invulnerable--;
+                }
+
+                // Increase game speed over time (mais lento)
+                game.gameSpeed += 0.005;
+                if (game.gameSpeed > 10) game.gameSpeed = 10;
                 setSpeed(Math.floor(game.gameSpeed * 10));
 
                 // Update score
@@ -302,12 +346,12 @@
                 ctx.fillRect(95, 0, 10, canvas.height);
                 ctx.fillRect(695, 0, 10, canvas.height);
 
-                // Player movement
+                // Player movement (mais suave)
                 if (keys.ArrowLeft || keys.a || keys.A) {
-                    player.x -= 8;
+                    player.x -= 6;
                     player.angle = -0.2;
                 } else if (keys.ArrowRight || keys.d || keys.D) {
-                    player.x += 8;
+                    player.x += 6;
                     player.angle = 0.2;
                 } else {
                     player.angle *= 0.8;
@@ -317,13 +361,13 @@
                 if (player.x < 120) player.x = 120;
                 if (player.x > canvas.width - player.width - 120) player.x = canvas.width - player.width - 120;
 
-                // Spawn obstacles
-                if (Math.random() < 0.02) {
+                // Spawn obstacles (menos frequente)
+                if (Math.random() < 0.012) {
                     spawnObstacle();
                 }
 
-                // Spawn coins
-                if (Math.random() < 0.015) {
+                // Spawn coins (menos frequente)
+                if (Math.random() < 0.01) {
                     spawnCoin();
                 }
 
@@ -354,9 +398,11 @@
                     ctx.fillRect(obstacle.width / 2 - 5, obstacle.height / 2 - 15, 10, 15);
                     ctx.restore();
 
-                    // Check collision with player
-                    if (checkCollision(player, obstacle)) {
+                    // Check collision with player (apenas se não estiver invulnerável)
+                    if (checkCollision(player, obstacle) && player.invulnerable <= 0) {
+                        player.invulnerable = 60; // 1 segundo de invulnerabilidade após colisão
                         createParticles(player.x + player.width / 2, player.y + player.height / 2, '#FF0000', 30);
+                        // Colisão termina o jogo (comportamento original do jogo)
                         setGameState('gameOver');
                         if (score > highScore) {
                             setHighScore(score);
@@ -417,30 +463,32 @@
                     return false;
                 });
 
-                // Draw player car
+                // Draw player car (piscar quando invulnerável)
                 ctx.save();
                 ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
                 ctx.rotate(player.angle);
                 
-                // Car body
-                ctx.fillStyle = '#FF0000';
-                ctx.fillRect(-player.width / 2, -player.height / 2, player.width, player.height);
-                
-                // Car windows
-                ctx.fillStyle = '#87CEEB';
-                ctx.fillRect(-player.width / 2 + 5, -player.height / 2 + 5, player.width - 10, 25);
-                
-                // Car details
-                ctx.fillStyle = '#000000';
-                ctx.fillRect(-player.width / 2, -player.height / 2, player.width, 5);
-                ctx.fillRect(-player.width / 2, player.height / 2 - 5, player.width, 5);
-                
-                // Wheels
-                ctx.fillStyle = '#000000';
-                ctx.fillRect(-player.width / 2 - 8, player.height / 2 - 20, 12, 20);
-                ctx.fillRect(player.width / 2 - 4, player.height / 2 - 20, 12, 20);
-                ctx.fillRect(-player.width / 2 - 8, -player.height / 2, 12, 20);
-                ctx.fillRect(player.width / 2 - 4, -player.height / 2, 12, 20);
+                if (player.invulnerable <= 0 || Math.floor(player.invulnerable / 10) % 2 === 0) {
+                    // Car body
+                    ctx.fillStyle = '#FF0000';
+                    ctx.fillRect(-player.width / 2, -player.height / 2, player.width, player.height);
+                    
+                    // Car windows
+                    ctx.fillStyle = '#87CEEB';
+                    ctx.fillRect(-player.width / 2 + 5, -player.height / 2 + 5, player.width - 10, 25);
+                    
+                    // Car details
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(-player.width / 2, -player.height / 2, player.width, 5);
+                    ctx.fillRect(-player.width / 2, player.height / 2 - 5, player.width, 5);
+                    
+                    // Wheels
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(-player.width / 2 - 8, player.height / 2 - 20, 12, 20);
+                    ctx.fillRect(player.width / 2 - 4, player.height / 2 - 20, 12, 20);
+                    ctx.fillRect(-player.width / 2 - 8, -player.height / 2, 12, 20);
+                    ctx.fillRect(player.width / 2 - 4, -player.height / 2, 12, 20);
+                }
                 
                 ctx.restore();
 
@@ -493,24 +541,24 @@
             }, [gameState]);
 
             return (
-                <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black flex items-center justify-center p-4" style={{ fontFamily: "'Press Start 2P', cursive" }}>
-                    <div className="relative">
+                <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom right, #1f2937, #111827, #000000)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', fontFamily: "'Press Start 2P', cursive" }}>
+                    <div style={{ position: 'relative' }}>
                         {/* HUD */}
-                        <div className="absolute top-0 left-0 right-0 flex justify-between items-start p-4 text-white z-10 text-xs">
-                            <div className="space-y-2">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-yellow-400">💰</span>
-                                    <span className="text-white">{score}</span>
+                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '1rem', color: 'white', zIndex: 10, fontSize: '12px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span style={{ color: '#facc15' }}>💰</span>
+                                    <span>{score}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-cyan-400">⚡</span>
-                                    <span className="text-white">{speed} km/h</span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span style={{ color: '#22d3ee' }}>⚡</span>
+                                    <span>{speed} km/h</span>
                                 </div>
                             </div>
                             
-                            <div className="text-right space-y-2">
-                                <div className="text-xs text-gray-300">RECORDE</div>
-                                <div className="text-yellow-400">{highScore}</div>
+                            <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ fontSize: '12px', color: '#d1d5db' }}>RECORDE</div>
+                                <div style={{ color: '#facc15' }}>{highScore}</div>
                             </div>
                         </div>
 
@@ -518,8 +566,7 @@
                             ref={canvasRef}
                             width={canvasSize.width}
                             height={canvasSize.height}
-                            className="border-4 border-gray-600 shadow-2xl bg-gray-800"
-                            style={{ boxShadow: '0 0 30px rgba(0, 0, 0, 0.5)', maxWidth: '100%', height: 'auto' }}
+                            style={{ border: '4px solid #4b5563', boxShadow: '0 0 30px rgba(0, 0, 0, 0.5), 0 25px 50px -12px rgba(0, 0, 0, 0.25)', backgroundColor: '#1f2937', maxWidth: '100%', height: 'auto' }}
                         />
 
                         {/* Touch Controls for Mobile */}
@@ -548,13 +595,13 @@
 
                         {/* Menu Overlay */}
                         {gameState === 'menu' && (
-                            <div className="absolute inset-0 bg-black bg-opacity-90 flex items-center justify-center backdrop-blur-sm">
-                                <div className="text-center space-y-8 p-8">
-                                    <h1 className="text-5xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-400 to-red-500 animate-pulse">
+                            <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+                                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '2rem', padding: '2rem' }}>
+                                    <h1 style={{ fontSize: '3rem', background: 'linear-gradient(to right, #ef4444, #facc15, #ef4444)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}>
                                         CAR<br/>RACING
                                     </h1>
                                     
-                                    <div className="space-y-4 text-xs text-cyan-300">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '12px', color: '#67e8f9' }}>
                                         <p>A/D ou SETAS - Mover</p>
                                         <p>Evite os obstáculos!</p>
                                         <p>Colete moedas para pontos extras!</p>
@@ -562,8 +609,11 @@
 
                                     <button
                                         onClick={startGame}
-                                        className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-white px-8 py-4 text-sm border-4 border-white shadow-lg transition-all hover:scale-110 active:scale-95"
-                                        style={{ boxShadow: '0 0 20px rgba(239, 68, 68, 0.5)' }}
+                                        style={{ background: 'linear-gradient(to right, #ef4444, #dc2626)', color: 'white', padding: '1rem 2rem', fontSize: '14px', border: '4px solid white', boxShadow: '0 0 20px rgba(239, 68, 68, 0.5)', cursor: 'pointer', transition: 'all 0.3s' }}
+                                        onMouseEnter={(e) => { e.target.style.transform = 'scale(1.1)'; e.target.style.background = 'linear-gradient(to right, #f87171, #ef4444)'; }}
+                                        onMouseLeave={(e) => { e.target.style.transform = 'scale(1)'; e.target.style.background = 'linear-gradient(to right, #ef4444, #dc2626)'; }}
+                                        onMouseDown={(e) => { e.target.style.transform = 'scale(0.95)'; }}
+                                        onMouseUp={(e) => { e.target.style.transform = 'scale(1.1)'; }}
                                     >
                                         INICIAR
                                     </button>
@@ -573,38 +623,42 @@
 
                         {/* Game Over Overlay */}
                         {gameState === 'gameOver' && (
-                            <div className="absolute inset-0 bg-black bg-opacity-90 flex items-center justify-center backdrop-blur-sm">
-                                <div className="text-center space-y-6 p-8">
-                                    <h2 className="text-4xl text-red-500 animate-pulse">GAME OVER</h2>
+                            <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+                                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+                                    <h2 style={{ fontSize: '2.25rem', color: '#ef4444', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}>GAME OVER</h2>
                                     
-                                    <div className="space-y-4 text-xl">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.25rem' }}>
                                         <div>
-                                            <div className="text-xs text-gray-400 mb-1">PONTUAÇÃO</div>
-                                            <div className="text-yellow-400">{score}</div>
+                                            <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '0.25rem' }}>PONTUAÇÃO</div>
+                                            <div style={{ color: '#facc15' }}>{score}</div>
                                         </div>
                                         
                                         {score === highScore && score > 0 && (
-                                            <div className="text-yellow-400 text-sm animate-bounce">
+                                            <div style={{ color: '#facc15', fontSize: '14px', animation: 'bounce 1s infinite' }}>
                                                 🏆 NOVO RECORDE! 🏆
                                             </div>
                                         )}
                                         
                                         <div>
-                                            <div className="text-xs text-gray-400 mb-1">RECORDE</div>
-                                            <div className="text-yellow-400">{highScore}</div>
+                                            <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '0.25rem' }}>RECORDE</div>
+                                            <div style={{ color: '#facc15' }}>{highScore}</div>
                                         </div>
                                     </div>
 
-                                    <div className="space-y-3 pt-4">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem' }}>
                                         <button
                                             onClick={startGame}
-                                            className="block w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white px-8 py-3 text-xs border-2 border-white transition-all hover:scale-105"
+                                            style={{ width: '100%', background: 'linear-gradient(to right, #16a34a, #15803d)', color: 'white', padding: '0.75rem 2rem', fontSize: '12px', border: '2px solid white', cursor: 'pointer', transition: 'all 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.transform = 'scale(1.05)'; e.target.style.background = 'linear-gradient(to right, #22c55e, #16a34a)'; }}
+                                            onMouseLeave={(e) => { e.target.style.transform = 'scale(1)'; e.target.style.background = 'linear-gradient(to right, #16a34a, #15803d)'; }}
                                         >
                                             JOGAR NOVAMENTE
                                         </button>
                                         <button
                                             onClick={() => setGameState('menu')}
-                                            className="block w-full bg-red-700 hover:bg-red-600 text-white px-8 py-3 text-xs border-2 border-red-400"
+                                            style={{ width: '100%', backgroundColor: '#b91c1c', color: 'white', padding: '0.75rem 2rem', fontSize: '12px', border: '2px solid #f87171', cursor: 'pointer', transition: 'background-color 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.backgroundColor = '#dc2626'; }}
+                                            onMouseLeave={(e) => { e.target.style.backgroundColor = '#b91c1c'; }}
                                         >
                                             MENU
                                         </button>
@@ -618,6 +672,7 @@
         };
 
         ReactDOM.render(React.createElement(CarRacing), document.getElementById('root'));
+        hideLoading();
     </script>
 </body>
 </html>
