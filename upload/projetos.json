@@ -283,6 +283,21 @@
       "loadedImages": [
         "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
       ]
+    },
+    {
+      "id": 19,
+      "pasta": "projeto19",
+      "titulo": "Projetos em Python",
+      "descricao": "Repositório com 10 projetos de automação e sistemas desenvolvidos em Python. Inclui backup automatizado, monitor de sistema, web scraper, automação de emails, organizador de arquivos e outros projetos práticos com documentação completa.",
+      "tecnologias": "Python, psutil, requests, beautifulsoup4, pandas, win10toast",
+      "link": "https://github.com/BrayanSilver/Python_Brayan",
+      "github": "https://github.com/BrayanSilver/Python_Brayan",
+      "imagens": [
+        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop"
+      ]
     }
   ]
 }
