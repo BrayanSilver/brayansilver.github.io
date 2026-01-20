@@ -715,3 +715,46 @@ mobileMenu.addEventListener('click', (e) => {
 
 // Carregar portfólio ao carregar a página
 document.addEventListener('DOMContentLoaded', loadPortfolio);
+
+// Função para newsletter
+function handleNewsletter() {
+    const emailInput = document.getElementById('newsletterEmail');
+    const email = emailInput.value.trim();
+    
+    if (!email) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+    }
+    
+    // Validação básica de e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+    }
+    
+    // Aqui você pode adicionar a lógica para enviar o e-mail
+    // Por exemplo, usando EmailJS ou uma API
+    alert('Obrigado por se inscrever! Você receberá atualizações em breve.');
+    emailInput.value = '';
+}
+
+// Função para voltar ao topo
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Permitir Enter no input de newsletter
+document.addEventListener('DOMContentLoaded', () => {
+    const emailInput = document.getElementById('newsletterEmail');
+    if (emailInput) {
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleNewsletter();
+            }
+        });
+    }
+});
