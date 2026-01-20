@@ -14,10 +14,10 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0a0f;
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            color: #e4e4e7;
         }
 
         .dashboard-container {
@@ -26,12 +26,12 @@
         }
 
         .dashboard-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .dashboard-header h1 {
@@ -44,21 +44,27 @@
         }
 
         .dashboard-header p {
-            color: #666;
+            color: #a1a1aa;
             font-size: 1.1rem;
         }
 
         .filters-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .filters-section.filter-active {
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
         }
 
         .filter-group {
@@ -69,31 +75,34 @@
 
         .filter-group label {
             font-weight: 600;
-            color: #555;
+            color: #a1a1aa;
             font-size: 0.9rem;
         }
 
         .filter-group select,
         .filter-group input {
             padding: 12px 16px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid rgba(102, 126, 234, 0.3);
             border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s ease;
-            background: white;
+            background: rgba(10, 10, 15, 0.8);
+            color: #e4e4e7;
             cursor: pointer;
         }
 
         .filter-group select:hover,
         .filter-group input:hover {
-            border-color: #667eea;
+            border-color: rgba(102, 126, 234, 0.6);
+            background: rgba(10, 10, 15, 1);
         }
 
         .filter-group select:focus,
         .filter-group input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            background: rgba(10, 10, 15, 1);
         }
 
         .kpi-grid {
@@ -104,12 +113,12 @@
         }
 
         .kpi-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
@@ -126,12 +135,22 @@
 
         .kpi-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 25px 70px rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .kpi-card.updating {
+            animation: pulse 0.6s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         .kpi-title {
             font-size: 0.9rem;
-            color: #666;
+            color: #a1a1aa;
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -145,6 +164,16 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-value.updating {
+            animation: valueUpdate 0.5s ease;
+        }
+
+        @keyframes valueUpdate {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .kpi-change {
@@ -170,23 +199,34 @@
         }
 
         .chart-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
         }
 
         .chart-card:hover {
             transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.4);
+            box-shadow: 0 25px 70px rgba(102, 126, 234, 0.3);
+        }
+
+        .chart-card.updating {
+            animation: chartUpdate 0.5s ease;
+        }
+
+        @keyframes chartUpdate {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .chart-title {
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #333;
+            color: #e4e4e7;
         }
 
         .chart-container {
@@ -230,7 +270,7 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
@@ -251,7 +291,7 @@
             <p>Análise de dados em tempo real com gráficos e indicadores</p>
         </div>
 
-        <div class="filters-section">
+        <div class="filters-section" id="filtersSection">
             <div class="filter-group">
                 <label for="periodFilter">Período</label>
                 <select id="periodFilter">
@@ -298,7 +338,7 @@
         </div>
 
         <div class="kpi-grid">
-            <div class="kpi-card">
+            <div class="kpi-card" id="kpiCardSales">
                 <div class="kpi-title">Total de Vendas</div>
                 <div class="kpi-value" id="kpiSales">R$ 0</div>
                 <div class="kpi-change positive">
@@ -306,7 +346,7 @@
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card" id="kpiCardUsers">
                 <div class="kpi-title">Usuários Ativos</div>
                 <div class="kpi-value" id="kpiUsers">0</div>
                 <div class="kpi-change positive">
@@ -314,7 +354,7 @@
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card" id="kpiCardConversion">
                 <div class="kpi-title">Taxa de Conversão</div>
                 <div class="kpi-value" id="kpiConversion">0%</div>
                 <div class="kpi-change positive">
@@ -322,7 +362,7 @@
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card" id="kpiCardTicket">
                 <div class="kpi-title">Ticket Médio</div>
                 <div class="kpi-value" id="kpiTicket">R$ 0</div>
                 <div class="kpi-change negative">
@@ -332,35 +372,35 @@
         </div>
 
         <div class="charts-grid">
-            <div class="chart-card">
+            <div class="chart-card" id="pieChartCard">
                 <div class="chart-title">Vendas por Categoria</div>
                 <div class="chart-container">
                     <canvas id="pieChart"></canvas>
                 </div>
             </div>
 
-            <div class="chart-card">
+            <div class="chart-card" id="barChartCard">
                 <div class="chart-title">Vendas Mensais</div>
                 <div class="chart-container">
                     <canvas id="barChart"></canvas>
                 </div>
             </div>
 
-            <div class="chart-card">
+            <div class="chart-card" id="lineChartCard">
                 <div class="chart-title">Evolução de Vendas</div>
                 <div class="chart-container">
                     <canvas id="lineChart"></canvas>
                 </div>
             </div>
 
-            <div class="chart-card">
+            <div class="chart-card" id="doughnutChartCard">
                 <div class="chart-title">Distribuição por Região</div>
                 <div class="chart-container">
                     <canvas id="doughnutChart"></canvas>
                 </div>
             </div>
 
-            <div class="chart-card full-width-chart">
+            <div class="chart-card full-width-chart" id="mixedChartCard">
                 <div class="chart-title">Análise Comparativa</div>
                 <div class="chart-container">
                     <canvas id="mixedChart"></canvas>
@@ -379,11 +419,24 @@
             salesChange: 12.5,
             usersChange: 8.3,
             conversionChange: 2.1,
-            ticketChange: -1.2
+            ticketChange: -1.2,
+            selectedMonth: null
         };
 
         // Gráficos
         let pieChart, barChart, lineChart, doughnutChart, mixedChart;
+
+        // Cores para tema dark
+        const colors = {
+            primary: 'rgba(102, 126, 234, 0.8)',
+            secondary: 'rgba(118, 75, 162, 0.8)',
+            accent: 'rgba(236, 72, 153, 0.8)',
+            warning: 'rgba(251, 146, 60, 0.8)',
+            success: 'rgba(34, 197, 94, 0.8)',
+            text: '#e4e4e7',
+            grid: 'rgba(255, 255, 255, 0.05)',
+            border: 'rgba(102, 126, 234, 0.2)'
+        };
 
         // Inicializar gráficos
         function initCharts() {
@@ -396,13 +449,13 @@
                     datasets: [{
                         data: [45, 25, 20, 10],
                         backgroundColor: [
-                            'rgba(102, 126, 234, 0.8)',
-                            'rgba(118, 75, 162, 0.8)',
-                            'rgba(236, 72, 153, 0.8)',
-                            'rgba(251, 146, 60, 0.8)'
+                            colors.primary,
+                            colors.secondary,
+                            colors.accent,
+                            colors.warning
                         ],
                         borderWidth: 2,
-                        borderColor: '#fff'
+                        borderColor: '#0a0a0f'
                     }]
                 },
                 options: {
@@ -413,26 +466,25 @@
                             position: 'bottom',
                             labels: {
                                 padding: 15,
-                                font: {
-                                    size: 12
-                                }
+                                font: { size: 12 },
+                                color: colors.text
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
                             padding: 12,
-                            titleFont: {
-                                size: 14
-                            },
-                            bodyFont: {
-                                size: 12
-                            }
+                            titleFont: { size: 14 },
+                            bodyFont: { size: 12 },
+                            titleColor: colors.text,
+                            bodyColor: colors.text,
+                            borderColor: colors.border,
+                            borderWidth: 1
                         }
                     }
                 }
             });
 
-            // Gráfico de Barras
+            // Gráfico de Barras com interatividade
             const barCtx = document.getElementById('barChart').getContext('2d');
             barChart = new Chart(barCtx, {
                 type: 'bar',
@@ -441,8 +493,8 @@
                     datasets: [{
                         label: 'Vendas (R$)',
                         data: [85000, 92000, 78000, 105000, 112000, 125000],
-                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
-                        borderColor: 'rgba(102, 126, 234, 1)',
+                        backgroundColor: colors.primary,
+                        borderColor: '#667eea',
                         borderWidth: 2,
                         borderRadius: 8
                     }]
@@ -450,13 +502,25 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const month = barChart.data.labels[index];
+                            selectMonth(index, month);
+                        }
+                    },
+                    onHover: (event, elements) => {
+                        event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+                    },
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleColor: colors.text,
+                            bodyColor: colors.text,
+                            borderColor: colors.border,
+                            borderWidth: 1
                         }
                     },
                     scales: {
@@ -465,16 +529,14 @@
                             ticks: {
                                 callback: function(value) {
                                     return 'R$ ' + (value / 1000) + 'k';
-                                }
+                                },
+                                color: colors.text
                             },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
+                            grid: { color: colors.grid }
                         },
                         x: {
-                            grid: {
-                                display: false
-                            }
+                            grid: { display: false },
+                            ticks: { color: colors.text }
                         }
                     }
                 }
@@ -489,15 +551,15 @@
                     datasets: [{
                         label: 'Vendas',
                         data: [18000, 22000, 19000, 25000, 28000, 30000],
-                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderColor: '#667eea',
                         backgroundColor: 'rgba(102, 126, 234, 0.1)',
                         borderWidth: 3,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 5,
                         pointHoverRadius: 8,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: 'rgba(102, 126, 234, 1)',
+                        pointBackgroundColor: '#0a0a0f',
+                        pointBorderColor: '#667eea',
                         pointBorderWidth: 2
                     }]
                 },
@@ -505,25 +567,25 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleColor: colors.text,
+                            bodyColor: colors.text,
+                            borderColor: colors.border,
+                            borderWidth: 1
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
+                            grid: { color: colors.grid },
+                            ticks: { color: colors.text }
                         },
                         x: {
-                            grid: {
-                                display: false
-                            }
+                            grid: { display: false },
+                            ticks: { color: colors.text }
                         }
                     }
                 }
@@ -538,14 +600,14 @@
                     datasets: [{
                         data: [30, 25, 20, 15, 10],
                         backgroundColor: [
-                            'rgba(102, 126, 234, 0.8)',
-                            'rgba(118, 75, 162, 0.8)',
-                            'rgba(236, 72, 153, 0.8)',
-                            'rgba(251, 146, 60, 0.8)',
-                            'rgba(34, 197, 94, 0.8)'
+                            colors.primary,
+                            colors.secondary,
+                            colors.accent,
+                            colors.warning,
+                            colors.success
                         ],
                         borderWidth: 2,
-                        borderColor: '#fff'
+                        borderColor: '#0a0a0f'
                     }]
                 },
                 options: {
@@ -556,14 +618,17 @@
                             position: 'bottom',
                             labels: {
                                 padding: 15,
-                                font: {
-                                    size: 12
-                                }
+                                font: { size: 12 },
+                                color: colors.text
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleColor: colors.text,
+                            bodyColor: colors.text,
+                            borderColor: colors.border,
+                            borderWidth: 1
                         }
                     }
                 }
@@ -580,8 +645,8 @@
                             type: 'bar',
                             label: 'Vendas',
                             data: [85000, 92000, 78000, 105000, 112000, 125000],
-                            backgroundColor: 'rgba(102, 126, 234, 0.6)',
-                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: colors.primary,
+                            borderColor: '#667eea',
                             borderWidth: 2,
                             borderRadius: 8
                         },
@@ -589,32 +654,48 @@
                             type: 'line',
                             label: 'Meta',
                             data: [80000, 85000, 90000, 95000, 100000, 110000],
-                            borderColor: 'rgba(236, 72, 153, 1)',
+                            borderColor: '#ec4899',
                             backgroundColor: 'rgba(236, 72, 153, 0.1)',
                             borderWidth: 3,
                             fill: false,
                             tension: 0.4,
                             pointRadius: 5,
-                            pointHoverRadius: 8
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: '#0a0a0f',
+                            pointBorderColor: '#ec4899',
+                            pointBorderWidth: 2
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    onClick: (event, elements) => {
+                        if (elements.length > 0 && elements[0].datasetIndex === 0) {
+                            const index = elements[0].index;
+                            const month = mixedChart.data.labels[index];
+                            selectMonth(index, month);
+                        }
+                    },
+                    onHover: (event, elements) => {
+                        event.native.target.style.cursor = elements.length > 0 && elements[0].datasetIndex === 0 ? 'pointer' : 'default';
+                    },
                     plugins: {
                         legend: {
                             position: 'top',
                             labels: {
                                 padding: 15,
-                                font: {
-                                    size: 12
-                                }
+                                font: { size: 12 },
+                                color: colors.text
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 12,
+                            titleColor: colors.text,
+                            bodyColor: colors.text,
+                            borderColor: colors.border,
+                            borderWidth: 1
                         }
                     },
                     scales: {
@@ -623,20 +704,142 @@
                             ticks: {
                                 callback: function(value) {
                                     return 'R$ ' + (value / 1000) + 'k';
-                                }
+                                },
+                                color: colors.text
                             },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
+                            grid: { color: colors.grid }
                         },
                         x: {
-                            grid: {
-                                display: false
-                            }
+                            grid: { display: false },
+                            ticks: { color: colors.text }
                         }
                     }
                 }
             });
+        }
+
+        // Selecionar mês e atualizar tudo
+        function selectMonth(index, month) {
+            dashboardData.selectedMonth = index;
+            
+            // Dados do mês selecionado
+            const monthData = {
+                sales: [85000, 92000, 78000, 105000, 112000, 125000][index],
+                users: [2800, 3000, 2600, 3200, 3400, 3420][index],
+                conversion: [3.2, 3.5, 3.0, 3.8, 4.0, 3.8][index],
+                ticket: [303, 306, 300, 328, 329, 365][index]
+            };
+
+            // Atualizar KPIs com animação
+            animateKPIUpdate('kpiCardSales', () => {
+                dashboardData.sales = monthData.sales;
+                updateKPIs();
+            });
+
+            animateKPIUpdate('kpiCardUsers', () => {
+                dashboardData.users = monthData.users;
+                updateKPIs();
+            });
+
+            animateKPIUpdate('kpiCardConversion', () => {
+                dashboardData.conversion = monthData.conversion;
+                updateKPIs();
+            });
+
+            animateKPIUpdate('kpiCardTicket', () => {
+                dashboardData.ticket = monthData.ticket;
+                updateKPIs();
+            });
+
+            // Destacar barra selecionada
+            highlightBar(index);
+            
+            // Atualizar outros gráficos baseado no mês
+            updateChartsForMonth(index);
+        }
+
+        // Destacar barra selecionada
+        function highlightBar(index) {
+            if (barChart) {
+                const colors = barChart.data.datasets[0].backgroundColor;
+                barChart.data.datasets[0].backgroundColor = colors.map((color, i) => 
+                    i === index ? '#667eea' : 'rgba(102, 126, 234, 0.5)'
+                );
+                barChart.update('active');
+            }
+
+            if (mixedChart) {
+                const colors = mixedChart.data.datasets[0].backgroundColor;
+                mixedChart.data.datasets[0].backgroundColor = colors.map((color, i) => 
+                    i === index ? '#667eea' : 'rgba(102, 126, 234, 0.5)'
+                );
+                mixedChart.update('active');
+            }
+        }
+
+        // Atualizar gráficos baseado no mês selecionado
+        function updateChartsForMonth(monthIndex) {
+            // Atualizar gráfico de linha com dados do mês
+            if (lineChart) {
+                const weekData = [
+                    [15000, 18000, 16000, 20000, 22000, 24000],
+                    [16000, 19000, 17000, 21000, 23000, 25000],
+                    [14000, 17000, 15000, 19000, 21000, 23000],
+                    [18000, 22000, 20000, 24000, 26000, 28000],
+                    [19000, 23000, 21000, 25000, 27000, 29000],
+                    [20000, 24000, 22000, 26000, 28000, 30000]
+                ];
+                lineChart.data.datasets[0].data = weekData[monthIndex] || weekData[5];
+                animateChartUpdate('lineChartCard', () => {
+                    lineChart.update('active');
+                });
+            }
+
+            // Atualizar gráfico de pizza com distribuição do mês
+            if (pieChart) {
+                const categoryData = [
+                    [50, 20, 20, 10],
+                    [45, 25, 20, 10],
+                    [40, 30, 20, 10],
+                    [55, 20, 15, 10],
+                    [50, 25, 15, 10],
+                    [45, 25, 20, 10]
+                ];
+                pieChart.data.datasets[0].data = categoryData[monthIndex] || categoryData[5];
+                animateChartUpdate('pieChartCard', () => {
+                    pieChart.update('active');
+                });
+            }
+        }
+
+        // Animar atualização de KPI
+        function animateKPIUpdate(cardId, callback) {
+            const card = document.getElementById(cardId);
+            const value = card.querySelector('.kpi-value');
+            
+            card.classList.add('updating');
+            value.classList.add('updating');
+            
+            setTimeout(() => {
+                if (callback) callback();
+                setTimeout(() => {
+                    card.classList.remove('updating');
+                    value.classList.remove('updating');
+                }, 500);
+            }, 100);
+        }
+
+        // Animar atualização de gráfico
+        function animateChartUpdate(cardId, callback) {
+            const card = document.getElementById(cardId);
+            card.classList.add('updating');
+            
+            setTimeout(() => {
+                if (callback) callback();
+                setTimeout(() => {
+                    card.classList.remove('updating');
+                }, 500);
+            }, 100);
         }
 
         // Atualizar KPIs
@@ -672,6 +875,13 @@
             const category = document.getElementById('categoryFilter').value;
             const region = document.getElementById('regionFilter').value;
 
+            // Animar seção de filtros
+            const filtersSection = document.getElementById('filtersSection');
+            filtersSection.classList.add('filter-active');
+            setTimeout(() => {
+                filtersSection.classList.remove('filter-active');
+            }, 600);
+
             // Simular mudanças nos dados baseado nos filtros
             let multiplier = 1;
             if (period === 'today') multiplier = 0.1;
@@ -685,8 +895,19 @@
             dashboardData.conversion = 3.8 + (Math.random() * 0.5 - 0.25);
             dashboardData.ticket = Math.floor(365 * (0.9 + Math.random() * 0.2));
 
-            // Atualizar KPIs
-            updateKPIs();
+            // Atualizar KPIs com animação
+            animateKPIUpdate('kpiCardSales', () => {
+                updateKPIs();
+            });
+            animateKPIUpdate('kpiCardUsers', () => {
+                updateKPIs();
+            });
+            animateKPIUpdate('kpiCardConversion', () => {
+                updateKPIs();
+            });
+            animateKPIUpdate('kpiCardTicket', () => {
+                updateKPIs();
+            });
 
             // Atualizar gráficos com novos dados
             updateCharts(period, category, region);
@@ -698,28 +919,38 @@
             if (pieChart) {
                 const newData = generatePieData(category);
                 pieChart.data.datasets[0].data = newData;
-                pieChart.update('active');
+                animateChartUpdate('pieChartCard', () => {
+                    pieChart.update('active');
+                });
             }
 
             // Atualizar gráfico de barras
             if (barChart) {
                 const newData = generateBarData(period);
                 barChart.data.datasets[0].data = newData;
-                barChart.update('active');
+                // Resetar cores
+                barChart.data.datasets[0].backgroundColor = colors.primary;
+                animateChartUpdate('barChartCard', () => {
+                    barChart.update('active');
+                });
             }
 
             // Atualizar gráfico de linha
             if (lineChart) {
                 const newData = generateLineData(period);
                 lineChart.data.datasets[0].data = newData;
-                lineChart.update('active');
+                animateChartUpdate('lineChartCard', () => {
+                    lineChart.update('active');
+                });
             }
 
             // Atualizar gráfico de rosca
             if (doughnutChart) {
                 const newData = generateDoughnutData(region);
                 doughnutChart.data.datasets[0].data = newData;
-                doughnutChart.update('active');
+                animateChartUpdate('doughnutChartCard', () => {
+                    doughnutChart.update('active');
+                });
             }
 
             // Atualizar gráfico misto
@@ -728,7 +959,11 @@
                 const newLineData = generateLineData(period);
                 mixedChart.data.datasets[0].data = newBarData;
                 mixedChart.data.datasets[1].data = newLineData;
-                mixedChart.update('active');
+                // Resetar cores
+                mixedChart.data.datasets[0].backgroundColor = colors.primary;
+                animateChartUpdate('mixedChartCard', () => {
+                    mixedChart.update('active');
+                });
             }
         }
 
@@ -802,8 +1037,17 @@
                 salesChange: 12.5,
                 usersChange: 8.3,
                 conversionChange: 2.1,
-                ticketChange: -1.2
+                ticketChange: -1.2,
+                selectedMonth: null
             };
+            
+            // Resetar cores das barras
+            if (barChart) {
+                barChart.data.datasets[0].backgroundColor = colors.primary;
+            }
+            if (mixedChart) {
+                mixedChart.data.datasets[0].backgroundColor = colors.primary;
+            }
             
             updateKPIs();
             updateCharts('all', 'all', 'all');
@@ -820,23 +1064,6 @@
             initCharts();
             updateKPIs();
         });
-
-        // Simular atualização em tempo real (opcional)
-        setInterval(() => {
-            // Pequenas variações aleatórias nos dados
-            dashboardData.sales += Math.floor(Math.random() * 1000 - 500);
-            dashboardData.users += Math.floor(Math.random() * 10 - 5);
-            dashboardData.conversion += (Math.random() * 0.1 - 0.05);
-            dashboardData.ticket += Math.floor(Math.random() * 5 - 2);
-            
-            // Manter valores dentro de limites razoáveis
-            dashboardData.sales = Math.max(100000, Math.min(150000, dashboardData.sales));
-            dashboardData.users = Math.max(3000, Math.min(4000, dashboardData.users));
-            dashboardData.conversion = Math.max(3.0, Math.min(4.5, dashboardData.conversion));
-            dashboardData.ticket = Math.max(300, Math.min(400, dashboardData.ticket));
-            
-            updateKPIs();
-        }, 5000);
     </script>
 </body>
 </html>
