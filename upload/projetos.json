@@ -39,6 +39,25 @@
       ]
     },
     {
+      "id": 22,
+      "pasta": "projeto22",
+      "titulo": "Dashboard Interativo",
+      "descricao": "Dashboard completo e interativo com múltiplos tipos de gráficos (pizza, barras, linhas, rosca) e indicadores de desempenho (KPIs). Sistema de filtros avançados por período, categoria e região. Atualização em tempo real com animações suaves e design moderno responsivo.",
+      "tecnologias": "HTML, CSS, JavaScript, Chart.js",
+      "link": "projetos/dashboard.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
+      ]
+    },
+    {
       "id": 3,
       "pasta": "projeto3",
       "titulo": "RF Consultoria -  Site Expositivo",
