@@ -1,6 +1,44 @@
 {
   "projetos": [
     {
+      "id": 20,
+      "pasta": "projeto20",
+      "titulo": "Slipper World Store - Site Expositivo",
+      "descricao": "Site internacional de venda de pantufas e sapatos confortáveis. E-commerce moderno com design elegante, catálogo completo de produtos, sistema de carrinho de compras e checkout seguro. Plataforma responsiva otimizada para conversão de vendas.",
+      "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
+      "link": "https://slipper-world-store.vercel.app/",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 21,
+      "pasta": "projeto21",
+      "titulo": "L'ESSENTIEL - Site Expositivo",
+      "descricao": "Site internacional de vendas de produtos estéticos e de beleza. E-commerce premium com catálogo luxuoso de produtos de skincare, maquiagem e cuidados pessoais. Interface sofisticada com experiência de compra premium e sistema de recomendações personalizadas.",
+      "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
+      "link": "https://beauty-afinity.vercel.app/",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
+      ]
+    },
+    {
       "id": 3,
       "pasta": "projeto3",
       "titulo": "RF Consultoria -  Site Expositivo",
@@ -297,44 +335,6 @@
       ],
       "loadedImages": [
         "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 20,
-      "pasta": "projeto20",
-      "titulo": "Slipper World Store - Site Expositivo",
-      "descricao": "Site internacional de venda de pantufas e sapatos confortáveis. E-commerce moderno com design elegante, catálogo completo de produtos, sistema de carrinho de compras e checkout seguro. Plataforma responsiva otimizada para conversão de vendas.",
-      "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
-      "link": "https://slipper-world-store.vercel.app/",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 21,
-      "pasta": "projeto21",
-      "titulo": "L'ESSENTIEL - Site Expositivo",
-      "descricao": "Site internacional de vendas de produtos estéticos e de beleza. E-commerce premium com catálogo luxuoso de produtos de skincare, maquiagem e cuidados pessoais. Interface sofisticada com experiência de compra premium e sistema de recomendações personalizadas.",
-      "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
-      "link": "https://beauty-afinity.vercel.app/",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
       ]
     }
   ]
