@@ -1,0 +1,47 @@
+/**
+ * Design tokens — paleta, tipografia e espaçamentos
+ */
+:root {
+  /* Cores base */
+  --bg-deep: #030712;
+  --bg-surface: #0a0f1a;
+  --bg-elevated: #111827;
+  --bg-glass: rgba(17, 24, 39, 0.65);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Acentos — gradiente emerald + violet */
+  --accent-emerald: #10b981;
+  --accent-emerald-light: #34d399;
+  --accent-violet: #8b5cf6;
+  --accent-violet-light: #a78bfa;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+
+  --gradient-primary: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-violet) 100%);
+  --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.15), transparent),
+                   radial-gradient(ellipse 60% 40% at 80% 50%, rgba(139, 92, 246, 0.1), transparent);
+
+  /* Tipografia */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Espaçamento */
+  --section-py: clamp(5rem, 12vw, 8rem);
+  --container-max: 1200px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-glow: 0 0 60px rgba(16, 185, 129, 0.12);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+
+  /* Transições */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s var(--ease-out);
+  --transition-base: 0.35s var(--ease-out);
+}

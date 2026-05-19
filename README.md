@@ -1,180 +1,169 @@
-# Portfólio Administrativo
+# Portfolio Master — Dev Brayan
 
-Um portfólio elegante e moderno com área administrativa completa, desenvolvido em HTML, CSS e JavaScript puro. Todos os dados são salvos em arquivos JSON, sem uso de LocalStorage.
+Portfólio profissional moderno com arquitetura **MVC** (Model-View-Controller), área administrativa e deploy estático no **GitHub Pages**. Sem backend, sem build step — HTML, CSS modular e JavaScript ES Modules.
 
-## 🎨 Características
+[![Live Demo](https://img.shields.io/badge/demo-GitHub%20Pages-10b981?style=flat-square)](https://brayansilver.github.io/)
+[![License](https://img.shields.io/badge/license-MIT-8b5cf6?style=flat-square)](LICENSE)
 
-- **Design Elegante**: Tema preto e azul moderno e clean
-- **Área Administrativa**: Gerencie suas informações pessoais e contatos
-- **Sistema de Pastas**: 10 pastas de projetos com até 5 imagens cada
-- **Carrossel de Imagens**: Navegação elegante entre fotos dos projetos
-- **Sem Backend**: Funciona completamente no frontend, ideal para GitHub Pages
-- **Sem LocalStorage**: Tudo salvo em arquivos JSON
-- **Responsivo**: Adaptado para todos os dispositivos
+## Preview
 
-## 📁 Estrutura do Projeto
+- Design dark premium com gradientes emerald + violet
+- Hero com efeito **typewriter** nas roles
+- Contadores animados (stats)
+- Grid **bento** de projetos
+- Timeline de experiência
+- Modal com carrossel de imagens
+- 100% responsivo
+
+## Arquitetura MVC
 
 ```
 portfoliomaster/
-├── index.html              # Página principal do portfólio
-├── admin.html              # Página administrativa
-├── styles.css              # Estilos principais
-├── admin.css               # Estilos da área admin
-├── script.js               # JavaScript do portfólio
-├── admin.js                # JavaScript da área admin
-├── upload/                 # Pasta de projetos e imagens
-│   ├── projetos.json       # Configuração dos projetos
-│   ├── info-pessoal.json  # Informações pessoais
-│   ├── contato.json        # Informações de contato
-│   ├── foto-pessoal/       # Pasta para foto pessoal
-│   │   └── foto.jpg        # Sua foto (opcional)
-│   ├── projeto1/           # Pasta do projeto 1
-│   │   ├── image1.png
-│   │   ├── image2.png
-│   │   └── ...
-│   ├── projeto2/           # Pasta do projeto 2
-│   └── ...                 # projeto3 a projeto10
-└── README.md               # Este arquivo
+├── index.html                 # View principal (HTML estático)
+├── src/
+│   ├── app.js                 # Bootstrap da aplicação
+│   ├── config/
+│   │   └── constants.js       # URLs, seletores, defaults
+│   ├── models/
+│   │   ├── PortfolioModel.js  # Estado agregado do portfólio
+│   │   └── ProjectModel.js    # Entidade projeto normalizada
+│   ├── services/
+│   │   └── DataService.js     # Fetch JSON + resolução de imagens
+│   ├── views/
+│   │   ├── HeroView.js
+│   │   ├── AboutView.js
+│   │   ├── StatsView.js
+│   │   ├── SkillsView.js
+│   │   ├── ExperienceView.js
+│   │   ├── ProjectsView.js
+│   │   ├── ContactView.js
+│   │   └── ModalView.js
+│   ├── controllers/
+│   │   ├── PortfolioController.js  # Orquestra Model ↔ Views
+│   │   └── NavigationController.js # Nav, scroll, reveal, newsletter
+│   └── utils/
+│       ├── dom.js
+│       └── helpers.js
+├── assets/css/                # Estilos modulares (BEM-like por componente)
+│   ├── main.css               # Entry point CSS
+│   ├── variables.css
+│   ├── base.css
+│   └── components/
+├── upload/                    # Dados (JSON) + imagens dos projetos
+│   ├── info-pessoal.json
+│   ├── projetos.json
+│   ├── contato.json
+│   └── projeto1..N/
+├── admin.html                 # Painel administrativo
+├── projetos/                  # Demos interativos (jogos, apps)
+└── README.md
 ```
 
-## 🚀 Como Usar
+### Fluxo de dados
 
-### 1. Configurar Projetos
+```
+index.html → app.js → PortfolioController
+                          ↓
+                    DataService (fetch)
+                          ↓
+                    PortfolioModel
+                          ↓
+              Views renderizam o DOM
+```
 
-1. **Adicione imagens nas pastas**
-   - Vá para a pasta `upload/`
-   - Em cada pasta (projeto1 a projeto10), coloque até 5 imagens
-   - Formatos aceitos: JPG, PNG, GIF, WebP
+## Início rápido
 
-2. **Configure os projetos**
-   - Edite o arquivo `upload/projetos.json`
-   - Configure título, descrição, tecnologias, links para cada projeto
-   - Ajuste os nomes das imagens se necessário
+### 1. Clonar e servir localmente
 
-3. **Adicione sua foto pessoal (opcional)**
-   - Coloque uma imagem na pasta `upload/foto-pessoal/`
-   - Nomes aceitos: foto.jpg, foto.png, foto.jpeg, image.jpg, image.png, image.jpeg
+```bash
+git clone https://github.com/BrayanSilver/portfoliomaster.git
+cd portfoliomaster
 
-4. **Configure informações pessoais**
-   - Edite o arquivo `upload/info-pessoal.json`
-   - Configure sobre mim, título e subtítulo
+# Servidor local (necessário para ES Modules e fetch)
+npx serve .
+# ou: python -m http.server 8080
+```
 
-5. **Configure contato**
-   - Edite o arquivo `upload/contato.json`
-   - Adicione email, telefone, LinkedIn, GitHub, website
+Abra `http://localhost:3000` (ou a porta indicada).
 
-### 2. Acessar a Área Administrativa
+### 2. Personalizar conteúdo
 
-1. Abra `admin.html` no navegador
-2. Clique em "🔄 Atualizar" para carregar as imagens das pastas
-3. Edite as informações conforme necessário
-4. Ao salvar, o sistema baixará arquivos JSON atualizados
-5. Substitua os arquivos na pasta `upload/` pelos arquivos baixados
+| Arquivo | Conteúdo |
+|---------|----------|
+| `upload/info-pessoal.json` | Bio, hero, skills, stats, experiência |
+| `upload/contato.json` | Email, GitHub, LinkedIn, WhatsApp |
+| `upload/projetos.json` | Lista de projetos |
+| `upload/foto-pessoal/` | Foto de perfil |
+| `upload/projetoN/` | Até 5 imagens por projeto |
 
-### 3. Visualizar seu Portfólio
+### 3. Área administrativa
 
-- Abra `index.html` para ver seu portfólio
-- Os projetos serão exibidos automaticamente
-- Clique em um projeto para ver o carrossel de imagens
+1. Abra `admin.html`
+2. Autentique-se (senha configurada em `admin.js`)
+3. Edite e **exporte** os JSONs atualizados
+4. Substitua os arquivos em `upload/` e faça commit
 
-## 📝 Arquivos JSON
+## Estrutura do `info-pessoal.json`
 
-### upload/projetos.json
-Contém a configuração de todos os projetos:
 ```json
 {
-  "projetos": [
+  "about": "Texto sobre você (use \\n para parágrafos)",
+  "heroTitle": "Desenvolvedor",
+  "heroSubtitle": "Subtítulo do hero",
+  "heroRoles": ["Full Stack", "Frontend", "Backend"],
+  "foto": "brayan.jpg",
+  "stats": [
+    { "label": "Projetos", "value": 22, "suffix": "+" }
+  ],
+  "skills": {
+    "hard": ["JavaScript", "React"],
+    "soft": ["Comunicação", "Proatividade"]
+  },
+  "experience": [
     {
-      "id": 1,
-      "pasta": "projeto1",
-      "titulo": "Nome do Projeto",
-      "descricao": "Descrição do projeto",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "https://projeto.com",
-      "github": "https://github.com/usuario/projeto",
-      "imagens": ["image1.png", "image2.png", ...]
+      "role": "Desenvolvedor Full Stack",
+      "company": "Empresa",
+      "period": "2024 — Atual",
+      "description": "Descrição da atuação"
     }
   ]
 }
 ```
 
-### upload/info-pessoal.json
-Informações pessoais:
-```json
-{
-  "about": "Texto sobre você",
-  "heroTitle": "Desenvolvedor",
-  "heroSubtitle": "Transformando ideias em realidade"
-}
-```
+## Deploy no GitHub Pages
 
-### upload/contato.json
-Informações de contato:
-```json
-{
-  "email": "seu@email.com",
-  "phone": "(00) 00000-0000",
-  "linkedin": "https://linkedin.com/in/seu-perfil",
-  "github": "https://github.com/seu-usuario",
-  "website": "https://seusite.com"
-}
-```
+1. Push para o repositório `usuario.github.io` ou ative Pages em **Settings → Pages**
+2. Branch: `main`, pasta: `/ (root)`
+3. Aguarde alguns minutos — o site estará em `https://usuario.github.io/`
 
-## 📤 Publicando no GitHub Pages
+> **Importante:** inclua a pasta `upload/` com todos os JSONs e imagens no repositório.
 
-1. Faça upload de todos os arquivos para um repositório GitHub
-2. **IMPORTANTE**: Certifique-se de incluir a pasta `upload/` com todas as imagens e arquivos JSON
-3. Vá em Settings > Pages
-4. Selecione a branch principal
-5. Seu portfólio estará disponível em `https://seu-usuario.github.io/nome-do-repo/`
+## Tecnologias
 
-## 🎯 Funcionalidades
+- HTML5 semântico + SEO (meta tags, JSON-LD, sitemap)
+- CSS3 modular (custom properties, grid, glassmorphism)
+- JavaScript ES6+ (modules, async/await, Intersection Observer)
+- Google Analytics 4
+- GitHub Pages (hospedagem estática)
 
-### Área Administrativa
-- ✅ Gerenciar informações pessoais
-- ✅ Editar detalhes dos projetos
-- ✅ Carregar projetos automaticamente das pastas
-- ✅ Gerenciar informações de contato
-- ✅ Exportar arquivos JSON atualizados
-- ✅ Interface intuitiva e fácil de usar
+## Scripts legados
 
-### Portfólio
-- ✅ Visualização elegante dos projetos
-- ✅ Carrossel de imagens com transições suaves
-- ✅ Navegação por botões, indicadores, teclado e swipe
-- ✅ Links para projetos e GitHub
-- ✅ Tags de tecnologias
-- ✅ Design responsivo
-- ✅ Navegação suave
+| Arquivo | Status |
+|---------|--------|
+| `styles.css` | Reexporta `assets/css/main.css` |
+| `script.js` | Depreciado — use `src/app.js` |
 
-## 🛠️ Tecnologias Utilizadas
+## Contribuindo
 
-- HTML5
-- CSS3 (com variáveis CSS e gradientes)
-- JavaScript (ES6+)
-- Fetch API
+1. Fork o projeto
+2. Crie uma branch (`git checkout -b feature/minha-feature`)
+3. Commit (`git commit -m 'feat: adiciona X'`)
+4. Push e abra um Pull Request
 
-## 📝 Notas Importantes
+## Licença
 
-- **Nenhum dado é salvo no LocalStorage** - tudo vem dos arquivos JSON
-- As imagens são carregadas diretamente das pastas
-- Cada projeto pode ter até 5 imagens
-- Para atualizar informações, edite os arquivos JSON ou use o admin e substitua os arquivos
-- A foto pessoal deve estar na pasta `upload/foto-pessoal/`
-- Todos os arquivos JSON devem estar na pasta `upload/`
+MIT — uso livre com atribuição.
 
-## 🎨 Personalização
+---
 
-Você pode personalizar as cores editando as variáveis CSS em `styles.css`:
-
-```css
-:root {
-    --cyan-400: #22d3ee;
-    --cyan-500: #06b6d4;
-    /* ... */
-}
-```
-
-## 📄 Licença
-
-Este projeto é de código aberto e está disponível para uso livre.
+Desenvolvido com ♥ por **Dev Brayan** — [brayansilver.github.io](https://brayansilver.github.io/)

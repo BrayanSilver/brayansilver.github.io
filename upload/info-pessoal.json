@@ -1,6 +1,80 @@
 {
-    "about": " Brayan R. Silveira, Desenvolvedor Fullstack, perito em tecnologia e criação de soluções eficientes — do backend ao frontend. Trabalho diariamente com ferramentas modernas, buscando sempre escrever código limpo, escalável e que realmente resolva problemas.\n\nTenho formação em Análise e Desenvolvimento de Sistemas, estou iniciando Gestão de TI e começando um MBA em Inteligência Artificial, ampliando minha visão sobre arquitetura, negócios e sistemas inteligentes.\n\nGosto de transformar ideias em aplicações reais, automatizar processos, criar interfaces funcionais e explorar novas tecnologias. Estou em constante evolução, sempre estudando e construindo projetos que me desafiam e me fazem crescer como desenvolvedor.",
-    "heroTitle": "Desenvolvedor",
-    "heroSubtitle": "Transformando ideias em realidade digital",
-    "foto": "brayan.jpg"
-  }
+  "about": "I'm Brayan Rosa da Silveira, a Full Stack Developer focused on web development — corporate websites, e-commerce platforms, internal systems, and REST APIs. I write clean, scalable code and ship products that solve real business problems.\n\nI graduated in Computer Systems Analysis (CST) from Centro Universitário Santa Cruz de Curitiba and I'm currently studying IT Management at the same institution. I also hold certifications in Data Governance (ENAP) and English.\n\nBefore joining Lumicenter Lighting officially, I worked as a freelance developer for two years, building websites, web apps, and automations for clients. I started with a data & Power BI internship and grew into full-time full stack roles — mainly web platforms, internal tools, and API integrations.\n\nI'm always learning, shipping side projects, and improving how I design APIs, dashboards, and modern user interfaces.",
+  "heroTitle": "Developer",
+  "heroSubtitle": "Full Stack Web Developer at Lumicenter Lighting · Websites, e-commerce & APIs",
+  "heroRoles": ["Full Stack", "React", "Node.js", "REST APIs"],
+  "foto": "brayan.jpg",
+  "stats": [
+    { "label": "Projects", "value": 23, "suffix": "+" },
+    { "label": "Years at Lumicenter", "value": 2, "suffix": "" },
+    { "label": "Years coding", "value": 4, "suffix": "+" },
+    { "label": "Freelance years", "value": 2, "suffix": "" }
+  ],
+  "skills": {
+    "hard": [
+      "JavaScript", "TypeScript", "React", "Node.js", "HTML5", "CSS3",
+      "Python", "SQL", "REST APIs", "E-commerce", "WordPress",
+      "Git", "Docker", "Scrum", "MySQL", "MongoDB", "Power BI"
+    ],
+    "soft": [
+      "Continuous learning", "Communication", "Proactivity",
+      "Teamwork", "Organization", "Problem solving", "Code review"
+    ]
+  },
+  "certifications": [
+    "Data Governance — ENAP (2026)",
+    "English — Wizard by Pearson",
+    "Logical programming & dashboards"
+  ],
+  "experience": [
+    {
+      "role": "Junior Full Stack Developer",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR · On-site",
+      "period": "Aug 2025 — Present",
+      "description": "Web development for the company e-commerce store, corporate sites, and internal systems. Building features end-to-end — frontend, backend, REST APIs, and integrations with third-party services."
+    },
+    {
+      "role": "Full Stack Developer",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR · On-site",
+      "period": "Dec 2024 — Jul 2025",
+      "description": "Full-time web development: internal web systems, landing pages, API consumption and creation, and support for digital products. Agile delivery with Scrum."
+    },
+    {
+      "role": "Intern — Data Analysis & Power BI",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR",
+      "period": "Jun 2024 — Nov 2024",
+      "description": "Internship focused on data analysis, Power BI dashboards, and reporting pipelines that supported business decisions."
+    },
+    {
+      "role": "Freelance Full Stack Developer",
+      "company": "Self-employed",
+      "location": "Remote · Brazil",
+      "period": "2022 — May 2024",
+      "description": "Two years delivering websites, web applications, e-commerce projects, and automations for clients — from requirements to deployment."
+    },
+    {
+      "role": "Soldier (EP)",
+      "company": "Brazilian Army",
+      "location": "Curitiba, PR · On-site",
+      "period": "Feb 2020 — Jun 2023",
+      "description": "Developed discipline, teamwork, and logical thinking under pressure. Strengthened communication and operational planning skills."
+    }
+  ],
+  "education": [
+    {
+      "degree": "CST — Computer Systems Analysis",
+      "school": "Centro Universitário Santa Cruz de Curitiba",
+      "period": "Aug 2023 — Dec 2025",
+      "description": "Degree completed. Focus on frontend, backend, databases — JavaScript, React, HTML, CSS, SQL, code review, and software engineering fundamentals."
+    },
+    {
+      "degree": "IT Management",
+      "school": "Centro Universitário Santa Cruz de Curitiba",
+      "period": "In progress",
+      "description": "Currently studying Information Technology Project Management and IT governance."
+    }
+  ]
+}

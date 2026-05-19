@@ -1,0 +1,242 @@
+/**
+ * About, Skills e Experience
+ */
+#about {
+  padding: var(--section-py) 1.5rem;
+}
+
+.about-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-text h2 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin-bottom: 0.5rem;
+}
+
+.about-underline {
+  width: 4rem;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  margin-bottom: 2rem;
+}
+
+.about-paragraph {
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image {
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15));
+  font-size: 4rem;
+}
+
+.image-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Skills */
+#skills {
+  padding: var(--section-py) 1.5rem;
+  background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.03), transparent);
+}
+
+.skills-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2.5rem;
+}
+
+.skills-column h3 {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skills-column h3::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+}
+
+.skills-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.skill-pill {
+  padding: 0.5rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.skill-pill:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.skill-pill--soft {
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
+.skill-pill--soft:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.certifications-block {
+  margin-top: 2.5rem;
+}
+
+.certifications-block h3 {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.skill-pill--cert {
+  border-color: rgba(245, 158, 11, 0.2);
+  color: var(--accent-amber);
+}
+
+.skill-pill--cert:hover {
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+/* Experience timeline */
+#experience {
+  padding: var(--section-py) 1.5rem;
+}
+
+.experience-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.timeline {
+  position: relative;
+  margin-top: 3rem;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-emerald), var(--accent-violet));
+  border-radius: var(--radius-full);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -2rem;
+  top: 0.35rem;
+  width: 12px;
+  height: 12px;
+  margin-left: -5px;
+  background: var(--accent-emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--bg-deep), 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.timeline-period {
+  font-size: 0.8rem;
+  color: var(--accent-emerald-light);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.timeline-role {
+  font-size: 1.25rem;
+  margin: 0.35rem 0 0.15rem;
+}
+
+.timeline-company {
+  color: var(--accent-violet-light);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .about-grid,
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-image-wrapper {
+    order: -1;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}

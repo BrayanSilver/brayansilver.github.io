@@ -1,0 +1,13 @@
+/**
+ * @file main.css
+ * @description Entry point dos estilos — importa todos os módulos CSS.
+ */
+@import url('variables.css');
+@import url('base.css');
+@import url('components/nav.css');
+@import url('components/hero.css');
+@import url('components/about.css');
+@import url('components/projects.css');
+@import url('components/contact.css');
+@import url('components/modal.css');
+@import url('components/footer.css');

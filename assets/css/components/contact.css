@@ -1,0 +1,57 @@
+/**
+ * Contact section
+ */
+#contact {
+  padding: var(--section-py) 1.5rem;
+}
+
+.contact-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-container .title-underline {
+  margin: 0 auto 1.5rem;
+}
+
+.contact-container .section-description {
+  margin: 0 auto 3rem;
+}
+
+.contact-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-glass);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  backdrop-filter: blur(12px);
+}
+
+.contact-item:hover {
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--text-primary);
+  transform: translateY(-3px);
+}
+
+.contact-item--primary {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.1));
+  border-color: rgba(16, 185, 129, 0.3);
+  color: var(--text-primary);
+}
+
+.contact-empty {
+  color: var(--text-muted);
+}
