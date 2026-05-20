@@ -4,6 +4,7 @@
  */
 
 import { createElement } from '../utils/dom.js';
+import { getI18n } from '../i18n/I18nService.js';
 
 export class ModalView {
   /** @type {HTMLElement|null} */
@@ -58,6 +59,7 @@ export class ModalView {
    * @param {string[]} images
    */
   #template(projeto, images) {
+    const i18n = getI18n();
     const tech = projeto.tecnologias
       ? projeto.tecnologias.split(',').map((t) => `<span class="tech-tag">${t.trim()}</span>`).join('')
       : '';
@@ -74,8 +76,8 @@ export class ModalView {
               `).join('')}
             </div>
             ${images.length > 1 ? `
-              <button class="carousel-btn carousel-prev" data-dir="-1" aria-label="Anterior">‹</button>
-              <button class="carousel-btn carousel-next" data-dir="1" aria-label="Próximo">›</button>
+              <button class="carousel-btn carousel-prev" data-dir="-1" aria-label="${i18n.t('modal.prev')}">‹</button>
+              <button class="carousel-btn carousel-next" data-dir="1" aria-label="${i18n.t('modal.next')}">›</button>
               <div class="carousel-indicators">
                 ${images.map((_, i) => `<button class="carousel-indicator ${i === 0 ? 'active' : ''}" data-slide="${i}"></button>`).join('')}
               </div>
@@ -88,15 +90,15 @@ export class ModalView {
       <div class="modal-content modal-project">
         <div class="modal-header">
           <h2>${projeto.titulo || 'Projeto'}</h2>
-          <button class="modal-close" data-close aria-label="Fechar">&times;</button>
+          <button class="modal-close" data-close aria-label="${i18n.t('modal.close')}">&times;</button>
         </div>
         <div class="modal-body">
           ${projeto.descricao ? `<p class="modal-desc">${projeto.descricao}</p>` : ''}
           ${tech ? `<div class="tech-tags">${tech}</div>` : ''}
           ${carousel}
           <div class="modal-actions">
-            ${projeto.link ? `<a href="${projeto.link}" target="_blank" rel="noopener" class="btn-primary">View Project</a>` : ''}
-            ${projeto.github ? `<a href="${projeto.github}" target="_blank" rel="noopener" class="btn-secondary">GitHub</a>` : ''}
+            ${projeto.link ? `<a href="${projeto.link}" target="_blank" rel="noopener" class="btn-primary">${i18n.t('modal.viewProject')}</a>` : ''}
+            ${projeto.github ? `<a href="${projeto.github}" target="_blank" rel="noopener" class="btn-secondary">${i18n.t('projects.github')}</a>` : ''}
           </div>
         </div>
       </div>

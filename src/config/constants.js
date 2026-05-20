@@ -8,6 +8,7 @@ export const API_PATHS = {
   personalInfo: 'upload/info-pessoal.json',
   personalInfoPt: 'upload/info-pessoal.pt.json',
   projects: 'upload/projetos.json',
+  projectsPt: 'upload/projetos.pt.json',
   contact: 'upload/contato.json',
   photoFolder: 'upload/foto-pessoal/',
 };
@@ -15,6 +16,11 @@ export const API_PATHS = {
 /** @param {'en'|'pt'} locale */
 export function personalInfoPath(locale) {
   return locale === 'pt' ? API_PATHS.personalInfoPt : API_PATHS.personalInfo;
+}
+
+/** @param {'en'|'pt'} locale */
+export function projectsPath(locale) {
+  return locale === 'pt' ? API_PATHS.projectsPt : API_PATHS.projects;
 }
 
 /** Seletores dos elementos principais do DOM */

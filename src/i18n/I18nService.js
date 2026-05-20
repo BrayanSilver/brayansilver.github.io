@@ -4,6 +4,7 @@
  */
 
 import { TRANSLATIONS } from './translations.js';
+import { LANG_TOGGLE_INNER } from '../utils/langToggleMarkup.js';
 
 const STORAGE_KEY = 'portfolio-lang';
 const DEFAULT_LOCALE = 'en';
@@ -59,29 +60,46 @@ export class I18nService {
 
   #bindToggle() {
     document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
-      btn.addEventListener('click', () => this.#toggle());
+      if (!btn.querySelector('[data-lang-option]')) {
+        btn.innerHTML = LANG_TOGGLE_INNER;
+      }
+      btn.addEventListener('click', (e) => {
+        const option = e.target.closest('[data-lang-option]');
+        if (option?.dataset.langOption === 'pt') this.#setLocale('pt');
+        else if (option?.dataset.langOption === 'en') this.#setLocale('en');
+        else this.#toggle();
+      });
     });
     this.#updateToggleButtons();
   }
 
-  #toggle() {
-    this.#locale = this.#locale === 'en' ? 'pt' : 'en';
-    localStorage.setItem(STORAGE_KEY, this.#locale);
-    document.documentElement.lang = this.#locale === 'pt' ? 'pt-BR' : 'en';
+  /** @param {'en'|'pt'} locale */
+  #setLocale(locale) {
+    if (this.#locale === locale) return;
+    this.#locale = locale;
+    localStorage.setItem(STORAGE_KEY, locale);
+    document.documentElement.lang = locale === 'pt' ? 'pt-BR' : 'en';
     this.#applyDom();
     this.#updateToggleButtons();
-    window.dispatchEvent(new CustomEvent('portfolio:langchange', { detail: { locale: this.#locale } }));
+    window.dispatchEvent(new CustomEvent('portfolio:langchange', { detail: { locale } }));
+  }
+
+  #toggle() {
+    this.#setLocale(this.#locale === 'en' ? 'pt' : 'en');
   }
 
   #updateToggleButtons() {
+    const isPt = this.#locale === 'pt';
     document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
-      btn.textContent = this.t('lang.switch');
       btn.setAttribute('aria-label', this.t('lang.aria'));
+      btn.querySelector('[data-lang-option="pt"]')?.classList.toggle('is-active', isPt);
+      btn.querySelector('[data-lang-option="en"]')?.classList.toggle('is-active', !isPt);
     });
   }
 
   #applyDom() {
     document.querySelectorAll('[data-i18n]').forEach((el) => {
+      if (el.closest('[data-lang-toggle]')) return;
       const key = el.getAttribute('data-i18n');
       if (!key) return;
       el.textContent = this.t(key);

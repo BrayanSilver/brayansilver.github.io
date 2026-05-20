@@ -34,7 +34,10 @@ export class PortfolioController {
 
   /** Inicializa a aplicação */
   async init() {
-    this.i18n.onChange(() => this.loadAndRender());
+    this.i18n.onChange(() => {
+      this.modalView.close();
+      this.loadAndRender();
+    });
     this.navController.init(this.i18n);
     await this.loadAndRender();
   }

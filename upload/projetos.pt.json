@@ -1,0 +1,434 @@
+{
+  "projetos": [
+    {
+      "id": 27,
+      "pasta": "projeto27",
+      "titulo": "TechDash — Painel BI",
+      "descricao": "Painel executivo de business intelligence: vendas, analytics, finanças, monitoramento de APIs e dados públicos em tempo real (câmbio, cripto, população). Gráficos Recharts, KPIs e fallback offline quando APIs falham.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Recharts, Tailwind CSS",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/PROFESSIONAL_DASHBOARD",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 24,
+      "pasta": "projeto24",
+      "titulo": "IntelliHub AI — Hub de IA",
+      "descricao": "Hub full stack de IA com sete módulos: chatbot com base de conhecimento, sumarização automática, busca semântica, OCR, suporte inteligente, geração de conteúdo e RAG com PDFs. React 19, Next.js 15, NestJS e engine mock pronta para OpenAI e provedores reais.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, Radix UI, AI",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/AI_PROJECT",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 25,
+      "pasta": "projeto25",
+      "titulo": "FlowCRM — Mini CRM SaaS",
+      "descricao": "Demo de CRM B2B multi-tenant: dashboard com KPIs e gráficos, CRUD de contatos, pipeline Kanban de negócios e quadro de tarefas (pendente / em progresso / concluído). Cada organização vê apenas seus dados mock. Next.js + NestJS full stack.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, shadcn/ui, Recharts",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/SAAS",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 26,
+      "pasta": "projeto26",
+      "titulo": "TechShop — Demo E-commerce",
+      "descricao": "Loja online ponta a ponta: catálogo com busca e filtros, auth JWT, carrinho, checkout simulado (PIX, cartão, boleto), controle de estoque e painel admin para produtos e upload de imagens. Regra de negócio: cartão recusa pedidos acima de R$ 5.000.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, JWT, Tailwind CSS",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/E-COMMERCE",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 28,
+      "pasta": "projeto28",
+      "titulo": "Clone do Trello — Quadros Kanban",
+      "descricao": "Gestão de tarefas estilo Trello: boards, listas Kanban, cards com drag-and-drop, modal de detalhes com labels, checklists, datas e membros. Demonstra CRUD REST, estado no frontend e UX de produtividade. Next.js + NestJS.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/TRELLO_KANBAN",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 29,
+      "pasta": "projeto29",
+      "titulo": "Realtime Hub — WebSocket",
+      "descricao": "Comunicação em tempo real com Socket.IO: chat multi-salas com presença e digitando, editor colaborativo com cursores ao vivo e feed de notificações push. Gateways WebSocket NestJS e socket.io-client no Next.js.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Socket.IO, WebSocket",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/WEBSOCKET_INSTANT",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 30,
+      "pasta": "projeto30",
+      "titulo": "Netflix Streaming — Clone de UI",
+      "descricao": "UI de streaming com React 19 e Vite: reconstrução visual fiel da experiência Netflix. Banner hero, carrosséis por categoria, Top 10, previews no hover, modal de detalhes, busca e 24 títulos mock com posters SVG — peça de portfólio focada em frontend.",
+      "tecnologias": "React, Vite, JavaScript, Lucide React, CSS3",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/NETFLIX_STREAMING",
+      "imagens": [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 23,
+      "pasta": "projeto23",
+      "titulo": "E-commerce Lumicenter",
+      "descricao": "Loja oficial Lumicenter Lighting — e-commerce profissional de iluminação LED para o Brasil. Catálogo por segmento, carrinho, checkout, parcelamento, frete nacional, chat ao vivo (ChatLumi) e suporte via WhatsApp e e-mail. Plataforma em produção focada em conversão B2B/B2C.",
+      "tecnologias": "HTML, CSS, JavaScript, E-commerce, REST APIs, Integrations",
+      "link": "https://lojaonline.lumicenter.com/",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1513506003901-935e5ad42ef9?w=1200&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1557821552-051099bc4b38?w=1200&h=800&fit=crop"
+      ],
+      "loadedImages": []
+    },
+    {
+      "id": 20,
+      "pasta": "projeto20",
+      "titulo": "Slipper World Store — Site vitrine",
+      "descricao": "Loja internacional de chinelos e calçados confortáveis. Design moderno com catálogo completo, carrinho e checkout seguro. Plataforma responsiva otimizada para conversão.",
+      "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
+      "link": "https://slipper-world-store.vercel.app/",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 21,
+      "pasta": "projeto21",
+      "titulo": "L'ESSENTIEL — Site vitrine",
+      "descricao": "E-commerce internacional de beleza e estética. Catálogo premium de skincare, maquiagem e cuidados pessoais. UI sofisticada com experiência de compra premium e recomendações personalizadas.",
+      "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
+      "link": "https://beauty-afinity.vercel.app/",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 3,
+      "pasta": "projeto3",
+      "titulo": "RF Consultoria — Site vitrine",
+      "descricao": "Site institucional para consultoria do setor alimentício. WordPress, formulários de contato e integração EmailJS para captura de leads.",
+      "tecnologias": "WordPress, PHP, EmailJS",
+      "link": "https://rfconsultoriaalimentos.com.br/home/",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/hGV2TfOh0ns/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/hGV2TfOh0ns/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 16,
+      "pasta": "projeto16",
+      "titulo": "Space Shooter",
+      "descricao": "Jogo de nave espacial em React. Pilote sua nave, destrua inimigos e asteroides, colete power-ups e busque a maior pontuação. Sistema de vidas, recordes e efeitos visuais.",
+      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
+      "link": "projetos/space-shooter.html",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/YOy-ek-aBR0/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/YOy-ek-aBR0/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 2,
+      "pasta": "projeto2",
+      "titulo": "Landing Page de E-book",
+      "descricao": "Landing page focada em conversão para e-book do setor de iluminação. Layout limpo, CTAs claros e design responsivo para geração de leads.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "https://iluminacaopratica.lumicenter.com/",
+      "github": "",
+      "imagens": [
+        "image.png",
+        "image1.png",
+        "image2.png",
+        "image3.png"
+      ],
+      "loadedImages": [
+        "upload/projeto2/image.png",
+        "upload/projeto2/image1.png",
+        "upload/projeto2/image2.png",
+        "upload/projeto2/image3.png"
+      ]
+    },
+    {
+      "id": 17,
+      "pasta": "projeto17",
+      "titulo": "Mario Platformer",
+      "descricao": "Plataforma estilo Mario em React. Pule entre plataformas, colete moedas, derrote inimigos e maximize sua pontuação. Vidas, física realista e animações suaves.",
+      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
+      "link": "projetos/mario-platformer.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 7,
+      "pasta": "projeto7",
+      "titulo": "Calculadora Moderna",
+      "descricao": "Calculadora elegante em dark mode com operações básicas (soma, subtração, multiplicação, divisão), UI intuitiva e feedback visual.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto7/calculadora.html",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/Z4kCtJKCP34/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/Z4kCtJKCP34/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 13,
+      "pasta": "projeto13",
+      "titulo": "Conversor de Moedas",
+      "descricao": "Conversor em tempo real com múltiplas moedas (USD, BRL, EUR, GBP, JPY). Interface limpa com conversão instantânea.",
+      "tecnologias": "Python, HTML, CSS, JavaScript",
+      "link": "upload/projeto13/conversor-moedas.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 12,
+      "pasta": "projeto12",
+      "titulo": "Gerador de QR Code",
+      "descricao": "Gerador rápido de QR Code para texto, URLs e dados customizados. Tamanhos ajustáveis e download direto da imagem.",
+      "tecnologias": "PHP, HTML, CSS, JavaScript, QRCode.js",
+      "link": "upload/projeto12/gerador-qrcode.html",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/AmaUFhjnEBE/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/AmaUFhjnEBE/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 1,
+      "pasta": "projeto1",
+      "titulo": "Lumisoft",
+      "descricao": "Sistema de cálculo e renderização de mapas de calor para análise fotométrica profissional. Web app avançada com backend Node.js e bibliotecas de visualização especializadas.",
+      "tecnologias": "HTML, CSS, JavaScript, Node.js, Advanced frameworks & libraries",
+      "link": "https://lumisoft.lumicenter.com/",
+      "github": "",
+      "imagens": [
+        "image1.png",
+        "image2.png",
+        "image3.png",
+        "image4.png",
+        "image5.png"
+      ],
+      "loadedImages": [
+        "upload/projeto1/image1.png",
+        "upload/projeto1/image2.png",
+        "upload/projeto1/image3.png",
+        "upload/projeto1/image4.png",
+        "upload/projeto1/image5.png"
+      ]
+    },
+    {
+      "id": 5,
+      "pasta": "projeto5",
+      "titulo": "Sistema de Gestão de Documentos",
+      "descricao": "SGI integrado para controle de documentos, fluxos de trabalho e rastreamento de conformidade na organização.",
+      "tecnologias": "HTML, CSS, JavaScript, Node.js, PL/SQL, Express",
+      "link": "",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 8,
+      "pasta": "projeto8",
+      "titulo": "App Todo List",
+      "descricao": "Lista de tarefas com persistência local. Adicione, conclua e exclua tarefas com interface limpa e responsiva.",
+      "tecnologias": "HTML, CSS, JavaScript, LocalStorage",
+      "link": "upload/projeto8/todo-list.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 10,
+      "pasta": "projeto10",
+      "titulo": "Gerador de Senhas",
+      "descricao": "Gerador seguro com opções customizáveis: tamanho, maiúsculas, minúsculas, números e símbolos. Cópia com um clique.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto10/gerador-senhas.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 6,
+      "pasta": "projeto6",
+      "titulo": "Jogo da Velha",
+      "descricao": "Jogo da velha interativo em HTML, CSS e JavaScript puro. Gradientes modernos e animações suaves. Dois jogadores alternam X e O.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto6/jogo-velha.html",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/TIUyoNGM0no/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/TIUyoNGM0no/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 9,
+      "pasta": "projeto9",
+      "titulo": "Jogo da Memória",
+      "descricao": "Jogo clássico de memória com 8 pares. Encontre todas as combinações no menor número de jogadas. Interface colorida e animada.",
+      "tecnologias": "HTML, CSS, JavaScript",
+      "link": "upload/projeto9/jogo-memoria.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 11,
+      "pasta": "projeto11",
+      "titulo": "Pedra, Papel e Tesoura",
+      "descricao": "Jogo clássico com UI moderna e placar. Jogue contra o computador em rodadas rápidas.",
+      "tecnologias": "Python, HTML, CSS, JavaScript",
+      "link": "upload/projeto11/pedra-papel-tesoura.html",
+      "github": "",
+      "imagens": [
+        "https://unsplash.com/photos/2HkXcDPnGh4/download?force=true&w=800"
+      ],
+      "loadedImages": [
+        "https://unsplash.com/photos/2HkXcDPnGh4/download?force=true&w=800"
+      ]
+    },
+    {
+      "id": 18,
+      "pasta": "projeto18",
+      "titulo": "Corrida de Carros",
+      "descricao": "Jogo de corrida em React. Desvie de obstáculos, colete moedas e sobreviva o máximo possível. Velocidade aumenta com o tempo. Pontuação e recordes.",
+      "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
+      "link": "projetos/car-racing.html",
+      "github": "",
+      "imagens": [
+        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 15,
+      "pasta": "projeto15",
+      "titulo": "Projetos Java",
+      "descricao": "Repositório GitHub com projetos Java OOP profissionais: aprovação de empréstimos, cadastro de farmácia, calculadora de consumo de água e gestão de funcionários. Arquitetura sólida e padrões de qualidade.",
+      "tecnologias": "Java",
+      "link": "https://github.com/BrayanSilver/Java_Brayan",
+      "github": "https://github.com/BrayanSilver/Java_Brayan",
+      "imagens": [
+        "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
+      ]
+    },
+    {
+      "id": 19,
+      "pasta": "projeto19",
+      "titulo": "Projetos Python",
+      "descricao": "Repositório com 10 projetos de automação e sistemas em Python: backup automático, monitor de sistema, web scraper, automação de e-mail, organizador de arquivos e mais — tudo documentado.",
+      "tecnologias": "Python, psutil, requests, beautifulsoup4, pandas, win10toast",
+      "link": "https://github.com/BrayanSilver/Python_Brayan",
+      "github": "https://github.com/BrayanSilver/Python_Brayan",
+      "imagens": [
+        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop"
+      ],
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop"
+      ]
+    }
+  ]
+}

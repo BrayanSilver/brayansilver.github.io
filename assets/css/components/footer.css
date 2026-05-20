@@ -141,7 +141,7 @@ footer {
 }
 
 .heart {
-  color: var(--accent-rose);
+  color: #38bdf8;
 }
 
 @media (max-width: 900px) {
