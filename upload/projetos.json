@@ -67,6 +67,17 @@
       "loadedImages": []
     },
     {
+      "id": 30,
+      "pasta": "projeto30",
+      "titulo": "Netflix Streaming — UI Clone",
+      "descricao": "Streaming platform UI built with React 19 and Vite: faithful visual rebuild of the Netflix experience. Hero banner, horizontal carousels by category, Top 10 ranking, hover previews, detail modal, search, and 24 mock titles with SVG posters — frontend-focused portfolio piece.",
+      "tecnologias": "React, Vite, JavaScript, Lucide React, CSS3",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/NETFLIX_STREAMING",
+      "imagens": ["1.png", "2.png", "3.png", "4.png", "5.png"],
+      "loadedImages": []
+    },
+    {
       "id": 23,
       "pasta": "projeto23",
       "titulo": "Lumicenter E-commerce",

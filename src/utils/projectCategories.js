@@ -48,9 +48,15 @@ export function categorizeProject(project) {
   }
 
   if (
-    tech.includes('next.js') &&
-    (tech.includes('nestjs') || tech.includes('socket.io'))
+    title.includes('netflix') ||
+    title.includes('streaming') ||
+    (tech.includes('next.js') &&
+      (tech.includes('nestjs') || tech.includes('socket.io')))
   ) {
+    return 'fullstack';
+  }
+
+  if (tech.includes('vite') && tech.includes('react')) {
     return 'fullstack';
   }
 
