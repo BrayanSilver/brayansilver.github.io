@@ -36,8 +36,9 @@ export class StatsView {
         .map(
           (s, i) => `
         <div class="stat-card reveal" data-delay="${i * 100}">
-          <span class="stat-value" data-target="${s.value}">0</span>
-          <span class="stat-suffix">${s.suffix || ''}</span>
+          <div class="stat-number">
+            <span class="stat-value" data-target="${s.value}">0</span><span class="stat-suffix">${s.suffix || ''}</span>
+          </div>
           <span class="stat-label">${s.label}</span>
         </div>
       `
@@ -50,7 +51,7 @@ export class StatsView {
 
   /** Anima contadores quando entram na viewport */
   #observeAndAnimate() {
-    const cards = document.querySelectorAll('.stat-card .stat-value');
+    const cards = document.querySelectorAll('.stat-card .stat-value[data-target]');
     if (!cards.length) return;
 
     const observer = new IntersectionObserver(

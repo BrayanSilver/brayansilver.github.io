@@ -9,11 +9,11 @@ import { isGameProject } from './helpers.js';
 
 /** @type {ProjectCategory[]} */
 export const PROJECT_CATEGORIES = [
-  { id: 'fullstack', label: 'Full Stack Apps' },
-  { id: 'websites', label: 'Websites & E-commerce' },
-  { id: 'tools', label: 'Tools & Dashboards' },
-  { id: 'games', label: 'Games & Interactives' },
-  { id: 'repos', label: 'Code Repositories' },
+  { id: 'fullstack' },
+  { id: 'websites' },
+  { id: 'tools' },
+  { id: 'games' },
+  { id: 'repos' },
 ];
 
 /**

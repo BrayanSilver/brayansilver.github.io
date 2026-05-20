@@ -7,7 +7,9 @@ import { $, $$ } from '../utils/dom.js';
 import { SELECTORS } from '../config/constants.js';
 
 export class NavigationController {
-  init() {
+  /** @param {import('../i18n/I18nService.js').I18nService} [i18n] */
+  init(i18n) {
+    this.i18n = i18n;
     this.#initScrollNav();
     this.#initSmoothScroll();
     this.#initMobileMenu();
@@ -132,10 +134,10 @@ export class NavigationController {
     const submit = () => {
       const email = input?.value.trim();
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Please enter a valid email address.');
+        alert(this.i18n?.t('newsletter.invalid') ?? 'Please enter a valid email address.');
         return;
       }
-      alert('Thanks for subscribing! You will receive updates soon.');
+      alert(this.i18n?.t('newsletter.thanks') ?? 'Thanks for subscribing!');
       if (input) input.value = '';
     };
 

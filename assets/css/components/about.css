@@ -51,19 +51,10 @@
 }
 
 .about-photo {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.about-photo-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15));
-  font-size: 4rem;
 }
 
 .image-glow {
@@ -93,7 +84,9 @@
 }
 
 .skills-column h3 {
+  font-family: var(--font-body);
   font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 1.25rem;
   display: flex;
@@ -120,7 +113,9 @@
   background: var(--bg-elevated);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: var(--radius-full);
+  font-family: var(--font-body);
   font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text-secondary);
   transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }

@@ -3,7 +3,7 @@
  * @description Camada de serviço — responsável por buscar e transformar dados JSON.
  */
 
-import { API_PATHS, DEFAULTS } from '../config/constants.js';
+import { API_PATHS, DEFAULTS, personalInfoPath } from '../config/constants.js';
 import { PortfolioModel, Project } from '../models/PortfolioModel.js';
 
 /**
@@ -14,10 +14,13 @@ export class DataService {
    * Carrega todos os dados do portfólio em paralelo.
    * @returns {Promise<PortfolioModel>}
    */
-  async loadPortfolio() {
+  /**
+   * @param {'en'|'pt'} [locale]
+   */
+  async loadPortfolio(locale = 'en') {
     try {
       const [personalInfo, rawProjects, contact] = await Promise.all([
-        this.#fetchJson(API_PATHS.personalInfo, DEFAULTS.personalInfo),
+        this.#fetchJson(personalInfoPath(locale), DEFAULTS.personalInfo),
         this.#fetchJson(API_PATHS.projects, { projetos: [] }),
         this.#fetchJson(API_PATHS.contact, DEFAULTS.contact),
       ]);

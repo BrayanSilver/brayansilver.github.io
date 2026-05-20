@@ -6,10 +6,16 @@
 /** Caminhos base para os arquivos JSON de conteúdo */
 export const API_PATHS = {
   personalInfo: 'upload/info-pessoal.json',
+  personalInfoPt: 'upload/info-pessoal.pt.json',
   projects: 'upload/projetos.json',
   contact: 'upload/contato.json',
   photoFolder: 'upload/foto-pessoal/',
 };
+
+/** @param {'en'|'pt'} locale */
+export function personalInfoPath(locale) {
+  return locale === 'pt' ? API_PATHS.personalInfoPt : API_PATHS.personalInfo;
+}
 
 /** Seletores dos elementos principais do DOM */
 export const SELECTORS = {

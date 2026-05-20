@@ -5,6 +5,7 @@
 
 import { setHTML } from '../utils/dom.js';
 import { SELECTORS } from '../config/constants.js';
+import { getI18n } from '../i18n/I18nService.js';
 
 /** Ícones SVG reutilizáveis */
 const ICONS = {
@@ -25,7 +26,7 @@ export class ContactView {
     const hasData = contact && Object.values(contact).some(Boolean);
 
     if (!hasData) {
-      setHTML(SELECTORS.contactContent, '<p class="contact-empty">Add your contact details in upload/contato.json</p>');
+      setHTML(SELECTORS.contactContent, `<p class="contact-empty">${getI18n().t('contact.empty')}</p>`);
       return;
     }
 

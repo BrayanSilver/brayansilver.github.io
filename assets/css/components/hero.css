@@ -15,6 +15,10 @@
   width: 100%;
 }
 
+.availability-badge--hidden {
+  display: none !important;
+}
+
 .availability-badge {
   display: inline-flex;
   align-items: center;
@@ -59,7 +63,7 @@
 
 .gradient-text,
 #heroTyping {
-  background: var(--gradient-primary);
+  background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -79,7 +83,7 @@
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   color: var(--text-secondary);
   max-width: 540px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   line-height: 1.7;
 }
 
@@ -140,8 +144,8 @@
 .stat-card {
   background: var(--bg-glass);
   border: 1px solid rgba(148, 163, 184, 0.08);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 1.25rem;
   text-align: center;
   backdrop-filter: blur(12px);
   transition: border-color var(--transition-fast), transform var(--transition-fast);
@@ -152,27 +156,41 @@
   transform: translateY(-4px);
 }
 
-.stat-value {
+.stat-number {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.05em;
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: clamp(2.25rem, 5vw, 2.75rem);
   font-weight: 800;
-  background: var(--gradient-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.stat-value,
 .stat-suffix {
-  font-size: 1.5rem;
-  color: var(--accent-emerald-light);
-  font-weight: 700;
+  font: inherit;
+  letter-spacing: inherit;
+  background: inherit;
+  -webkit-background-clip: inherit;
+  -webkit-text-fill-color: inherit;
+  background-clip: inherit;
+  color: transparent;
 }
 
 .stat-label {
   display: block;
-  margin-top: 0.25rem;
-  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
 }

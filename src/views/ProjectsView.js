@@ -7,6 +7,7 @@ import { setHTML } from '../utils/dom.js';
 import { SELECTORS, PROJECT_OVERLAY_CLASSES } from '../config/constants.js';
 import { isGameProject, isExternalUrl } from '../utils/helpers.js';
 import { PROJECT_CATEGORIES, groupProjectsByCategory } from '../utils/projectCategories.js';
+import { getI18n } from '../i18n/I18nService.js';
 
 const FEATURED_COUNT = 2;
 
@@ -16,10 +17,11 @@ export class ProjectsView {
    * @param {(index: number) => void} onOpenModal
    */
   render(projects, onOpenModal) {
+    const i18n = getI18n();
     if (!projects.length) {
       setHTML(SELECTORS.projectsGrid, `
         <div class="empty-state reveal">
-          <p>No projects available at the moment.</p>
+          <p>${i18n.t('projects.empty')}</p>
         </div>
       `);
       return;
@@ -32,7 +34,7 @@ export class ProjectsView {
     const categoriesHTML = PROJECT_CATEGORIES.map((cat) => {
       const items = grouped.get(cat.id) || [];
       if (!items.length) return '';
-      return this.#carouselSection(cat.label, items, onOpenModal);
+      return this.#carouselSection(i18n.categoryLabel(cat.id), items, onOpenModal);
     }).join('');
 
     setHTML(
@@ -60,6 +62,7 @@ export class ProjectsView {
    * @param {(index: number) => void} onOpenModal
    */
   #carouselSection(label, items, onOpenModal) {
+    const i18n = getI18n();
     const cards = items
       .map((p) => this.#cardHTML(p, onOpenModal, 'carousel'))
       .join('');
@@ -73,12 +76,12 @@ export class ProjectsView {
           <div class="carousel-viewport">
             <div class="carousel-track">${cards}</div>
           </div>
-          <button type="button" class="carousel-btn carousel-btn--prev" data-carousel-prev aria-label="Previous projects">
+          <button type="button" class="carousel-btn carousel-btn--prev" data-carousel-prev aria-label="${i18n.t('projects.prev')}">
             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
-          <button type="button" class="carousel-btn carousel-btn--next" data-carousel-next aria-label="Next projects">
+          <button type="button" class="carousel-btn carousel-btn--next" data-carousel-next aria-label="${i18n.t('projects.next')}">
             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
@@ -94,6 +97,7 @@ export class ProjectsView {
    * @param {'featured'|'carousel'} variant
    */
   #cardHTML(project, onOpenModal, variant) {
+    const i18n = getI18n();
     const index = project.index;
     const overlay = PROJECT_OVERLAY_CLASSES[index % PROJECT_OVERLAY_CLASSES.length];
     const featuredClass = variant === 'featured' ? 'project-card--featured' : 'project-card--carousel';
@@ -127,8 +131,8 @@ export class ProjectsView {
     if (project.link) {
       if (isGame) linkText = '🎮 Play';
       else if (isExternalUrl(project.link)) linkText = 'View project';
-      else linkText = 'Open demo';
-    } else if (project.hasImages) linkText = '📷 Gallery';
+      else linkText = i18n.t('projects.openDemo');
+    } else if (project.hasImages) linkText = `📷 ${i18n.t('projects.gallery')}`;
 
     const dataAction = openDirect
       ? `data-link="${project.link}"`
@@ -158,7 +162,7 @@ export class ProjectsView {
               </button>` : ''}
             ${project.github ? `
               <a href="${project.github}" target="_blank" rel="noopener" class="project-link project-link--ghost">
-                GitHub
+                ${i18n.t('projects.github')}
               </a>` : ''}
           </div>
         </div>

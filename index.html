@@ -15,20 +15,22 @@
     <meta name="google-site-verification" content="y_WRW1U4amvbRyIwiFCrOtW-yBmYSqLVgQRbw11mt-I" />
     
     <!-- Primary Meta Tags (English) -->
-    <title>Brayan Rosa da Silveira | Full Stack Developer — React, Node.js, ERP</title>
+    <title>&lt;Dev_Brayan&gt;</title>
     <meta name="title" content="Brayan Rosa da Silveira | Full Stack Developer — React, Node.js, ERP">
-    <meta name="description" content="Brayan Rosa da Silveira is a Junior Full Stack Developer at Lumicenter Lighting with 2+ years in the company, 2 years of freelance experience, and a degree in Computer Systems Analysis. Portfolio, projects, and contact.">
-    <meta name="keywords" content="Brayan Rosa da Silveira, Brayan Silveira, Full Stack Developer, Junior Full Stack Developer, Web Developer, Software Engineer, React Developer, Node.js Developer, JavaScript, TypeScript, Python, ERP, Power BI, Lumicenter Lighting, Curitiba Developer, Brazil Developer, Freelance Developer, Portfolio, GitHub, LinkedIn, Computer Systems Analysis, Santa Cruz University, Scrum, REST API, MySQL, MongoDB">
+    <meta name="description" content="Brayan Rosa da Silveira is a Junior Full Stack Developer at Lumicenter Lighting with freelance background and a degree in Systems Analysis and Development. Portfolio, projects, and contact.">
+    <meta name="keywords" content="Brayan Rosa da Silveira, Brayan Silveira, Full Stack Developer, Junior Full Stack Developer, Web Developer, Software Engineer, React Developer, Node.js Developer, JavaScript, TypeScript, Python, ERP, Power BI, Lumicenter Lighting, Curitiba Developer, Brazil Developer, Freelance Developer, Portfolio, GitHub, LinkedIn, Systems Analysis and Development, Santa Cruz University, Scrum, REST API, MySQL, MongoDB">
     <meta name="author" content="Brayan Rosa da Silveira">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
     <meta http-equiv="content-language" content="en">
+    <meta name="google" content="notranslate">
     <meta name="revisit-after" content="7 days">
     <meta name="distribution" content="global">
     <meta name="rating" content="general">
     
     <!-- Language: English (primary) -->
     <link rel="alternate" hreflang="en" href="https://brayansilver.github.io/">
+    <link rel="alternate" hreflang="pt-BR" href="https://brayansilver.github.io/">
     <link rel="alternate" hreflang="x-default" href="https://brayansilver.github.io/">
     
     <!-- Canonical URL -->
@@ -38,7 +40,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://brayansilver.github.io/">
     <meta property="og:title" content="Brayan Rosa da Silveira | Full Stack Developer">
-    <meta property="og:description" content="Junior Full Stack Developer at Lumicenter Lighting. React, Node.js, ERP systems. 2+ years at the company, freelance background, Computer Systems Analysis graduate.">
+    <meta property="og:description" content="Junior Full Stack Developer at Lumicenter Lighting. React, Node.js, ERP systems. Systems Analysis and Development graduate.">
     <meta property="og:image" content="https://brayansilver.github.io/upload/foto-pessoal/brayan.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -65,7 +67,7 @@
       "name": "Brayan Rosa da Silveira",
       "alternateName": "Dev Brayan",
       "jobTitle": "Junior Full Stack Developer",
-      "description": "Full Stack Developer. React, Node.js, ERP systems. Former freelance developer, Computer Systems Analysis graduate.",
+      "description": "Full Stack Developer. React, Node.js, ERP systems. Former freelance developer, Systems Analysis and Development graduate.",
       "url": "https://brayansilver.github.io",
       "image": "https://brayansilver.github.io/upload/foto-pessoal/brayan.jpg",
       "email": "brayansilver.teen@gmail.com",
@@ -100,7 +102,7 @@
         {
           "@type": "EducationalOccupationalCredential",
           "credentialCategory": "degree",
-          "name": "CST — Computer Systems Analysis"
+          "name": "Systems Analysis and Development"
         },
         {
           "@type": "EducationalOccupationalCredential",
@@ -161,7 +163,6 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="alternate icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.svg">
     
     <!-- Performance Optimizations -->
@@ -175,8 +176,8 @@
     <link rel="preload" href="src/app.js" as="script" crossorigin>
     <link rel="preload" href="upload/info-pessoal.json" as="fetch" crossorigin>
     
-    <!-- Fonts: Syne (display) + Outfit (body) -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts: Syne (display) + Outfit (body) + Plus Jakarta Sans (logo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -185,22 +186,24 @@
     <div class="bg-mesh" aria-hidden="true"></div>
 
     <!-- Navigation -->
-    <nav id="navbar">
+    <nav id="navbar" translate="no">
         <div class="nav-container">
-            <div class="logo">
+            <div class="logo" translate="no">
                 <span class="logo-bracket">&lt;</span>
-                <span>Dev_Brayan</span>
+                <span class="logo-text">Dev<span class="logo-accent">_Brayan</span></span>
                 <span class="logo-bracket">/&gt;</span>
             </div>
             
             <ul class="nav-links">
-                <li><a href="#hero" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#hero" class="nav-link active" data-i18n="nav.home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-i18n="nav.about">About</a></li>
+                <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#experience" class="nav-link" data-i18n="nav.experience">Experience</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
             </ul>
+
+            <button type="button" class="lang-toggle" data-lang-toggle data-i18n="lang.switch" aria-label="Switch to Portuguese">PT</button>
 
             <div class="social-links" id="socialLinks">
                 <!-- Social links serão inseridos aqui via JS -->
@@ -217,15 +220,16 @@
     </nav>
 
     <!-- Mobile Menu (fora do nav para o overlay cobrir a viewport inteira) -->
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true" translate="no">
         <ul class="mobile-nav-links">
-            <li><a href="#hero" class="mobile-nav-link">Home</a></li>
-            <li><a href="#about" class="mobile-nav-link">About</a></li>
-            <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
-            <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
-            <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
-            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+            <li><a href="#hero" class="mobile-nav-link" data-i18n="nav.home">Home</a></li>
+            <li><a href="#about" class="mobile-nav-link" data-i18n="nav.about">About</a></li>
+            <li><a href="#skills" class="mobile-nav-link" data-i18n="nav.skills">Skills</a></li>
+            <li><a href="#projects" class="mobile-nav-link" data-i18n="nav.projects">Projects</a></li>
+            <li><a href="#experience" class="mobile-nav-link" data-i18n="nav.experience">Experience</a></li>
+            <li><a href="#contact" class="mobile-nav-link" data-i18n="nav.contact">Contact</a></li>
         </ul>
+        <button type="button" class="lang-toggle lang-toggle--mobile" data-lang-toggle data-i18n="lang.switch" aria-label="Switch to Portuguese">PT</button>
         <div class="mobile-social-links" id="mobileSocialLinks">
             <!-- Social links serão inseridos aqui via JS -->
         </div>
@@ -233,12 +237,8 @@
 
     <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-bg"></div>
-        <div class="floating-blob-1"></div>
-        <div class="floating-blob-2"></div>
-
         <div class="hero-content">
-            <div class="availability-badge">Open to opportunities</div>
+            <div class="availability-badge availability-badge--hidden" aria-hidden="true">Open to opportunities</div>
             
             <h1 id="heroTitle">
                 <span class="hero-line"><span class="glow-text">Developer</span></span>
@@ -252,15 +252,10 @@
             </p>
 
             <div class="hero-buttons">
-                <a href="#projects" class="btn-primary">View Projects</a>
-                <a href="#contact" class="btn-secondary">Get in Touch</a>
+                <a href="#projects" class="btn-primary" data-i18n="hero.viewProjects">View Projects</a>
+                <a href="#contact" class="btn-secondary" data-i18n="hero.getInTouch">Get in Touch</a>
             </div>
         </div>
-    </section>
-
-    <!-- Stats -->
-    <section id="stats" aria-label="Statistics">
-        <div class="stats-grid" id="statsGrid"></div>
     </section>
 
     <!-- About Section -->
@@ -268,7 +263,7 @@
         <div class="about-container">
             <div class="about-grid">
                 <div class="about-text">
-                    <h2>About <span class="section-accent">Me</span></h2>
+                    <h2><span data-i18n="about.title">About</span> <span class="section-accent" data-i18n="about.titleAccent">Me</span></h2>
                     <div class="about-underline"></div>
                     
                     <div id="aboutContent">
@@ -279,9 +274,7 @@
                 </div>
 
                 <div class="about-image-wrapper">
-                    <div class="about-image">
-                        <div class="about-photo-placeholder" aria-hidden="true"><span>👨‍💻</span></div>
-                    </div>
+                    <div class="about-image"></div>
                     <div class="image-glow"></div>
                 </div>
             </div>
@@ -291,42 +284,23 @@
     <!-- Skills -->
     <section id="skills" translate="no">
         <div class="skills-container">
-            <span class="section-label reveal">Stack</span>
-            <h2 class="section-title reveal">Hard & <span class="section-accent">Soft Skills</span></h2>
+            <span class="section-label reveal" data-i18n="skills.label">Stack</span>
+            <h2 class="section-title reveal"><span data-i18n="skills.title">Hard &</span> <span class="section-accent" data-i18n="skills.titleAccent">Soft Skills</span></h2>
             <div class="title-underline"></div>
             <div class="skills-grid">
                 <div class="skills-column reveal">
-                    <h3>Hard Skills</h3>
+                    <h3 data-i18n="skills.hard">Hard Skills</h3>
                     <div class="skills-pills" id="skillsHard" translate="no"></div>
                 </div>
                 <div class="skills-column reveal">
-                    <h3>Soft Skills</h3>
+                    <h3 data-i18n="skills.soft">Soft Skills</h3>
                     <div class="skills-pills" id="skillsSoft" translate="no"></div>
                 </div>
             </div>
             <div class="certifications-block reveal">
-                <h3>Certifications</h3>
+                <h3 data-i18n="skills.certs">Certifications</h3>
                 <div class="skills-pills" id="certificationsList"></div>
             </div>
-        </div>
-    </section>
-
-    <!-- Experience -->
-    <section id="experience">
-        <div class="experience-container">
-            <span class="section-label reveal">Career</span>
-            <h2 class="section-title reveal">Work <span class="section-accent">Experience</span></h2>
-            <div class="title-underline"></div>
-            <div class="timeline" id="experienceTimeline"></div>
-        </div>
-    </section>
-
-    <section id="education">
-        <div class="experience-container">
-            <span class="section-label reveal">Academic</span>
-            <h2 class="section-title reveal"><span class="section-accent">Education</span></h2>
-            <div class="title-underline"></div>
-            <div class="timeline" id="educationTimeline"></div>
         </div>
     </section>
 
@@ -334,10 +308,10 @@
     <section id="projects">
         <div class="projects-container">
             <div class="section-header reveal">
-                <span class="section-label">Portfolio</span>
-                <h2 class="section-title">Featured <span class="section-accent">Projects</span></h2>
+                <span class="section-label" data-i18n="projects.label">Portfolio</span>
+                <h2 class="section-title"><span data-i18n="projects.title">Featured</span> <span class="section-accent" data-i18n="projects.titleAccent">Projects</span></h2>
                 <div class="title-underline"></div>
-                <p class="section-description">Top picks below — browse the rest by category in horizontal carousels</p>
+                <p class="section-description" data-i18n="projects.description">Top picks below — browse the rest by category in horizontal carousels</p>
             </div>
 
             <div class="projects-grid" id="projectsGrid" role="region" aria-label="Project portfolio">
@@ -348,13 +322,32 @@
         </div>
     </section>
 
+    <!-- Experience -->
+    <section id="experience">
+        <div class="experience-container">
+            <span class="section-label reveal" data-i18n="experience.label">Career</span>
+            <h2 class="section-title reveal"><span data-i18n="experience.title">Work</span> <span class="section-accent" data-i18n="experience.titleAccent">Experience</span></h2>
+            <div class="title-underline"></div>
+            <div class="timeline" id="experienceTimeline"></div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="experience-container">
+            <span class="section-label reveal" data-i18n="education.label">Academic</span>
+            <h2 class="section-title reveal"><span class="section-accent" data-i18n="education.title">Education</span></h2>
+            <div class="title-underline"></div>
+            <div class="timeline" id="educationTimeline"></div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact">
         <div class="contact-container">
-            <h2 class="section-title">Let's <span class="section-accent">Talk</span></h2>
+            <h2 class="section-title"><span data-i18n="contact.title">Let's</span> <span class="section-accent" data-i18n="contact.titleAccent">Talk</span></h2>
             <div class="title-underline"></div>
             
-            <p class="section-description" style="margin-bottom: 3rem; line-height: 1.8;">
+            <p class="section-description" style="margin-bottom: 3rem; line-height: 1.8;" data-i18n="contact.description">
                 I'm open to new projects, collaborations, and full-time opportunities.
                 Reach out and let's build something great together.
             </p>
@@ -373,58 +366,35 @@
                 <div class="footer-column footer-logo-column">
                     <div class="footer-logo">
                         <h3>Dev_Brayan</h3>
-                        <p class="footer-tagline">Full Stack Web Developer</p>
-                        <p class="footer-company">Professional Portfolio</p>
+                        <p class="footer-tagline" data-i18n="footer.tagline">Full Stack Web Developer</p>
+                        <p class="footer-company" data-i18n="footer.company">Professional Portfolio</p>
                     </div>
                     <div class="footer-newsletter">
-                        <input type="email" id="newsletterEmail" placeholder="Your email" class="newsletter-input">
-                        <button type="button" class="newsletter-btn">Subscribe</button>
+                        <input type="email" id="newsletterEmail" class="newsletter-input" data-i18n-placeholder="footer.newsletterPlaceholder" placeholder="Your email">
+                        <button type="button" class="newsletter-btn" data-i18n="footer.subscribe">Subscribe</button>
                     </div>
                     <div class="back-to-top" role="button" tabindex="0">
                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
                         </svg>
-                        <span>Back to top</span>
+                        <span data-i18n="footer.backToTop">Back to top</span>
                     </div>
                 </div>
 
                 <!-- Coluna 2: Recursos -->
                 <div class="footer-column">
-                    <h4 class="footer-title">Resources</h4>
+                    <h4 class="footer-title" data-i18n="footer.resources">Resources</h4>
                     <ul class="footer-links">
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="projetos/dashboard.html">Dashboard</a></li>
+                        <li><a href="#hero" data-i18n="nav.home">Home</a></li>
+                        <li><a href="#about" data-i18n="nav.about">About</a></li>
+                        <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
                     </ul>
-                    <div class="footer-social">
-                        <a href="#" class="social-icon" target="_blank" aria-label="YouTube">
-                            <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" target="_blank" aria-label="Instagram">
-                            <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" target="_blank" aria-label="Facebook">
-                            <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 6.286 4.608 11.488 10.633 12.415v-8.783h-3.2v-3.632h3.2V9.385c0-3.16 1.882-4.905 4.76-4.905 1.38 0 2.825.246 2.825.246v3.105h-1.592c-1.57 0-2.06.975-2.06 1.976v2.36h3.5l-.56 3.632h-2.94v8.783C19.392 23.561 24 18.359 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.linkedin.com/in/brayan-r-silveira-b80636150/?skipRedirect=true" class="social-icon" target="_blank" rel="noopener" aria-label="LinkedIn">
-                            <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                            </svg>
-                        </a>
-                    </div>
                 </div>
 
                 <!-- Coluna 3: Projetos -->
                 <div class="footer-column">
-                    <h4 class="footer-title">Demos</h4>
+                    <h4 class="footer-title" data-i18n="footer.demos">Demos</h4>
                     <ul class="footer-links">
                         <li><a href="projetos/space-shooter.html">Space Shooter</a></li>
                         <li><a href="projetos/mario-platformer.html">Mario Platformer</a></li>
@@ -437,20 +407,19 @@
 
                 <!-- Coluna 4: Links Úteis -->
                 <div class="footer-column">
-                    <h4 class="footer-title">Quick Links</h4>
+                    <h4 class="footer-title" data-i18n="footer.quickLinks">Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#projects">Portfolio</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="projetos/dashboard.html">Dashboard</a></li>
+                        <li><a href="#hero" data-i18n="nav.home">Home</a></li>
+                        <li><a href="#about" data-i18n="nav.about">About</a></li>
+                        <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                        <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+                        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>Built with <span class="heart">♥</span> by <strong>Dev_Brayan</strong></p>
-                <p>© 2026 All rights reserved</p>
+                <p><span data-i18n="footer.built">Built with</span> <span class="heart">♥</span> <span data-i18n="footer.by">by</span> <strong>Dev_Brayan</strong></p>
+                <p data-i18n="footer.rights">© 2026 All rights reserved</p>
             </div>
         </div>
     </footer>

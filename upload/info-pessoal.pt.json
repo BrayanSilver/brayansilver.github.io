@@ -1,0 +1,75 @@
+{
+  "about": "Sou Brayan Rosa da Silveira, Desenvolvedor Full Stack com foco em desenvolvimento web — sites corporativos, e-commerce, sistemas internos e APIs REST. Escrevo código limpo e escalável e entrego produtos que resolvem problemas reais de negócio.\n\nFormei-me em Análise e Desenvolvimento de Sistemas pelo Centro Universitário Santa Cruz de Curitiba e atualmente curso Gestão da Tecnologia da Informação na mesma instituição. Também possuo certificações em Governança de Dados (ENAP) e Inglês.\n\nAntes de ingressar oficialmente na Lumicenter Lighting, trabalhei dois anos como freelancer, criando sites, aplicações web e automações para clientes. Comecei com estágio em dados e Power BI e evolui para funções full stack — principalmente plataformas web, ferramentas internas e integrações de API.\n\nEstou sempre aprendendo, publicando projetos paralelos e melhorando a forma como desenho APIs, dashboards e interfaces modernas.",
+  "heroTitle": "Developer",
+  "heroSubtitle": "Desenvolvedor Full Stack · Sites, e-commerce e APIs",
+  "heroRoles": ["Full Stack", "React", "Node.js", "APIs REST"],
+  "foto": "brayan.jpg",
+  "stats": [],
+  "skills": {
+    "hard": [
+      "JavaScript", "TypeScript", "React", "Node.js", "HTML5", "CSS3",
+      "Python", "SQL", "REST APIs", "E-commerce", "WordPress",
+      "Git", "Docker", "Scrum", "MySQL", "MongoDB", "Power BI"
+    ],
+    "soft": [
+      "Aprendizado contínuo", "Comunicação", "Proatividade",
+      "Trabalho em equipe", "Organização", "Resolução de problemas", "Code review"
+    ]
+  },
+  "certifications": [
+    "Governança de Dados — ENAP (2026)",
+    "Inglês — Wizard by Pearson",
+    "Programação lógica e dashboards"
+  ],
+  "experience": [
+    {
+      "role": "Desenvolvedor Full Stack Júnior",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR · Presencial",
+      "period": "Ago 2025 — Atual",
+      "description": "Desenvolvimento web da loja e-commerce, sites corporativos e sistemas internos. Features ponta a ponta — frontend, backend, APIs REST e integrações com serviços terceiros."
+    },
+    {
+      "role": "Sistemas da Informação",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR · Presencial",
+      "period": "Dez 2024 — Jul 2025",
+      "description": "Desenvolvimento web em tempo integral: sistemas internos, landing pages, consumo e criação de APIs e suporte a produtos digitais. Entregas ágeis com Scrum."
+    },
+    {
+      "role": "Estagiário — Análise de Dados & Power BI",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR",
+      "period": "Jun 2024 — Nov 2024",
+      "description": "Estágio focado em análise de dados, dashboards Power BI e pipelines de relatórios que apoiaram decisões de negócio."
+    },
+    {
+      "role": "Desenvolvedor Full Stack Freelancer",
+      "company": "Autônomo",
+      "location": "Remoto · Brasil",
+      "period": "2022 — Mai 2024",
+      "description": "Dois anos entregando sites, aplicações web, e-commerce e automações — do levantamento de requisitos ao deploy."
+    },
+    {
+      "role": "Soldado (EP)",
+      "company": "Exército Brasileiro",
+      "location": "Curitiba, PR · Presencial",
+      "period": "Fev 2020 — Jun 2023",
+      "description": "Desenvolvi disciplina, trabalho em equipe e raciocínio lógico sob pressão. Fortaleci comunicação e planejamento operacional."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Análise e Desenvolvimento de Sistemas",
+      "school": "Centro Universitário Santa Cruz de Curitiba",
+      "period": "Ago 2023 — Dez 2025",
+      "description": "Graduação concluída. Foco em frontend, backend e bancos de dados — JavaScript, React, HTML, CSS, SQL, code review e fundamentos de engenharia de software."
+    },
+    {
+      "degree": "Gestão da Tecnologia da Informação",
+      "school": "Centro Universitário Santa Cruz de Curitiba",
+      "period": "Em andamento",
+      "description": "Cursando gestão de projetos de TI e governança de tecnologia."
+    }
+  ]
+}

@@ -21,12 +21,14 @@
   --accent-rose: #f43f5e;
 
   --gradient-primary: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-violet) 100%);
+  --gradient-text: linear-gradient(90deg, var(--accent-emerald-light) 0%, var(--accent-violet-light) 100%);
   --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.15), transparent),
                    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(139, 92, 246, 0.1), transparent);
 
   /* Tipografia */
   --font-display: 'Syne', sans-serif;
   --font-body: 'Outfit', sans-serif;
+  --font-logo: 'Plus Jakarta Sans', 'Outfit', sans-serif;
 
   /* Espaçamento */
   --section-py: clamp(5rem, 12vw, 8rem);

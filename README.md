@@ -21,11 +21,11 @@ You can find me on
 
 - **Full Stack Web Developer** building corporate sites, e-commerce, internal systems, and REST APIs
 - Currently at **Grupo Lumicenter Lighting** — web platforms, integrations, and digital products
-- Degree in **Computer Systems Analysis (CST)** — Centro Universitário Santa Cruz de Curitiba
+- Degree in **Systems Analysis and Development** — Centro Universitário Santa Cruz de Curitiba
 - Postgraduate in **IT Management** *(in progress)*
 - MBA in **Artificial Intelligence** *(starting)*
 - Based in **São José dos Pinhais, PR — Brazil**
-- 2+ years of freelance experience before joining Lumicenter full-time
+- Freelance experience before joining Lumicenter full-time
 
 ---
 

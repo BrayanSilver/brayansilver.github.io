@@ -6,7 +6,6 @@
 import { DataService } from '../services/DataService.js';
 import { HeroView } from '../views/HeroView.js';
 import { AboutView } from '../views/AboutView.js';
-import { StatsView } from '../views/StatsView.js';
 import { SkillsView } from '../views/SkillsView.js';
 import { ExperienceView } from '../views/ExperienceView.js';
 import { EducationView } from '../views/EducationView.js';
@@ -14,13 +13,14 @@ import { ProjectsView } from '../views/ProjectsView.js';
 import { ContactView } from '../views/ContactView.js';
 import { ModalView } from '../views/ModalView.js';
 import { NavigationController } from './NavigationController.js';
+import { getI18n } from '../i18n/I18nService.js';
 
 export class PortfolioController {
   constructor() {
+    this.i18n = getI18n();
     this.dataService = new DataService();
     this.heroView = new HeroView();
     this.aboutView = new AboutView(this.dataService);
-    this.statsView = new StatsView();
     this.skillsView = new SkillsView();
     this.experienceView = new ExperienceView();
     this.educationView = new EducationView();
@@ -34,18 +34,18 @@ export class PortfolioController {
 
   /** Inicializa a aplicação */
   async init() {
-    this.navController.init();
+    this.i18n.onChange(() => this.loadAndRender());
+    this.navController.init(this.i18n);
     await this.loadAndRender();
   }
 
   /** Carrega dados e renderiza todas as views */
   async loadAndRender() {
-    this.model = await this.dataService.loadPortfolio();
+    this.model = await this.dataService.loadPortfolio(this.i18n.getLocale());
     const { personalInfo, projects, contact, rawProjects } = this.model;
 
     this.heroView.render(personalInfo);
     await this.aboutView.render(personalInfo);
-    this.statsView.render(personalInfo, projects.length);
     this.skillsView.render(personalInfo.skills, personalInfo.certifications);
     this.experienceView.render(personalInfo.experience);
     this.educationView.render(personalInfo.education);
