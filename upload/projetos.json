@@ -1,6 +1,72 @@
 {
   "projetos": [
     {
+      "id": 27,
+      "pasta": "projeto27",
+      "titulo": "TechDash — BI Dashboard",
+      "descricao": "Executive business intelligence panel: sales, analytics, finance, API monitoring, and live public data (exchange rates, crypto, population). Interactive Recharts charts, KPIs, and offline fallback when APIs fail.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Recharts, Tailwind CSS",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/PROFESSIONAL_DASHBOARD",
+      "imagens": ["1.png", "2.png", "3.png"],
+      "loadedImages": []
+    },
+    {
+      "id": 24,
+      "pasta": "projeto24",
+      "titulo": "IntelliHub AI — AI Hub",
+      "descricao": "Full-stack AI portfolio hub with seven modules: knowledge-base chatbot, automatic summarization, semantic search, OCR, intelligent support, content generation, and RAG with PDFs. React 19, Next.js 15, NestJS, and mock engine ready for OpenAI and real providers.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, Radix UI, AI",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/AI_PROJECT",
+      "imagens": ["1.png", "2.png", "3.png", "4.png"],
+      "loadedImages": []
+    },
+    {
+      "id": 25,
+      "pasta": "projeto25",
+      "titulo": "FlowCRM — Mini CRM SaaS",
+      "descricao": "Multi-tenant B2B CRM demo: dashboard with KPIs and charts, contacts CRUD, deals Kanban pipeline, and tasks board (pending / in progress / done). Each organization sees only its own mock data. Next.js + NestJS full-stack.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, shadcn/ui, Recharts",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/SAAS",
+      "imagens": ["1.png", "2.png", "3.png"],
+      "loadedImages": []
+    },
+    {
+      "id": 26,
+      "pasta": "projeto26",
+      "titulo": "TechShop — E-commerce Demo",
+      "descricao": "End-to-end online store: catalog with search and filters, JWT auth, shopping cart, simulated checkout (PIX, card, boleto), stock control, and admin panel for products and image upload. Business rule: card declines orders over R$ 5,000.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, JWT, Tailwind CSS",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/E-COMMERCE",
+      "imagens": ["1.png", "2.png", "3.png"],
+      "loadedImages": []
+    },
+    {
+      "id": 28,
+      "pasta": "projeto28",
+      "titulo": "Trello Clone — Kanban Boards",
+      "descricao": "Trello-style task management: boards, Kanban lists, drag-and-drop cards, detail modal with labels, checklists, dates, and members. Demonstrates REST CRUD, frontend state, and productivity UX. Next.js + NestJS.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/TRELLO_KANBAN",
+      "imagens": ["1.png", "2.png", "3.png"],
+      "loadedImages": []
+    },
+    {
+      "id": 29,
+      "pasta": "projeto29",
+      "titulo": "Realtime Hub — WebSocket",
+      "descricao": "Real-time communication with Socket.IO: multi-room chat with presence and typing indicators, collaborative editor with live cursors, and push notification feed. NestJS WebSocket gateways and Next.js socket.io-client.",
+      "tecnologias": "React, Next.js, TypeScript, NestJS, Socket.IO, WebSocket",
+      "link": "",
+      "github": "https://github.com/BrayanSilver/WEBSOCKET_INSTANT",
+      "imagens": ["1.png", "2.png", "3.png"],
+      "loadedImages": []
+    },
+    {
       "id": 23,
       "pasta": "projeto23",
       "titulo": "Lumicenter E-commerce",
@@ -51,25 +117,6 @@
         "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop",
         "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 22,
-      "pasta": "projeto22",
-      "titulo": "Interactive Dashboard",
-      "descricao": "Full interactive dashboard with multiple chart types (pie, bar, line, doughnut) and KPI indicators. Advanced filters by period, category, and region. Real-time updates with smooth animations and a modern responsive layout.",
-      "tecnologias": "HTML, CSS, JavaScript, Chart.js",
-      "link": "projetos/dashboard.html",
-      "github": "",
-      "imagens": [
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
       ]
     },
     {
@@ -222,21 +269,6 @@
       ]
     },
     {
-      "id": 4,
-      "pasta": "projeto4",
-      "titulo": "Linktree — Bio Page",
-      "descricao": "Personal link-in-bio page aggregating social profiles, projects, and contact links in a single responsive hub.",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "",
-      "github": "",
-      "imagens": [
-        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
-      ],
-      "loadedImages": [
-        "https://unsplash.com/photos/FVtG38Cjc_k/download?force=true&w=800"
-      ]
-    },
-    {
       "id": 8,
       "pasta": "projeto8",
       "titulo": "Todo List App",
@@ -324,21 +356,6 @@
       ],
       "loadedImages": [
         "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop"
-      ]
-    },
-    {
-      "id": 14,
-      "pasta": "projeto14",
-      "titulo": "More Completed Projects",
-      "descricao": "GitHub repository with professional HTML, CSS, and JavaScript projects: loan approval system, pharmacy registration, water consumption calculator, and employee management. Built with strong technical quality and best practices.",
-      "tecnologias": "HTML, CSS, JavaScript",
-      "link": "https://github.com/BrayanSilver/JS-HTML_Brayan",
-      "github": "https://github.com/BrayanSilver/JS-HTML_Brayan",
-      "imagens": [
-        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop"
-      ],
-      "loadedImages": [
-        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop"
       ]
     },
     {

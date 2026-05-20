@@ -15,11 +15,14 @@ export class StatsView {
   render(personalInfo, projectCount) {
     const stats = [...(personalInfo.stats || [])];
 
-    // Atualiza contagem de projetos dinamicamente
-    const projectStat = stats.find((s) => s.label.toLowerCase().includes('projeto'));
+    // Atualiza contagem de projetos dinamicamente (PT ou EN)
+    const projectStat = stats.find((s) => {
+      const label = s.label.toLowerCase();
+      return label.includes('projeto') || label.includes('project');
+    });
     if (projectStat) projectStat.value = projectCount;
     else if (projectCount > 0) {
-      stats.unshift({ label: 'Projetos', value: projectCount, suffix: '+' });
+      stats.unshift({ label: 'Projects', value: projectCount, suffix: '+' });
     }
 
     if (stats.length === 0) {

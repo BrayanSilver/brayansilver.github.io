@@ -65,7 +65,7 @@
       "name": "Brayan Rosa da Silveira",
       "alternateName": "Dev Brayan",
       "jobTitle": "Junior Full Stack Developer",
-      "description": "Full Stack Developer at Lumicenter Lighting. React, Node.js, ERP systems. Former freelance developer, Computer Systems Analysis graduate.",
+      "description": "Full Stack Developer. React, Node.js, ERP systems. Former freelance developer, Computer Systems Analysis graduate.",
       "url": "https://brayansilver.github.io",
       "image": "https://brayansilver.github.io/upload/foto-pessoal/brayan.jpg",
       "email": "brayansilver.teen@gmail.com",
@@ -154,7 +154,7 @@
         "name": "Brayan Rosa da Silveira",
         "alternateName": "Dev Brayan"
       },
-      "description": "Professional portfolio of Brayan Rosa da Silveira, Junior Full Stack Developer at Lumicenter Lighting.",
+      "description": "Professional portfolio of Brayan Rosa da Silveira, Junior Full Stack Developer.",
       "inLanguage": "en"
     }
     </script>
@@ -207,28 +207,29 @@
             </div>
 
             <!-- Hamburger Menu Button -->
-            <button class="hamburger" id="hamburger" aria-label="Menu">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
 
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <ul class="mobile-nav-links">
-                <li><a href="#hero" class="mobile-nav-link">Home</a></li>
-                <li><a href="#about" class="mobile-nav-link">About</a></li>
-                <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
-                <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
-                <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
-                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-            </ul>
-            <div class="mobile-social-links" id="mobileSocialLinks">
-                <!-- Social links serão inseridos aqui via JS -->
-            </div>
-        </div>
     </nav>
+
+    <!-- Mobile Menu (fora do nav para o overlay cobrir a viewport inteira) -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <ul class="mobile-nav-links">
+            <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+            <li><a href="#about" class="mobile-nav-link">About</a></li>
+            <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+            <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
+            <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        </ul>
+        <div class="mobile-social-links" id="mobileSocialLinks">
+            <!-- Social links serão inseridos aqui via JS -->
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="hero">
@@ -247,7 +248,7 @@
             </h1>
             
             <p class="hero-description" id="heroDescription">
-                Full Stack Developer at Lumicenter Lighting · Freelance background · Building scalable web products
+                Full Stack Web Developer · Websites, e-commerce & APIs
             </p>
 
             <div class="hero-buttons">
@@ -288,7 +289,7 @@
     </section>
 
     <!-- Skills -->
-    <section id="skills">
+    <section id="skills" translate="no">
         <div class="skills-container">
             <span class="section-label reveal">Stack</span>
             <h2 class="section-title reveal">Hard & <span class="section-accent">Soft Skills</span></h2>
@@ -296,11 +297,11 @@
             <div class="skills-grid">
                 <div class="skills-column reveal">
                     <h3>Hard Skills</h3>
-                    <div class="skills-pills" id="skillsHard"></div>
+                    <div class="skills-pills" id="skillsHard" translate="no"></div>
                 </div>
                 <div class="skills-column reveal">
                     <h3>Soft Skills</h3>
-                    <div class="skills-pills" id="skillsSoft"></div>
+                    <div class="skills-pills" id="skillsSoft" translate="no"></div>
                 </div>
             </div>
             <div class="certifications-block reveal">
@@ -336,10 +337,10 @@
                 <span class="section-label">Portfolio</span>
                 <h2 class="section-title">Featured <span class="section-accent">Projects</span></h2>
                 <div class="title-underline"></div>
-                <p class="section-description">Recent work, collaborations, and interactive demos</p>
+                <p class="section-description">Top picks below — browse the rest by category in horizontal carousels</p>
             </div>
 
-            <div class="projects-grid" id="projectsGrid">
+            <div class="projects-grid" id="projectsGrid" role="region" aria-label="Project portfolio">
                 <div class="empty-state">
                     <p>No projects available at the moment.</p>
                 </div>

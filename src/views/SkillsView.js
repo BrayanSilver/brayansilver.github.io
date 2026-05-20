@@ -30,7 +30,7 @@ export class SkillsView {
       certEl.innerHTML = (certifications || [])
         .map(
           (cert, i) => `
-        <span class="skill-pill skill-pill--cert reveal" data-delay="${i * 40}">${cert}</span>
+        <span class="skill-pill skill-pill--cert reveal" data-delay="${i * 40}" translate="no">${cert}</span>
       `
         )
         .join('');
@@ -44,7 +44,7 @@ export class SkillsView {
    */
   #skillPill(skill, index, type = 'hard') {
     return `
-      <span class="skill-pill skill-pill--${type} reveal" data-delay="${index * 40}">
+      <span class="skill-pill skill-pill--${type} reveal" data-delay="${index * 40}" translate="no">
         ${skill}
       </span>
     `;
