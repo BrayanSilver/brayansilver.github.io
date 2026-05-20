@@ -15,6 +15,8 @@ export class HeroView {
    * @param {Object} personalInfo
    */
   render(personalInfo) {
+    this.destroy();
+
     const titleEl = $(SELECTORS.heroTitle);
     const descEl = $(SELECTORS.heroDescription);
 

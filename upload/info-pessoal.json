@@ -1,7 +1,7 @@
 {
   "about": "I'm Brayan Rosa da Silveira, a Full Stack Developer focused on web development — corporate websites, e-commerce platforms, internal systems, and REST APIs. I write clean, scalable code and ship products that solve real business problems.\n\nI graduated in Systems Analysis and Development from Centro Universitário Santa Cruz de Curitiba and I'm currently studying IT Management at the same institution. I also hold certifications in Data Governance (ENAP) and English.\n\nBefore joining Lumicenter Lighting officially, I worked as a freelance developer for two years, building websites, web apps, and automations for clients. I started with a data & Power BI internship and grew into full-time full stack roles — mainly web platforms, internal tools, and API integrations.\n\nI'm always learning, shipping side projects, and improving how I design APIs, dashboards, and modern user interfaces.",
   "heroTitle": "Developer",
-  "heroSubtitle": "Full Stack Developer · Scalable web applications, integrations, and business-driven digital products",
+  "heroSubtitle": "Full Stack · Scalable web applications, integrations, and business-driven digital products",
   "heroRoles": ["Full Stack", "React", "Node.js", "REST APIs"],
   "foto": "brayan.jpg",
   "stats": [],
