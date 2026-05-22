@@ -29,7 +29,9 @@ export function categorizeProject(project) {
   if (
     title.includes('more completed') ||
     title.includes('java projects') ||
-    title.includes('python projects')
+    title.includes('python projects') ||
+    title.includes('projetos java') ||
+    title.includes('projetos python')
   ) {
     return 'repos';
   }
@@ -96,7 +98,7 @@ export function categorizeProject(project) {
   }
 
   if (
-    project.isExternal ||
+    (project.isExternal && !project.github) ||
     tech.includes('wordpress') ||
     tech.includes('e-commerce') ||
     title.includes('e-commerce') ||
