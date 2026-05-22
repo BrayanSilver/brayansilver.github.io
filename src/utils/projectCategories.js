@@ -60,6 +60,10 @@ export function categorizeProject(project) {
     return 'games';
   }
 
+  if (title.includes('techshop') || title.includes('e-commerce demo')) {
+    return 'websites';
+  }
+
   if (
     title.includes('netflix') ||
     title.includes('streaming') ||
