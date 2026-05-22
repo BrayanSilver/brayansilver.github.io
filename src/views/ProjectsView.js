@@ -34,7 +34,7 @@ export class ProjectsView {
     const categoriesHTML = PROJECT_CATEGORIES.map((cat) => {
       const items = grouped.get(cat.id) || [];
       if (!items.length) return '';
-      return this.#carouselSection(i18n.categoryLabel(cat.id), items, onOpenModal);
+      return this.#carouselSection(cat.id, i18n.categoryLabel(cat.id), items, onOpenModal);
     }).join('');
 
     setHTML(
@@ -61,14 +61,14 @@ export class ProjectsView {
    * @param {import('../models/ProjectModel.js').Project[]} items
    * @param {(index: number) => void} onOpenModal
    */
-  #carouselSection(label, items, onOpenModal) {
+  #carouselSection(categoryId, label, items, onOpenModal) {
     const i18n = getI18n();
     const cards = items
       .map((p) => this.#cardHTML(p, onOpenModal, 'carousel'))
       .join('');
 
     return `
-      <section class="project-category reveal">
+      <section class="project-category reveal" data-category="${categoryId}">
         <div class="carousel-header">
           <h3 class="project-category-title">${label}</h3>
         </div>

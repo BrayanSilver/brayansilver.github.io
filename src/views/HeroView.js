@@ -5,6 +5,7 @@
 
 import { $, setHTML } from '../utils/dom.js';
 import { SELECTORS } from '../config/constants.js';
+import { getI18n } from '../i18n/I18nService.js';
 
 export class HeroView {
   /** @type {number|null} */
@@ -20,10 +21,12 @@ export class HeroView {
     const titleEl = $(SELECTORS.heroTitle);
     const descEl = $(SELECTORS.heroDescription);
 
-    if (titleEl && personalInfo.heroTitle) {
+    const titleWord = getI18n().t('hero.titleWord');
+
+    if (titleEl) {
       titleEl.innerHTML = `
         <span class="hero-line">
-          <span class="glow-text">${personalInfo.heroTitle}</span>
+          <span class="glow-text">${titleWord}</span>
         </span>
         <span class="hero-line hero-line--accent">
           <span class="gradient-text" id="heroTyping"></span>

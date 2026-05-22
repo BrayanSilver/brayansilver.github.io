@@ -11,6 +11,7 @@ import { isGameProject } from './helpers.js';
 export const PROJECT_CATEGORIES = [
   { id: 'fullstack' },
   { id: 'websites' },
+  { id: 'contributions' },
   { id: 'tools' },
   { id: 'games' },
   { id: 'repos' },
@@ -34,6 +35,18 @@ export function categorizeProject(project) {
   }
 
   if (isGameProject(project)) return 'games';
+
+  if (
+    title.includes('lumisoft') ||
+    title.includes('lumicenter') ||
+    title.includes('e-book') ||
+    title.includes('ebook') ||
+    link.includes('lumisoft.lumicenter') ||
+    link.includes('lojaonline.lumicenter') ||
+    link.includes('iluminacaopratica.lumicenter')
+  ) {
+    return 'contributions';
+  }
 
   if (
     link.includes('jogo') ||
@@ -62,8 +75,6 @@ export function categorizeProject(project) {
 
   if (
     title.includes('dashboard') ||
-    title.includes('document management') ||
-    title.includes('lumisoft') ||
     tech.includes('chart.js')
   ) {
     return 'tools';

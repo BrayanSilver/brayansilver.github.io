@@ -265,21 +265,6 @@
       ]
     },
     {
-      "id": 5,
-      "pasta": "projeto5",
-      "titulo": "Document Management System",
-      "descricao": "Integrated management system (SGI) for document control, workflows, and compliance tracking within the organization.",
-      "tecnologias": "HTML, CSS, JavaScript, Node.js, PL/SQL, Express",
-      "link": "",
-      "github": "",
-      "imagens": [
-        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
-      ],
-      "loadedImages": [
-        "https://unsplash.com/photos/Skf7HxARcoc/download?force=true&w=800"
-      ]
-    },
-    {
       "id": 8,
       "pasta": "projeto8",
       "titulo": "Todo List App",

@@ -34,6 +34,11 @@
   gap: 2rem;
 }
 
+/* Oculto temporariamente — Contribuições & Colaborações */
+.project-category[data-category="contributions"] {
+  display: none;
+}
+
 /* Category + carousel */
 .project-category-title {
   font-family: var(--font-display);

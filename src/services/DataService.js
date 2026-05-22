@@ -41,7 +41,7 @@ export class DataService {
    * @returns {Promise<Object>}
    */
   async #fetchJson(path, fallback) {
-    const response = await fetch(path);
+    const response = await fetch(`${path}?v=${Date.now()}`, { cache: 'no-store' });
     if (!response.ok) return fallback;
     return response.json();
   }
