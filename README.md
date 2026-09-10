@@ -21,10 +21,10 @@ You can find me on
 
 - **Full Stack Web Developer** building corporate sites, e-commerce, internal systems, and REST APIs
 - Currently at **Grupo Lumicenter Lighting** — web platforms, integrations, and digital products
-- Degree in **Systems Analysis and Development** — Centro Universitário Santa Cruz de Curitiba
+- Degree in **Systems Analysis and Development** — Centro UniversitÃ¡rio Santa Cruz de Curitiba
 - Postgraduate in **IT Management** *(in progress)*
 - MBA in **Artificial Intelligence** *(starting)*
-- Based in **São José dos Pinhais, PR — Brazil**
+- Based in **SÃ£o JosÃ© dos Pinhais, PR — Brazil**
 - Freelance experience before joining Lumicenter full-time
 
 ---
@@ -93,7 +93,7 @@ You can find me on
 
 ### Live portfolio
 
-**[brayansilver.github.io](https://brayansilver.github.io)** · [Repository](https://github.com/BrayanSilver/brayansilver.github.io)  
+**[brayansilver.github.io](https://brayansilver.github.io)** Â· [Repository](https://github.com/BrayanSilver/brayansilver.github.io)  
 Personal portfolio with MVC architecture (ES Modules), JSON-driven content, admin panel, featured projects, category carousels, and interactive projects. Deployed on GitHub Pages.
 
 ---
@@ -122,9 +122,9 @@ Personal portfolio with MVC architecture (ES Modules), JSON-driven content, admi
 
 ### Study & code collections
 
-**[Java Projects](https://github.com/BrayanSilver/Java_Brayan)** — OOP exercises: loans, pharmacy, calculators, employee management  
+**[Java Projects](https://github.com/BrayanSilver/Java)** — OOP exercises: loans, pharmacy, calculators, employee management  
 
-**[Python Projects](https://github.com/BrayanSilver/Python_Brayan)** — Automation: backup, monitoring, scraper, email, file organizer  
+**[Python Projects](https://github.com/BrayanSilver/Python)** — Automation: backup, monitoring, scraper, email, file organizer  
 
 **[Web Projects (JS/HTML)](https://github.com/BrayanSilver/JS-HTML_Brayan)** — Front-end exercises and small applications  
 
@@ -149,7 +149,7 @@ npx serve .
 | `admin.html` | Admin panel to edit & export JSON |
 | `src/` | MVC app (`app.js`, views, controllers) |
 
-**Stack:** HTML5 · CSS3 (design tokens, glassmorphism) · Vanilla JS (fetch, Intersection Observer) · GitHub Pages · Google Analytics 4
+**Stack:** HTML5 Â· CSS3 (design tokens, glassmorphism) Â· Vanilla JS (fetch, Intersection Observer) Â· GitHub Pages Â· Google Analytics 4
 
 ---
 

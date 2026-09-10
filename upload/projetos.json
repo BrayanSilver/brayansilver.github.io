@@ -3,7 +3,7 @@
     {
       "id": 27,
       "pasta": "projeto27",
-      "titulo": "TechDash — BI Dashboard",
+      "titulo": "TechDash â€” BI Dashboard",
       "descricao": "Executive business intelligence panel: sales, analytics, finance, API monitoring, and live public data (exchange rates, crypto, population). Interactive Recharts charts, KPIs, and offline fallback when APIs fail.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Recharts, Tailwind CSS",
       "link": "",
@@ -14,7 +14,7 @@
     {
       "id": 24,
       "pasta": "projeto24",
-      "titulo": "IntelliHub AI — AI Hub",
+      "titulo": "IntelliHub AI â€” AI Hub",
       "descricao": "Full-stack AI portfolio hub with seven modules: knowledge-base chatbot, automatic summarization, semantic search, OCR, intelligent support, content generation, and RAG with PDFs. React 19, Next.js 15, NestJS, and mock engine ready for OpenAI and real providers.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, Radix UI, AI",
       "link": "",
@@ -25,7 +25,7 @@
     {
       "id": 25,
       "pasta": "projeto25",
-      "titulo": "FlowCRM — Mini CRM SaaS",
+      "titulo": "FlowCRM â€” Mini CRM SaaS",
       "descricao": "Multi-tenant B2B CRM demo: dashboard with KPIs and charts, contacts CRUD, deals Kanban pipeline, and tasks board (pending / in progress / done). Each organization sees only its own mock data. Next.js + NestJS full-stack.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, shadcn/ui, Recharts",
       "link": "",
@@ -36,7 +36,7 @@
     {
       "id": 26,
       "pasta": "projeto26",
-      "titulo": "TechShop — E-commerce Demo",
+      "titulo": "TechShop â€” E-commerce Demo",
       "descricao": "End-to-end online store: catalog with search and filters, JWT auth, shopping cart, simulated checkout (PIX, card, boleto), stock control, and admin panel for products and image upload. Business rule: card declines orders over R$ 5,000.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, JWT, Tailwind CSS",
       "link": "",
@@ -47,7 +47,7 @@
     {
       "id": 28,
       "pasta": "projeto28",
-      "titulo": "Trello Clone — Kanban Boards",
+      "titulo": "Trello Clone â€” Kanban Boards",
       "descricao": "Trello-style task management: boards, Kanban lists, drag-and-drop cards, detail modal with labels, checklists, dates, and members. Demonstrates REST CRUD, frontend state, and productivity UX. Next.js + NestJS.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS",
       "link": "",
@@ -58,7 +58,7 @@
     {
       "id": 29,
       "pasta": "projeto29",
-      "titulo": "Realtime Hub — WebSocket",
+      "titulo": "Realtime Hub â€” WebSocket",
       "descricao": "Real-time communication with Socket.IO: multi-room chat with presence and typing indicators, collaborative editor with live cursors, and push notification feed. NestJS WebSocket gateways and Next.js socket.io-client.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Socket.IO, WebSocket",
       "link": "",
@@ -69,8 +69,8 @@
     {
       "id": 30,
       "pasta": "projeto30",
-      "titulo": "Netflix Streaming — UI Clone",
-      "descricao": "Streaming platform UI built with React 19 and Vite: faithful visual rebuild of the Netflix experience. Hero banner, horizontal carousels by category, Top 10 ranking, hover previews, detail modal, search, and 24 mock titles with SVG posters — frontend-focused portfolio piece.",
+      "titulo": "Netflix Streaming â€” UI Clone",
+      "descricao": "Streaming platform UI built with React 19 and Vite: faithful visual rebuild of the Netflix experience. Hero banner, horizontal carousels by category, Top 10 ranking, hover previews, detail modal, search, and 24 mock titles with SVG posters â€” frontend-focused portfolio piece.",
       "tecnologias": "React, Vite, JavaScript, Lucide React, CSS3",
       "link": "",
       "github": "https://github.com/BrayanSilver/NETFLIX_STREAMING",
@@ -81,7 +81,7 @@
       "id": 23,
       "pasta": "projeto23",
       "titulo": "Lumicenter E-commerce",
-      "descricao": "Official Lumicenter Lighting online store — professional LED lighting e-commerce for Brazil. Full product catalog by segment, shopping cart, checkout, installments, nationwide shipping, live chat (ChatLumi), and specialist support via WhatsApp and email. Production-ready platform focused on conversion and B2B/B2C sales.",
+      "descricao": "Official Lumicenter Lighting online store â€” professional LED lighting e-commerce for Brazil. Full product catalog by segment, shopping cart, checkout, installments, nationwide shipping, live chat (ChatLumi), and specialist support via WhatsApp and email. Production-ready platform focused on conversion and B2B/B2C sales.",
       "tecnologias": "HTML, CSS, JavaScript, E-commerce, REST APIs, Integrations",
       "link": "https://lojaonline.lumicenter.com/",
       "github": "",
@@ -95,7 +95,7 @@
     {
       "id": 20,
       "pasta": "projeto20",
-      "titulo": "Slipper World Store — Showcase Site",
+      "titulo": "Slipper World Store â€” Showcase Site",
       "descricao": "International e-commerce store for slippers and comfortable shoes. Modern design with a full product catalog, shopping cart, and secure checkout. Responsive platform optimized for sales conversion.",
       "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
       "link": "https://slipper-world-store.vercel.app/",
@@ -114,7 +114,7 @@
     {
       "id": 21,
       "pasta": "projeto21",
-      "titulo": "L'ESSENTIEL — Showcase Site",
+      "titulo": "L'ESSENTIEL â€” Showcase Site",
       "descricao": "International beauty and aesthetics e-commerce store. Premium catalog for skincare, makeup, and personal care products. Sophisticated UI with a premium shopping experience and personalized recommendations.",
       "tecnologias": "React, Next.js, TypeScript, Tailwind CSS, E-commerce",
       "link": "https://beauty-afinity.vercel.app/",
@@ -133,7 +133,7 @@
     {
       "id": 3,
       "pasta": "projeto3",
-      "titulo": "RF Consultoria — Showcase Site",
+      "titulo": "RF Consultoria â€” Showcase Site",
       "descricao": "Corporate showcase website for a food industry consulting firm. Built with WordPress, contact forms, and EmailJS integration for lead capture.",
       "tecnologias": "WordPress, PHP, EmailJS",
       "link": "https://rfconsultoriaalimentos.com.br/home/",
@@ -360,8 +360,8 @@
       "titulo": "Java Projects",
       "descricao": "GitHub repository with professional Java OOP projects: loan approval, pharmacy registration, water consumption calculator, and employee management. Implemented following software quality standards and solid architecture.",
       "tecnologias": "Java",
-      "link": "https://github.com/BrayanSilver/Java_Brayan",
-      "github": "https://github.com/BrayanSilver/Java_Brayan",
+      "link": "https://github.com/BrayanSilver/Java",
+      "github": "https://github.com/BrayanSilver/Java",
       "imagens": [
         "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop"
       ],
@@ -373,10 +373,10 @@
       "id": 19,
       "pasta": "projeto19",
       "titulo": "Python Projects",
-      "descricao": "GitHub repository with 10 automation and system projects in Python: automated backup, system monitor, web scraper, email automation, file organizer, and more — all fully documented.",
+      "descricao": "GitHub repository with 10 automation and system projects in Python: automated backup, system monitor, web scraper, email automation, file organizer, and more â€” all fully documented.",
       "tecnologias": "Python, psutil, requests, beautifulsoup4, pandas, win10toast",
-      "link": "https://github.com/BrayanSilver/Python_Brayan",
-      "github": "https://github.com/BrayanSilver/Python_Brayan",
+      "link": "https://github.com/BrayanSilver/Python",
+      "github": "https://github.com/BrayanSilver/Python",
       "imagens": [
         "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop"
       ],
