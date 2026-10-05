@@ -3,7 +3,7 @@
  * @description Tilt 3D discreto + highlight acompanhando o mouse nos cards.
  */
 
-const DEFAULT_SELECTOR = '.stat-card, .about-image, .contact-item, .skill-pill';
+const DEFAULT_SELECTOR = '.stat-card, .contact-item, .skill-pill';
 const MAX_TILT = 10;
 
 /**

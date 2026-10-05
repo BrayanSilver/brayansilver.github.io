@@ -39,7 +39,6 @@
 
 .about-image-wrapper {
   position: relative;
-  perspective: 1000px;
 }
 
 .about-image {
@@ -49,13 +48,6 @@
   border: 1px solid rgba(197, 205, 216, 0.12);
   position: relative;
   z-index: 1;
-  transform-style: preserve-3d;
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
-  will-change: transform;
-}
-
-.about-image.is-tilting {
-  transition: none;
 }
 
 .about-photo {
