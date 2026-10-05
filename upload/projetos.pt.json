@@ -1,23 +1,6 @@
 {
   "projetos": [
     {
-      "id": 31,
-      "pasta": "projeto31",
-      "titulo": "SalesPulse — Dashboard de Vendas",
-      "descricao": "Dashboard TV de vendas com dados 100% mock: visão geral, indicadores, metas, pedidos ao vivo, rankings e popups motivacionais. Demo de portfólio — empresa fictícia Nexus Retail, sem vínculo com sistemas reais.",
-      "tecnologias": "HTML, CSS, JavaScript, Chart.js",
-      "link": "projetos/sales-pulse/index.html",
-      "github": "",
-      "imagens": [
-        "1.webp",
-        "2.webp"
-      ],
-      "loadedImages": [
-        "upload/projeto31/1.webp",
-        "upload/projeto31/2.webp"
-      ]
-    },
-    {
       "id": 27,
       "pasta": "projeto27",
       "titulo": "TechDash — Painel BI",
@@ -154,6 +137,23 @@
         "upload/projeto30/3.webp",
         "upload/projeto30/4.webp",
         "upload/projeto30/5.webp"
+      ]
+    },
+    {
+      "id": 31,
+      "pasta": "projeto31",
+      "titulo": "SalesPulse — Dashboard de Vendas",
+      "descricao": "Dashboard TV de vendas com dados 100% mock: visão geral, indicadores, metas, pedidos ao vivo, rankings e popups motivacionais. Demo de portfólio — empresa fictícia Nexus Retail, sem vínculo com sistemas reais.",
+      "tecnologias": "HTML, CSS, JavaScript, Chart.js",
+      "link": "projetos/sales-pulse/index.html",
+      "github": "",
+      "imagens": [
+        "1.webp",
+        "2.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto31/1.webp",
+        "upload/projeto31/2.webp"
       ]
     },
     {
