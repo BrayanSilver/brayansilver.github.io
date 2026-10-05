@@ -11,10 +11,10 @@ import { isGameProject, isCollaborationProject } from './helpers.js';
 export const PROJECT_CATEGORIES = [
   { id: 'fullstack' },
   { id: 'websites' },
-  { id: 'contributions' },
   { id: 'tools' },
   { id: 'games' },
   { id: 'repos' },
+  { id: 'contributions' },
 ];
 
 /**
