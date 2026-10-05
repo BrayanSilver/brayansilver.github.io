@@ -53,10 +53,17 @@
   ],
   "experience": [
     {
+      "role": "Desenvolvedor Full Stack Pleno",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR · Presencial",
+      "period": "Ago 2026 — Atual",
+      "description": "Desenvolvimento web da loja e-commerce, sites corporativos e sistemas internos. Features ponta a ponta — frontend, backend, APIs REST e integrações com serviços terceiros."
+    },
+    {
       "role": "Desenvolvedor Full Stack Júnior",
       "company": "Grupo Lumicenter Lighting",
       "location": "São José dos Pinhais, PR · Presencial",
-      "period": "Ago 2025 — Atual",
+      "period": "Ago 2025 — Jul 2026",
       "description": "Desenvolvimento web da loja e-commerce, sites corporativos e sistemas internos. Features ponta a ponta — frontend, backend, APIs REST e integrações com serviços terceiros."
     },
     {

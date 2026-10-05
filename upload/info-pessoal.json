@@ -53,10 +53,17 @@
   ],
   "experience": [
     {
+      "role": "Mid-level Full Stack Developer",
+      "company": "Grupo Lumicenter Lighting",
+      "location": "São José dos Pinhais, PR · On-site",
+      "period": "Aug 2026 — Present",
+      "description": "Web development for the company e-commerce store, corporate sites, and internal systems. Building features end-to-end — frontend, backend, REST APIs, and integrations with third-party services."
+    },
+    {
       "role": "Junior Full Stack Developer",
       "company": "Grupo Lumicenter Lighting",
       "location": "São José dos Pinhais, PR · On-site",
-      "period": "Aug 2025 — Present",
+      "period": "Aug 2025 — Jul 2026",
       "description": "Web development for the company e-commerce store, corporate sites, and internal systems. Building features end-to-end — frontend, backend, REST APIs, and integrations with third-party services."
     },
     {
