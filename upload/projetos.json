@@ -4,7 +4,7 @@
       "id": 27,
       "pasta": "projeto27",
       "titulo": "TechDash — BI Dashboard",
-      "descricao": "Executive business intelligence panel: sales, analytics, finance, API monitoring, and live public data (exchange rates, crypto, population). Interactive Recharts charts, KPIs, and offline fallback when APIs fail.",
+      "descricao": "Executive BI dashboard with sales, analytics, finance, API monitoring and public data. Interactive Recharts charts and KPI cards. Next.js + NestJS full-stack demo.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Recharts, Tailwind CSS",
       "link": "https://techdash-bi.vercel.app",
       "github": "https://github.com/BrayanSilver/PROFESSIONAL_DASHBOARD",
@@ -23,9 +23,9 @@
       "id": 24,
       "pasta": "projeto24",
       "titulo": "IntelliHub AI — AI Hub",
-      "descricao": "Full-stack AI portfolio hub with seven modules: knowledge-base chatbot, automatic summarization, semantic search, OCR, intelligent support, content generation, and RAG with PDFs. React 19, Next.js 15, NestJS, and mock engine ready for OpenAI and real providers.",
+      "descricao": "AI portfolio hub with chatbot, summarization, semantic search, OCR, support, content generation and RAG over PDFs. React 19, Next.js 15 and NestJS mock engine.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, Radix UI, AI",
-      "link": "https://intellihub-ai.vercel.app",
+      "link": "https://intellihub-ai-self.vercel.app",
       "github": "https://github.com/BrayanSilver/AI_PROJECT",
       "imagens": [
         "1.webp",
@@ -44,7 +44,7 @@
       "id": 25,
       "pasta": "projeto25",
       "titulo": "FlowCRM — Mini CRM SaaS",
-      "descricao": "Multi-tenant B2B CRM demo: dashboard with KPIs and charts, contacts CRUD, deals Kanban pipeline, and tasks board (pending / in progress / done). Each organization sees only its own mock data. Next.js + NestJS full-stack.",
+      "descricao": "Multi-tenant mini CRM SaaS: landing, email login, KPI dashboard, contacts and Kanban deals pipeline. Next.js + NestJS with mock org data.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, shadcn/ui, Recharts",
       "link": "https://flowcrm-saas.vercel.app",
       "github": "https://github.com/BrayanSilver/SAAS",
@@ -63,7 +63,7 @@
       "id": 26,
       "pasta": "projeto26",
       "titulo": "TechShop — E-commerce Demo",
-      "descricao": "End-to-end online store: catalog with search and filters, JWT auth, shopping cart, simulated checkout (PIX, card, boleto), stock control, and admin panel for products and image upload. Business rule: card declines orders over R$ 5,000.",
+      "descricao": "TechShop e-commerce demo: dark storefront, category filters, cart and simulated checkout. Catalog with mock products. Next.js + NestJS.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, JWT, Tailwind CSS",
       "link": "https://techshop-store-blond.vercel.app",
       "github": "https://github.com/BrayanSilver/E-COMMERCE",
@@ -82,7 +82,7 @@
       "id": 28,
       "pasta": "projeto28",
       "titulo": "BoardFlow — Kanban Boards",
-      "descricao": "Task management with Kanban boards: lists, drag-and-drop cards, detail modal with labels, checklists, dates, and members. Demonstrates REST CRUD, frontend state, and productivity UX. Next.js + NestJS. Original portfolio demo — not affiliated with any third-party brand.",
+      "descricao": "BoardFlow Kanban boards: favorites, board workspace, lists and cards with detail modal. REST CRUD productivity demo. Next.js + NestJS.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS",
       "link": "https://trello-kanban-three.vercel.app",
       "github": "https://github.com/BrayanSilver/TRELLO_KANBAN",
@@ -101,7 +101,7 @@
       "id": 29,
       "pasta": "projeto29",
       "titulo": "Realtime Hub — WebSocket",
-      "descricao": "Real-time communication with Socket.IO: multi-room chat with presence and typing indicators, collaborative editor with live cursors, and push notification feed. NestJS WebSocket gateways and Next.js socket.io-client.",
+      "descricao": "Realtime Hub with Socket.IO: multi-room chat, collaborative editor with live cursors, and push notification feed. NestJS + Next.js.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Socket.IO, WebSocket",
       "link": "https://realtime-hub-nine.vercel.app",
       "github": "https://github.com/BrayanSilver/WEBSOCKET_INSTANT",
@@ -120,7 +120,7 @@
       "id": 30,
       "pasta": "projeto30",
       "titulo": "NovaStream — Streaming UI",
-      "descricao": "Streaming platform UI built with React 19 and Vite: hero banner, category carousels, Top 10 ranking, hover previews, detail modal, search, and 24 fictional titles with SVG posters. Frontend-focused portfolio piece — original branding and mock content, not affiliated with commercial streaming services.",
+      "descricao": "NovaStream — original streaming UI demo (React + Vite): hero, Top 10, category rows, search and fictional titles with SVG posters.",
       "tecnologias": "React, Vite, JavaScript, Lucide React, CSS3",
       "link": "https://netflix-streaming.vercel.app",
       "github": "https://github.com/BrayanSilver/NETFLIX_STREAMING",
@@ -251,15 +251,15 @@
       "id": 17,
       "pasta": "projeto17",
       "titulo": "Pixel Hop — Platformer",
-      "descricao": "2D platformer built with React. Jump across platforms, collect coins, defeat enemies, and maximize your score. Lives system, physics, and smooth animations. Original portfolio demo.",
+      "descricao": "Pixel Hop — original React 2D platformer: jump, collect coins, defeat enemies and chase high scores.",
       "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
       "link": "projetos/mario-platformer.html",
       "github": "",
       "imagens": [
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+        "1.webp"
       ],
       "loadedImages": [
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+        "upload/projeto17/1.webp"
       ]
     },
     {
