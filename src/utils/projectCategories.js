@@ -66,6 +66,8 @@ export function categorizeProject(project) {
     title.includes('boardflow') ||
     title.includes('pixel hop') ||
     title.includes('streaming') ||
+    title.includes('salespulse') ||
+    title.includes('sales pulse') ||
     (tech.includes('next.js') &&
       (tech.includes('nestjs') || tech.includes('socket.io')))
   ) {
@@ -77,7 +79,6 @@ export function categorizeProject(project) {
   }
 
   if (
-    title.includes('salespulse') ||
     title.includes('dashboard') ||
     tech.includes('chart.js')
   ) {
