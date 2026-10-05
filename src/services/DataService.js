@@ -7,7 +7,7 @@ import { API_PATHS, DEFAULTS, personalInfoPath, projectsPath } from '../config/c
 import { PortfolioModel, Project } from '../models/PortfolioModel.js';
 
 /** Bump when JSON/assets change to bust CDN/browser cache without Date.now() */
-const DATA_VERSION = '20261005b';
+const DATA_VERSION = '20261005e';
 
 /**
  * Serviço de acesso a dados do portfólio (simula uma API REST via fetch).
@@ -40,7 +40,7 @@ export class DataService {
    */
   async #fetchJson(path, fallback) {
     const response = await fetch(`${path}?v=${DATA_VERSION}`, {
-      cache: 'force-cache',
+      cache: 'no-store',
     });
     if (!response.ok) return fallback;
     return response.json();
