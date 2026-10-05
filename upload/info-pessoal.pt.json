@@ -2,18 +2,42 @@
   "about": "Sou Brayan Rosa da Silveira, Desenvolvedor Full Stack com foco em desenvolvimento web — sites corporativos, e-commerce, sistemas internos e APIs REST. Escrevo código limpo e escalável e entrego produtos que resolvem problemas reais de negócio.\n\nFormei-me em Análise e Desenvolvimento de Sistemas pelo Centro Universitário Santa Cruz de Curitiba e atualmente curso Gestão da Tecnologia da Informação na mesma instituição. Também possuo certificações em Governança de Dados (ENAP) e Inglês.\n\nAntes de ingressar oficialmente na Lumicenter Lighting, trabalhei dois anos como freelancer, criando sites, aplicações web e automações para clientes. Comecei com estágio em dados e Power BI e evolui para funções full stack — principalmente plataformas web, ferramentas internas e integrações de API.\n\nEstou sempre aprendendo, publicando projetos paralelos e melhorando a forma como desenho APIs, dashboards e interfaces modernas.",
   "heroTitle": "Desenvolvedor",
   "heroSubtitle": "Full Stack · Aplicações web, integrações e produtos digitais orientados a resultados de negócio",
-  "heroRoles": ["Full Stack", "React", "Node.js", "APIs REST"],
-  "foto": "brayan.jpg",
+  "heroRoles": [
+    "Full Stack",
+    "React",
+    "Node.js",
+    "APIs REST"
+  ],
+  "foto": "brayan.webp",
   "stats": [],
   "skills": {
     "hard": [
-      "JavaScript", "TypeScript", "React", "Node.js", "HTML5", "CSS3",
-      "Python", "SQL", "REST APIs", "E-commerce", "WordPress",
-      "Git", "Docker", "Scrum", "MySQL", "MongoDB", "Power BI"
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "HTML5",
+      "CSS3",
+      "Python",
+      "SQL",
+      "REST APIs",
+      "E-commerce",
+      "WordPress",
+      "Git",
+      "Docker",
+      "Scrum",
+      "MySQL",
+      "MongoDB",
+      "Power BI"
     ],
     "soft": [
-      "Aprendizado contínuo", "Comunicação", "Proatividade",
-      "Trabalho em equipe", "Organização", "Resolução de problemas", "Code review"
+      "Aprendizado contínuo",
+      "Comunicação",
+      "Proatividade",
+      "Trabalho em equipe",
+      "Organização",
+      "Resolução de problemas",
+      "Code review"
     ]
   },
   "certifications": [

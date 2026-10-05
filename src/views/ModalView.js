@@ -88,7 +88,7 @@ export class ModalView {
               <div class="carousel-track" id="carouselTrack">
                 ${images.map((img, i) => `
                   <div class="carousel-slide ${i === 0 ? 'active' : ''}">
-                    <img src="${img}" alt="${projeto.titulo || 'Project'} — ${i + 1}" class="carousel-image" loading="${i === 0 ? 'eager' : 'lazy'}">
+                    <img src="${img}" alt="${projeto.titulo || 'Project'} — ${i + 1}" class="carousel-image" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" width="1280" height="720">
                   </div>
                 `).join('')}
               </div>

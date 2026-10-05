@@ -107,7 +107,15 @@ export class ProjectsView {
 
     const media = firstImage
       ? `<div class="project-image">
-          <img src="${firstImage}" alt="${project.title}" loading="lazy" decoding="async">
+          <img
+            src="${firstImage}"
+            alt="${project.title}"
+            width="800"
+            height="500"
+            loading="${variant === 'featured' && index < 3 ? 'eager' : 'lazy'}"
+            decoding="async"
+            fetchpriority="${variant === 'featured' && index < 3 ? 'high' : 'low'}"
+          >
           <div class="project-overlay ${overlay}"></div>
           <div class="project-number">${String(index + 1).padStart(2, '0')}</div>
         </div>`

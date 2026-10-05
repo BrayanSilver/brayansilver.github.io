@@ -6,10 +6,18 @@
       "titulo": "TechDash — BI Dashboard",
       "descricao": "Executive business intelligence panel: sales, analytics, finance, API monitoring, and live public data (exchange rates, crypto, population). Interactive Recharts charts, KPIs, and offline fallback when APIs fail.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Recharts, Tailwind CSS",
-      "link": "",
+      "link": "https://techdash-bi.vercel.app",
       "github": "https://github.com/BrayanSilver/PROFESSIONAL_DASHBOARD",
-      "imagens": ["1.png", "2.png", "3.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto27/1.webp",
+        "upload/projeto27/2.webp",
+        "upload/projeto27/3.webp"
+      ]
     },
     {
       "id": 24,
@@ -17,10 +25,20 @@
       "titulo": "IntelliHub AI — AI Hub",
       "descricao": "Full-stack AI portfolio hub with seven modules: knowledge-base chatbot, automatic summarization, semantic search, OCR, intelligent support, content generation, and RAG with PDFs. React 19, Next.js 15, NestJS, and mock engine ready for OpenAI and real providers.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, Radix UI, AI",
-      "link": "",
+      "link": "https://intellihub-ai.vercel.app",
       "github": "https://github.com/BrayanSilver/AI_PROJECT",
-      "imagens": ["1.png", "2.png", "3.png", "4.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp",
+        "4.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto24/1.webp",
+        "upload/projeto24/2.webp",
+        "upload/projeto24/3.webp",
+        "upload/projeto24/4.webp"
+      ]
     },
     {
       "id": 25,
@@ -28,10 +46,18 @@
       "titulo": "FlowCRM — Mini CRM SaaS",
       "descricao": "Multi-tenant B2B CRM demo: dashboard with KPIs and charts, contacts CRUD, deals Kanban pipeline, and tasks board (pending / in progress / done). Each organization sees only its own mock data. Next.js + NestJS full-stack.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS, shadcn/ui, Recharts",
-      "link": "",
+      "link": "https://flowcrm-saas.vercel.app",
       "github": "https://github.com/BrayanSilver/SAAS",
-      "imagens": ["1.png", "2.png", "3.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto25/1.webp",
+        "upload/projeto25/2.webp",
+        "upload/projeto25/3.webp"
+      ]
     },
     {
       "id": 26,
@@ -39,10 +65,18 @@
       "titulo": "TechShop — E-commerce Demo",
       "descricao": "End-to-end online store: catalog with search and filters, JWT auth, shopping cart, simulated checkout (PIX, card, boleto), stock control, and admin panel for products and image upload. Business rule: card declines orders over R$ 5,000.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, JWT, Tailwind CSS",
-      "link": "",
+      "link": "https://techshop-store-blond.vercel.app",
       "github": "https://github.com/BrayanSilver/E-COMMERCE",
-      "imagens": ["1.png", "2.png", "3.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto26/1.webp",
+        "upload/projeto26/2.webp",
+        "upload/projeto26/3.webp"
+      ]
     },
     {
       "id": 28,
@@ -50,10 +84,18 @@
       "titulo": "Trello Clone — Kanban Boards",
       "descricao": "Trello-style task management: boards, Kanban lists, drag-and-drop cards, detail modal with labels, checklists, dates, and members. Demonstrates REST CRUD, frontend state, and productivity UX. Next.js + NestJS.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS",
-      "link": "",
+      "link": "https://trello-kanban-three.vercel.app",
       "github": "https://github.com/BrayanSilver/TRELLO_KANBAN",
-      "imagens": ["1.png", "2.png", "3.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto28/1.webp",
+        "upload/projeto28/2.webp",
+        "upload/projeto28/3.webp"
+      ]
     },
     {
       "id": 29,
@@ -61,10 +103,18 @@
       "titulo": "Realtime Hub — WebSocket",
       "descricao": "Real-time communication with Socket.IO: multi-room chat with presence and typing indicators, collaborative editor with live cursors, and push notification feed. NestJS WebSocket gateways and Next.js socket.io-client.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Socket.IO, WebSocket",
-      "link": "",
+      "link": "https://realtime-hub-nine.vercel.app",
       "github": "https://github.com/BrayanSilver/WEBSOCKET_INSTANT",
-      "imagens": ["1.png", "2.png", "3.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto29/1.webp",
+        "upload/projeto29/2.webp",
+        "upload/projeto29/3.webp"
+      ]
     },
     {
       "id": 30,
@@ -72,10 +122,22 @@
       "titulo": "Netflix Streaming — UI Clone",
       "descricao": "Streaming platform UI built with React 19 and Vite: faithful visual rebuild of the Netflix experience. Hero banner, horizontal carousels by category, Top 10 ranking, hover previews, detail modal, search, and 24 mock titles with SVG posters — frontend-focused portfolio piece.",
       "tecnologias": "React, Vite, JavaScript, Lucide React, CSS3",
-      "link": "",
+      "link": "https://netflix-streaming.vercel.app",
       "github": "https://github.com/BrayanSilver/NETFLIX_STREAMING",
-      "imagens": ["1.png", "2.png", "3.png", "4.png", "5.png"],
-      "loadedImages": []
+      "imagens": [
+        "1.webp",
+        "2.webp",
+        "3.webp",
+        "4.webp",
+        "5.webp"
+      ],
+      "loadedImages": [
+        "upload/projeto30/1.webp",
+        "upload/projeto30/2.webp",
+        "upload/projeto30/3.webp",
+        "upload/projeto30/4.webp",
+        "upload/projeto30/5.webp"
+      ]
     },
     {
       "id": 23,
@@ -90,7 +152,11 @@
         "https://images.unsplash.com/photo-1513506003901-935e5ad42ef9?w=1200&h=800&fit=crop",
         "https://images.unsplash.com/photo-1557821552-051099bc4b38?w=1200&h=800&fit=crop"
       ],
-      "loadedImages": []
+      "loadedImages": [
+        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1513506003901-935e5ad42ef9?w=1200&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1557821552-051099bc4b38?w=1200&h=800&fit=crop"
+      ]
     },
     {
       "id": 20,
@@ -169,16 +235,16 @@
       "link": "https://iluminacaopratica.lumicenter.com/",
       "github": "",
       "imagens": [
-        "image.png",
-        "image1.png",
-        "image2.png",
-        "image3.png"
+        "image.webp",
+        "image1.webp",
+        "image2.webp",
+        "image3.webp"
       ],
       "loadedImages": [
-        "upload/projeto2/image.png",
-        "upload/projeto2/image1.png",
-        "upload/projeto2/image2.png",
-        "upload/projeto2/image3.png"
+        "upload/projeto2/image.webp",
+        "upload/projeto2/image1.webp",
+        "upload/projeto2/image2.webp",
+        "upload/projeto2/image3.webp"
       ]
     },
     {
@@ -205,10 +271,14 @@
       "link": "projetos/neon-drift-3d.html",
       "github": "",
       "imagens": [
-        "neon-drift-cover.jpg"
+        "neon-drift-cover.webp",
+        "2.webp",
+        "3.webp"
       ],
       "loadedImages": [
-        "upload/projeto31/neon-drift-cover.jpg"
+        "upload/projeto31/neon-drift-cover.webp",
+        "upload/projeto31/2.webp",
+        "upload/projeto31/3.webp"
       ]
     },
     {
@@ -220,10 +290,14 @@
       "link": "projetos/crystal-orbit-3d.html",
       "github": "",
       "imagens": [
-        "crystal-orbit-cover.jpg"
+        "crystal-orbit-cover.webp",
+        "2.webp",
+        "3.webp"
       ],
       "loadedImages": [
-        "upload/projeto32/crystal-orbit-cover.jpg"
+        "upload/projeto32/crystal-orbit-cover.webp",
+        "upload/projeto32/2.webp",
+        "upload/projeto32/3.webp"
       ]
     },
     {
@@ -280,18 +354,18 @@
       "link": "https://lumisoft.lumicenter.com/",
       "github": "",
       "imagens": [
-        "image1.png",
-        "image2.png",
-        "image3.png",
-        "image4.png",
-        "image5.png"
+        "image1.webp",
+        "image2.webp",
+        "image3.webp",
+        "image4.webp",
+        "image5.webp"
       ],
       "loadedImages": [
-        "upload/projeto1/image1.png",
-        "upload/projeto1/image2.png",
-        "upload/projeto1/image3.png",
-        "upload/projeto1/image4.png",
-        "upload/projeto1/image5.png"
+        "upload/projeto1/image1.webp",
+        "upload/projeto1/image2.webp",
+        "upload/projeto1/image3.webp",
+        "upload/projeto1/image4.webp",
+        "upload/projeto1/image5.webp"
       ]
     },
     {

@@ -60,7 +60,7 @@ export class AboutView {
     }
 
     wrapper.innerHTML = `
-      <img src="${photoPath}" alt="${getI18n().t('about.photoAlt')}" loading="lazy" class="about-photo">
+      <img src="${photoPath}" alt="${getI18n().t('about.photoAlt')}" loading="eager" decoding="async" fetchpriority="high" width="640" height="800" class="about-photo">
     `;
 
     const img = wrapper.querySelector('.about-photo');
