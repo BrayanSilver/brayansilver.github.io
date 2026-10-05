@@ -5,7 +5,7 @@
 
 import { setHTML } from '../utils/dom.js';
 import { SELECTORS, PROJECT_OVERLAY_CLASSES } from '../config/constants.js';
-import { isGameProject, isExternalUrl } from '../utils/helpers.js';
+import { isGameProject, isExternalUrl, isCollaborationProject } from '../utils/helpers.js';
 import { PROJECT_CATEGORIES, groupProjectsByCategory } from '../utils/projectCategories.js';
 import { getI18n } from '../i18n/I18nService.js';
 
@@ -66,11 +66,16 @@ export class ProjectsView {
     const cards = items
       .map((p) => this.#cardHTML(p, onOpenModal, 'carousel'))
       .join('');
+    const note =
+      categoryId === 'contributions'
+        ? `<p class="project-category-note">${i18n.t('projects.contributionsNote')}</p>`
+        : '';
 
     return `
       <section class="project-category reveal" data-category="${categoryId}">
         <div class="carousel-header">
           <h3 class="project-category-title">${label}</h3>
+          ${note}
         </div>
         <div class="project-carousel" data-carousel>
           <div class="carousel-viewport">
@@ -151,10 +156,15 @@ export class ProjectsView {
     const descClass =
       variant === 'carousel' ? 'project-description project-description--compact' : 'project-description';
 
+    const ownershipBadge = isCollaborationProject(project)
+      ? `<span class="project-ownership">${i18n.t('projects.collaborationBadge')}</span>`
+      : '';
+
     return `
       <article class="project-card reveal ${featuredClass}" ${dataAction} data-delay="${(index % 6) * 60}">
         ${media}
         <div class="project-content">
+          ${ownershipBadge}
           <h3 class="project-title">${project.title}</h3>
           <p class="${descClass}">${project.description}</p>
           ${techHTML ? `<div class="tech-tags">${techHTML}${moreTech}</div>` : ''}

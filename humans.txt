@@ -11,7 +11,14 @@ Standards: HTML5, CSS3, JavaScript
 Components: React, Next.js, Node.js
 Language: pt-BR, en
 
-/* NOTICE */
-Portfolio demos are educational showcases by Brayan Rosa da Silveira.
-Not affiliated with third-party trademark holders. Demos use original portfolio branding.
+/* NOTICE (PT) */
+Portfólio e demos educativas pessoais © Brayan Rosa da Silveira.
+Produtos listados como colaboração (ex.: Lumicenter, RF Consultoria Alimentos) pertencem às empresas donas.
+Colaboração ≠ propriedade.
+
+/* NOTICE (EN) */
+Portfolio and personal educational demos © Brayan Rosa da Silveira.
+Company/client products listed as collaborations remain property of their owners
+(e.g. Lumicenter, RF Consultoria Alimentos). Collaboration ≠ ownership.
+Personal demos use original portfolio branding and are unaffiliated with third-party trademarks.
 Third-party trademarks remain property of their respective owners.

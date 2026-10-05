@@ -48,11 +48,6 @@
   gap: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-/* Oculto temporariamente ? Contribui??es & Colabora??es */
-.project-category[data-category="contributions"] {
-  display: none;
-}
-
 /* Category + carousel */
 .project-category-title {
   font-family: var(--font-display);
@@ -64,6 +59,30 @@
 
 .project-category .carousel-header {
   margin-bottom: 1rem;
+}
+
+.project-category-note {
+  max-width: 52rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.project-ownership {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.65rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(201, 168, 76, 0.28);
+  background: rgba(201, 168, 76, 0.08);
+  color: var(--accent-gold-light);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .project-carousel {

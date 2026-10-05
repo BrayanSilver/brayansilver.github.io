@@ -24,6 +24,31 @@ export function isHtmlProject(link) {
 }
 
 /**
+ * True when the card is a company/client collaboration (not personal ownership).
+ * @param {{ title?: string, link?: string }} project
+ * @returns {boolean}
+ */
+export function isCollaborationProject(project) {
+  const title = (project.title || '').toLowerCase();
+  const link = (project.link || '').toLowerCase();
+  return (
+    title.includes('lumisoft') ||
+    title.includes('lumicenter') ||
+    title.includes('e-book') ||
+    title.includes('ebook') ||
+    title.includes('rf consultoria') ||
+    title.includes("l'essentiel") ||
+    title.includes('slipper') ||
+    link.includes('lumisoft.lumicenter') ||
+    link.includes('lojaonline.lumicenter') ||
+    link.includes('iluminacaopratica.lumicenter') ||
+    link.includes('rfconsultoriaalimentos') ||
+    link.includes('slipper-world') ||
+    link.includes('beauty-afinity')
+  );
+}
+
+/**
  * Detecta se o projeto é um jogo interativo.
  * @param {import('../models/ProjectModel.js').Project} project
  * @returns {boolean}

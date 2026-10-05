@@ -140,6 +140,15 @@ footer {
   margin: 0.25rem 0;
 }
 
+.footer-legal {
+  max-width: 42rem;
+  margin: 0.75rem auto 0 !important;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  opacity: 0.9;
+}
+
 .heart {
   color: #e4c878;
 }

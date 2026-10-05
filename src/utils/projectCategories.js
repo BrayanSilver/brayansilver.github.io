@@ -3,7 +3,7 @@
  * @description Agrupa projetos em categorias para carrosséis.
  */
 
-import { isGameProject } from './helpers.js';
+import { isGameProject, isCollaborationProject } from './helpers.js';
 
 /** @typedef {{ id: string, label: string }} ProjectCategory */
 
@@ -38,15 +38,7 @@ export function categorizeProject(project) {
 
   if (isGameProject(project)) return 'games';
 
-  if (
-    title.includes('lumisoft') ||
-    title.includes('lumicenter') ||
-    title.includes('e-book') ||
-    title.includes('ebook') ||
-    link.includes('lumisoft.lumicenter') ||
-    link.includes('lojaonline.lumicenter') ||
-    link.includes('iluminacaopratica.lumicenter')
-  ) {
+  if (isCollaborationProject(project)) {
     return 'contributions';
   }
 

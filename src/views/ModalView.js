@@ -5,6 +5,7 @@
 
 import { createElement } from '../utils/dom.js';
 import { getI18n } from '../i18n/I18nService.js';
+import { isCollaborationProject } from '../utils/helpers.js';
 
 export class ModalView {
   /** @type {HTMLElement|null} */
@@ -137,6 +138,9 @@ export class ModalView {
           <aside class="modal-panel">
             <div class="modal-panel-scroll">
               <p class="modal-kicker">${i18n.t('modal.caseStudy')}</p>
+              ${isCollaborationProject({ title: projeto.titulo, link: projeto.link })
+                ? `<span class="project-ownership">${i18n.t('projects.collaborationBadge')}</span>`
+                : ''}
               <h2 id="modalProjectTitle" class="modal-title">${projeto.titulo || 'Projeto'}</h2>
               ${tech ? `
                 <div class="modal-stack">
