@@ -273,16 +273,101 @@
     /* ── Visão Geral grid ── */
     .overview-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1.2fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: 1.05fr 1.05fr 1.2fr;
+      grid-template-areas:
+        "geral tele metas"
+        "orders bars side";
       gap: 1rem;
+      align-items: stretch;
     }
+
+    .card-geral { grid-area: geral; }
+    .card-tele { grid-area: tele; }
+    .card-metas { grid-area: metas; }
+    .orders-card { grid-area: orders; }
+    .bars-card { grid-area: bars; }
+    .side-card { grid-area: side; }
 
     .chart-card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 280px;
+      min-height: 260px;
+    }
+
+    .bars-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 340px;
+    }
+
+    .bars-card .chart-container {
+      flex: 1;
+      min-height: 260px;
+      height: auto;
+    }
+
+    .side-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-height: 340px;
+    }
+
+    .side-metric {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid var(--border);
+    }
+
+    .side-metric .label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .side-metric .value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .side-metric .hint {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    .side-metric.accent-cyan .value { color: var(--cyan); }
+    .side-metric.accent-amber .value { color: var(--amber); }
+    .side-metric.accent-green .value { color: var(--green); }
+    .side-metric.accent-violet .value { color: var(--violet); }
+
+    .channel-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      margin-top: 0.35rem;
+    }
+
+    .channel-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .channel-legend i {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      display: inline-block;
     }
 
     .doughnut-wrap {
@@ -374,10 +459,11 @@
 
     /* ── Live orders ── */
     .orders-card {
-      grid-row: span 2;
       display: flex;
       flex-direction: column;
-      max-height: 580px;
+      max-height: none;
+      min-height: 340px;
+    }
     }
 
     .orders-header {
@@ -394,6 +480,10 @@
     }
 
     .orders-list {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+    }
       flex: 1;
       overflow-y: auto;
       display: flex;
@@ -696,8 +786,15 @@
 
     /* ── Responsive ── */
     @media (max-width: 1200px) {
-      .overview-grid { grid-template-columns: 1fr 1fr; }
-      .orders-card { grid-row: auto; max-height: 400px; }
+      .overview-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "geral tele"
+          "metas metas"
+          "bars bars"
+          "orders side";
+      }
+      .orders-card { max-height: 420px; }
       .indicadores-grid { grid-template-columns: 1fr 1fr; }
       .kpi-strip { grid-template-columns: repeat(3, 1fr); }
     }
@@ -705,7 +802,16 @@
     @media (max-width: 768px) {
       .header { padding: 0.85rem 1rem; }
       .main { padding: 1rem; }
-      .overview-grid { grid-template-columns: 1fr; }
+      .overview-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "geral"
+          "tele"
+          "metas"
+          "bars"
+          "side"
+          "orders";
+      }
       .meta-cards { grid-template-columns: 1fr; }
       .kpi-strip { grid-template-columns: repeat(2, 1fr); }
       .indicadores-grid { grid-template-columns: 1fr; }
@@ -713,6 +819,7 @@
       .doughnut-wrap { width: 170px; height: 170px; }
       .motiv-popup { right: 1rem; left: 1rem; max-width: none; }
       .logo-text { font-size: 1.15rem; }
+      .orders-card { max-height: 380px; }
     }
 
     @media (max-width: 480px) {
@@ -762,7 +869,7 @@
     <section class="view-panel active" id="panel-overview">
       <div class="overview-grid">
 
-        <div class="card chart-card">
+        <div class="card chart-card card-geral">
           <div class="card-title">Resultado Geral</div>
           <div class="doughnut-wrap">
             <canvas id="chartGeral"></canvas>
@@ -773,7 +880,7 @@
           </div>
         </div>
 
-        <div class="card chart-card">
+        <div class="card chart-card card-tele">
           <div class="card-title">Televendas</div>
           <div class="doughnut-wrap">
             <canvas id="chartTele"></canvas>
@@ -784,7 +891,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card card-metas">
           <div class="card-title">Metas &amp; Vendas</div>
           <div class="meta-cards">
             <div class="meta-card m1">
@@ -816,6 +923,41 @@
             <div class="orders-count" id="ordersCount">0 pedidos hoje</div>
           </div>
           <div class="orders-list" id="ordersList"></div>
+        </div>
+
+        <div class="card bars-card">
+          <div class="card-title">Vendas por Canal — Mês</div>
+          <div class="chart-container">
+            <canvas id="chartBars"></canvas>
+          </div>
+          <div class="channel-legend">
+            <span><i style="background:#22c55e"></i> Meta do canal</span>
+            <span><i style="background:#38bdf8"></i> Realizado</span>
+          </div>
+        </div>
+
+        <div class="card side-card">
+          <div class="card-title">Indicadores Rápidos</div>
+          <div class="side-metric accent-cyan">
+            <div class="label">Ticket Médio</div>
+            <div class="value" id="sideTicket">R$ 0</div>
+            <div class="hint" id="sideTicketHint">vs. mês anterior</div>
+          </div>
+          <div class="side-metric accent-amber">
+            <div class="label">Taxa de Conversão</div>
+            <div class="value" id="sideConv">0%</div>
+            <div class="hint">visitas → pedidos</div>
+          </div>
+          <div class="side-metric accent-green">
+            <div class="label">Top Produto</div>
+            <div class="value" id="sideTop" style="font-size:1.05rem">—</div>
+            <div class="hint" id="sideTopHint">maior faturamento</div>
+          </div>
+          <div class="side-metric accent-violet">
+            <div class="label">Pedidos / Hora</div>
+            <div class="value" id="sidePace">0</div>
+            <div class="hint">ritmo médio hoje</div>
+          </div>
         </div>
 
       </div>
@@ -968,6 +1110,16 @@
       { name: 'Bahia', value: 76000 }
     ];
 
+    const CHANNELS = [
+      { name: 'E-commerce', meta: 280000, real: 246800 },
+      { name: 'Televendas', meta: 220000, real: 198320 },
+      { name: 'Loja Física', meta: 160000, real: 98450 },
+      { name: 'Marketplace', meta: 120000, real: 112400 },
+      { name: 'Parceiros', meta: 70000, real: 59030 }
+    ];
+
+    const TOP_PRODUCT = { name: 'Plano Anual Pro', value: 148900 };
+
     const AVATAR_COLORS = ['#22c55e','#8b5cf6','#06b6d4','#f59e0b','#f43f5e','#ec4899','#6366f1'];
 
     const MOTIVATIONS = [
@@ -1052,6 +1204,91 @@
 
       if (state.charts.geral) updateDoughnut(state.charts.geral, pctGeral);
       if (state.charts.tele) updateDoughnut(state.charts.tele, pctTele);
+      updateSideMetrics();
+      if (state.charts.bars) updateBarsChart();
+    }
+
+    function updateSideMetrics() {
+      const ticket = Math.round(state.vendasAtuais / Math.max(1, state.ordersToday));
+      const conv = (3.2 + Math.random() * 0.6).toFixed(1);
+      const pace = Math.max(1, Math.round(state.ordersToday / 9));
+      document.getElementById('sideTicket').textContent = fmtMoney(ticket);
+      document.getElementById('sideTicketHint').textContent = '+8% vs. mês anterior';
+      document.getElementById('sideConv').textContent = conv + '%';
+      document.getElementById('sideTop').textContent = TOP_PRODUCT.name;
+      document.getElementById('sideTopHint').textContent = fmtMoney(TOP_PRODUCT.value) + ' no mês';
+      document.getElementById('sidePace').textContent = pace;
+    }
+
+    function createBarsChart() {
+      const el = document.getElementById('chartBars');
+      if (!el) return;
+      const ctx = el.getContext('2d');
+      state.charts.bars = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: CHANNELS.map(c => c.name),
+          datasets: [
+            {
+              label: 'Meta',
+              data: CHANNELS.map(c => c.meta),
+              backgroundColor: 'rgba(34, 197, 94, 0.28)',
+              borderColor: 'rgba(34, 197, 94, 0.55)',
+              borderWidth: 1,
+              borderRadius: 6,
+              barPercentage: 0.7,
+              categoryPercentage: 0.7
+            },
+            {
+              label: 'Realizado',
+              data: CHANNELS.map(c => c.real),
+              backgroundColor: 'rgba(56, 189, 248, 0.85)',
+              borderRadius: 6,
+              barPercentage: 0.7,
+              categoryPercentage: 0.7
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1e293b',
+              titleColor: '#94a3b8',
+              bodyColor: '#f1f5f9',
+              borderColor: 'rgba(148,163,184,0.2)',
+              borderWidth: 1,
+              callbacks: {
+                label: (ctx) => ` ${ctx.dataset.label}: ${fmtMoney(ctx.parsed.y)}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { size: 11, weight: '600' } }
+            },
+            y: {
+              grid: { color: 'rgba(148,163,184,0.08)' },
+              ticks: {
+                color: '#64748b',
+                font: { size: 10 },
+                callback: (v) => 'R$ ' + (v / 1000).toFixed(0) + 'k'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateBarsChart() {
+      CHANNELS.forEach(c => {
+        c.real = Math.max(c.real * 0.97, Math.min(c.meta * 1.05, c.real + randomBetween(-2500, 4200)));
+      });
+      state.charts.bars.data.datasets[1].data = CHANNELS.map(c => Math.round(c.real));
+      state.charts.bars.update('none');
     }
 
     /* ── Live orders ── */
@@ -1352,6 +1589,7 @@
 
       state.charts.geral = createDoughnut('chartGeral', 0, '#22c55e');
       state.charts.tele = createDoughnut('chartTele', 0, '#8b5cf6');
+      createBarsChart();
 
       refreshOverview();
       initOrders();
@@ -1373,6 +1611,10 @@
 
       setInterval(animateRegions, 15000);
       setInterval(renderKPIs, 8000);
+      setInterval(() => {
+        if (state.charts.bars) updateBarsChart();
+        updateSideMetrics();
+      }, 9000);
 
       setTimeout(showMotivation, 8000);
       scheduleMotivation();
