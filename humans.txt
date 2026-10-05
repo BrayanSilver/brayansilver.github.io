@@ -1,0 +1,17 @@
+/* TEAM */
+Name: Brayan Rosa da Silveira
+Also known as: Brayan R. Silveira, Dev Brayan
+Site: https://brayansilver.github.io/
+Location: Curitiba, Paraná, Brazil
+LinkedIn: https://www.linkedin.com/in/brayan-r-silveira-b80636150/
+GitHub: https://github.com/BrayanSilver
+
+/* SITE */
+Standards: HTML5, CSS3, JavaScript
+Components: React, Next.js, Node.js
+Language: pt-BR, en
+
+/* NOTICE */
+Portfolio demos are educational showcases by Brayan Rosa da Silveira.
+Not affiliated with Netflix, Atlassian/Trello, Nintendo, or other trademark holders.
+Third-party trademarks remain property of their respective owners.
