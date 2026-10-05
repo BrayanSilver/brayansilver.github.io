@@ -158,8 +158,6 @@
 
 /* Cards */
 .project-card {
-  --tilt-x: 50%;
-  --tilt-y: 50%;
   position: relative;
   background: var(--bg-glass);
   border: 1px solid rgba(197, 205, 216, 0.1);
@@ -168,34 +166,6 @@
   cursor: pointer;
   transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
   backdrop-filter: blur(12px);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.project-card.tilt-ready::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 3;
-  opacity: 0;
-  background: radial-gradient(
-    420px circle at var(--tilt-x) var(--tilt-y),
-    rgba(228, 200, 120, 0.18),
-    transparent 42%
-  );
-  transition: opacity var(--transition-fast);
-}
-
-.project-card.is-tilting::after {
-  opacity: 1;
-}
-
-.project-card.is-tilting {
-  transition: none;
-  border-color: rgba(201, 168, 76, 0.28);
-  box-shadow: var(--shadow-glow);
 }
 
 .project-card--featured {
@@ -208,7 +178,7 @@
   max-width: 380px;
 }
 
-.project-card:hover:not(.is-tilting) {
+.project-card:hover {
   transform: translateY(-4px);
   border-color: rgba(201, 168, 76, 0.28);
   box-shadow: var(--shadow-glow);
