@@ -77,6 +77,7 @@ export function categorizeProject(project) {
   }
 
   if (
+    title.includes('salespulse') ||
     title.includes('dashboard') ||
     tech.includes('chart.js')
   ) {

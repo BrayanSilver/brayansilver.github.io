@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SalesPulse — Dashboard de Vendas</title>
+  <meta name="description" content="Demo de portfólio — dashboard de vendas fictício com dados simulados da Nexus Retail. Projeto demonstrativo, sem conexão a sistemas reais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg-deep: #0a1628;
+      --bg-card: rgba(17, 24, 39, 0.72);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --border: rgba(148, 163, 184, 0.12);
+      --border-bright: rgba(148, 163, 184, 0.22);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --green: #22c55e;
+      --green-dim: rgba(34, 197, 94, 0.15);
+      --violet: #8b5cf6;
+      --violet-dim: rgba(139, 92, 246, 0.15);
+      --rose: #f43f5e;
+      --rose-dim: rgba(244, 63, 94, 0.15);
+      --amber: #f59e0b;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 15px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(34, 197, 94, 0.08), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(139, 92, 246, 0.1), transparent),
+        radial-gradient(ellipse 50% 30% at 50% 100%, rgba(6, 182, 212, 0.06), transparent);
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(10, 22, 40, 0.85);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--green), var(--violet));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #fff 60%, var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-sub {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .clock {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .view-tabs {
+      display: flex;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3px;
+      position: relative;
+    }
+
+    .view-tab {
+      padding: 0.45rem 1.1rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 9px;
+      transition: all 0.25s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .view-tab.active {
+      color: #fff;
+      background: rgba(34, 197, 94, 0.2);
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.15);
+    }
+
+    .rotate-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ctrl-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .ctrl-btn:hover { background: var(--bg-card-hover); color: var(--text); }
+    .ctrl-btn.active { color: var(--green); border-color: rgba(34, 197, 94, 0.4); }
+
+    .progress-wrap {
+      width: 80px;
+      height: 4px;
+      background: rgba(148, 163, 184, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--violet));
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-btn {
+      padding: 0.4rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .admin-btn:hover { color: var(--text); border-color: var(--border-bright); }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* ── Main layout ── */
+    .main {
+      padding: 1.25rem 1.5rem 2rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .view-panel {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .view-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Glass card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: var(--border-bright); }
+
+    .card-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 0.85rem;
+    }
+
+    /* ── Visão Geral grid ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.2fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+    }
+
+    .chart-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 280px;
+    }
+
+    .doughnut-wrap {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .doughnut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .doughnut-pct {
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .doughnut-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .meta-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .meta-card {
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .meta-card.m1 { background: var(--green-dim); border-color: rgba(34, 197, 94, 0.25); }
+    .meta-card.m2 { background: var(--violet-dim); border-color: rgba(139, 92, 246, 0.25); }
+
+    .meta-card .label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+    }
+
+    .meta-card.m1 .label { color: var(--green); }
+    .meta-card.m2 .label { color: var(--violet); }
+
+    .meta-card .value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .meta-card .sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .summary-item {
+      padding: 0.85rem;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+    }
+
+    .summary-item .label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+    .summary-item .value { font-size: 1.2rem; font-weight: 700; margin-top: 0.25rem; }
+    .summary-item.gap .value { color: var(--rose); }
+    .summary-item.sales .value { color: var(--green); }
+
+    /* ── Live orders ── */
+    .orders-card {
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      max-height: 580px;
+    }
+
+    .orders-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .orders-count {
+      font-size: 0.72rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .orders-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148,163,184,0.3) transparent;
+    }
+
+    .order-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.65rem;
+      align-items: center;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border);
+      animation: slideIn 0.35s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .order-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .order-info .name { font-size: 0.82rem; font-weight: 600; }
+    .order-info .detail { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .order-value { font-size: 0.85rem; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
+    .order-time { font-size: 0.65rem; color: var(--text-dim); text-align: right; }
+
+    /* ── Indicadores ── */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .kpi-card {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .kpi-card .kpi-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-card .kpi-label {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+
+    .kpi-card .kpi-change {
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-top: 0.3rem;
+    }
+
+    .kpi-change.up { color: var(--green); }
+    .kpi-change.down { color: var(--rose); }
+
+    .indicadores-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .region-list { display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .region-item .region-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+      font-size: 0.82rem;
+    }
+
+    .region-item .region-name { font-weight: 600; }
+    .region-item .region-pct { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+    .region-bar {
+      height: 8px;
+      background: rgba(148, 163, 184, 0.12);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .region-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 1s ease;
+    }
+
+    .chart-container { position: relative; height: 260px; }
+
+    .rank-list { display: flex; flex-direction: column; gap: 0.55rem; }
+
+    .rank-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid var(--border);
+    }
+
+    .rank-pos {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .rank-pos.gold { background: rgba(245, 158, 11, 0.2); color: var(--amber); }
+    .rank-pos.silver { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
+    .rank-pos.bronze { background: rgba(180, 83, 9, 0.2); color: #d97706; }
+    .rank-pos.normal { background: rgba(100, 116, 139, 0.15); color: var(--text-dim); }
+
+    .rank-name { flex: 1; font-size: 0.82rem; font-weight: 600; }
+    .rank-value { font-size: 0.82rem; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
+
+    .rankings-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* ── Motivational popup ── */
+    .motiv-popup {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 200;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(139, 92, 246, 0.15));
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      max-width: 340px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    .motiv-popup.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .motiv-popup .motiv-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .motiv-popup .motiv-text { font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
+    .motiv-popup .motiv-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem; }
+
+    .motiv-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.65rem;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    /* ── Admin panel ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .overlay.open { display: flex; }
+
+    .admin-panel {
+      background: #111827;
+      border: 1px solid var(--border-bright);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    }
+
+    .admin-panel h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .admin-panel .admin-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.85rem;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.65rem;
+      border-radius: 10px;
+      border: none;
+      font-family: var(--font);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #0a1628;
+    }
+
+    .btn-primary:hover { filter: brightness(1.1); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover { color: var(--text); }
+
+    .demo-banner {
+      text-align: center;
+      padding: 0.4rem;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      background: rgba(15, 23, 42, 0.5);
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .overview-grid { grid-template-columns: 1fr 1fr; }
+      .orders-card { grid-row: auto; max-height: 400px; }
+      .indicadores-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .header { padding: 0.85rem 1rem; }
+      .main { padding: 1rem; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .meta-cards { grid-template-columns: 1fr; }
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+      .indicadores-grid { grid-template-columns: 1fr; }
+      .rankings-split { grid-template-columns: 1fr; }
+      .doughnut-wrap { width: 170px; height: 170px; }
+      .motiv-popup { right: 1rem; left: 1rem; max-width: none; }
+      .logo-text { font-size: 1.15rem; }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-strip { grid-template-columns: 1fr; }
+      .summary-row { grid-template-columns: 1fr; }
+      .view-tab { padding: 0.4rem 0.75rem; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    Demo de portfólio · Nexus Retail · Dados 100% fictícios · Sem conexão a sistemas reais
+  </div>
+
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">SP</div>
+      <div>
+        <div class="logo-text">SalesPulse</div>
+        <div class="logo-sub">Nexus Retail</div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="live-badge"><span class="live-dot"></span> Ao vivo</div>
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="view-tabs">
+        <button class="view-tab active" data-view="overview">Visão Geral</button>
+        <button class="view-tab" data-view="indicadores">Indicadores</button>
+      </div>
+      <div class="rotate-controls">
+        <button class="ctrl-btn" id="pauseBtn" title="Pausar rotação">⏸</button>
+        <button class="ctrl-btn active" id="rotateToggle" title="Alternar rotação automática">🔄</button>
+        <div class="progress-wrap"><div class="progress-bar" id="rotateProgress"></div></div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="admin-btn" id="adminOpen">⚙ Config</button>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- ═══ VISÃO GERAL ═══ -->
+    <section class="view-panel active" id="panel-overview">
+      <div class="overview-grid">
+
+        <div class="card chart-card">
+          <div class="card-title">Resultado Geral</div>
+          <div class="doughnut-wrap">
+            <canvas id="chartGeral"></canvas>
+            <div class="doughnut-center">
+              <div class="doughnut-pct" id="pctGeral">0%</div>
+              <div class="doughnut-label">da meta total</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card chart-card">
+          <div class="card-title">Televendas</div>
+          <div class="doughnut-wrap">
+            <canvas id="chartTele"></canvas>
+            <div class="doughnut-center">
+              <div class="doughnut-pct" id="pctTele">0%</div>
+              <div class="doughnut-label">canal televendas</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Metas &amp; Vendas</div>
+          <div class="meta-cards">
+            <div class="meta-card m1">
+              <div class="label">Meta 1</div>
+              <div class="value" id="meta1Val">R$ 0</div>
+              <div class="sub">Objetivo principal</div>
+            </div>
+            <div class="meta-card m2">
+              <div class="label">Meta 2</div>
+              <div class="value" id="meta2Val">R$ 0</div>
+              <div class="sub">Objetivo stretch</div>
+            </div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-item sales">
+              <div class="label">Vendas Atuais</div>
+              <div class="value" id="vendasAtuais">R$ 0</div>
+            </div>
+            <div class="summary-item gap">
+              <div class="label">Diferença p/ Meta 1</div>
+              <div class="value" id="diferenca">R$ 0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card orders-card">
+          <div class="orders-header">
+            <div class="card-title" style="margin:0">Pedidos em Tempo Real</div>
+            <div class="orders-count" id="ordersCount">0 pedidos hoje</div>
+          </div>
+          <div class="orders-list" id="ordersList"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ INDICADORES ═══ -->
+    <section class="view-panel" id="panel-indicadores">
+
+      <div class="kpi-strip" id="kpiStrip"></div>
+
+      <div class="indicadores-grid">
+
+        <div class="card">
+          <div class="card-title">Progresso por Regional</div>
+          <div class="region-list" id="regionList"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Evolução Diária — Outubro 2025</div>
+          <div class="chart-container">
+            <canvas id="chartDaily"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Rankings</div>
+          <div class="rankings-split">
+            <div>
+              <div class="card-title" style="margin-bottom:0.5rem">Top 5 Vendedores</div>
+              <div class="rank-list" id="rankReps"></div>
+            </div>
+            <div>
+              <div class="card-title" style="margin-bottom:0.5rem">Top 5 Estados</div>
+              <div class="rank-list" id="rankStates"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Motivational popup -->
+  <div class="motiv-popup" id="motivPopup">
+    <button class="motiv-close" id="motivClose">&times;</button>
+    <div class="motiv-icon" id="motivIcon">🚀</div>
+    <div class="motiv-text" id="motivText"></div>
+    <div class="motiv-sub" id="motivSub"></div>
+  </div>
+
+  <!-- Admin panel -->
+  <div class="overlay" id="adminOverlay">
+    <div class="admin-panel">
+      <h2>Configurações (Demo)</h2>
+      <p class="admin-desc">Painel local com localStorage — sem API ou senha. Ajuste metas fictícias para personalizar a demo.</p>
+      <div class="form-group">
+        <label>Meta 1 (R$)</label>
+        <input type="number" id="cfgMeta1" value="850000">
+      </div>
+      <div class="form-group">
+        <label>Meta 2 (R$)</label>
+        <input type="number" id="cfgMeta2" value="1000000">
+      </div>
+      <div class="form-group">
+        <label>Nome da Empresa</label>
+        <input type="text" id="cfgCompany" value="Nexus Retail">
+      </div>
+      <div class="form-group">
+        <label>Intervalo de rotação (seg)</label>
+        <input type="number" id="cfgRotate" value="12" min="5" max="60">
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-ghost" id="adminCancel">Cancelar</button>
+        <button class="btn btn-primary" id="adminSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Config & state ── */
+    const STORAGE_KEY = 'salespulse_demo_config';
+    const defaultConfig = {
+      meta1: 850000,
+      meta2: 1000000,
+      company: 'Nexus Retail',
+      rotateSec: 12
+    };
+
+    function loadConfig() {
+      try {
+        const s = localStorage.getItem(STORAGE_KEY);
+        return s ? { ...defaultConfig, ...JSON.parse(s) } : { ...defaultConfig };
+      } catch { return { ...defaultConfig }; }
+    }
+
+    function saveConfig(cfg) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
+    }
+
+    let config = loadConfig();
+
+    let state = {
+      vendasAtuais: 612450,
+      televendas: 198320,
+      ordersToday: 847,
+      view: 'overview',
+      rotateEnabled: true,
+      paused: false,
+      rotateElapsed: 0,
+      charts: {}
+    };
+
+    /* ── Mock data ── */
+    const REPS = [
+      'Ana Costa', 'Bruno Lima', 'Carla Mendes', 'Diego Souza', 'Elena Rocha',
+      'Felipe Alves', 'Gabriela Nunes', 'Henrique Dias', 'Isabela Freitas', 'João Pereira',
+      'Karina Barbosa', 'Lucas Martins', 'Mariana Teixeira', 'Nicolas Ribeiro', 'Olivia Campos'
+    ];
+
+    const PRODUCTS = [
+      'Kit Premium Home', 'Assinatura Plus', 'Pacote Corporativo', 'Plano Anual Pro',
+      'Combo Família', 'Upgrade Elite', 'Licença Enterprise', 'Bundle Starter'
+    ];
+
+    const REGIONS = [
+      { name: 'Sudeste', pct: 78, color: '#22c55e' },
+      { name: 'Sul', pct: 85, color: '#8b5cf6' },
+      { name: 'Nordeste', pct: 62, color: '#06b6d4' },
+      { name: 'Centro-Oeste', pct: 71, color: '#f59e0b' },
+      { name: 'Norte', pct: 54, color: '#f43f5e' }
+    ];
+
+    const TOP_REPS = [
+      { name: 'Carla Mendes', value: 98400 },
+      { name: 'Bruno Lima', value: 87200 },
+      { name: 'Ana Costa', value: 81500 },
+      { name: 'Diego Souza', value: 76800 },
+      { name: 'Elena Rocha', value: 72100 }
+    ];
+
+    const TOP_STATES = [
+      { name: 'São Paulo', value: 245000 },
+      { name: 'Minas Gerais', value: 128000 },
+      { name: 'Rio de Janeiro', value: 112000 },
+      { name: 'Paraná', value: 89000 },
+      { name: 'Bahia', value: 76000 }
+    ];
+
+    const AVATAR_COLORS = ['#22c55e','#8b5cf6','#06b6d4','#f59e0b','#f43f5e','#ec4899','#6366f1'];
+
+    const MOTIVATIONS = [
+      { icon: '🚀', text: 'Meta batida em SP! Time imbatível!', sub: 'Sudeste lidera com 78% da meta' },
+      { icon: '🔥', text: 'Carla Mendes acaba de fechar R$ 12.400!', sub: 'Recorde pessoal do mês' },
+      { icon: '💪', text: 'Faltam R$ 237k — vamos buscar juntos!', sub: 'Cada venda conta agora' },
+      { icon: '⭐', text: 'Televendas em 82% da meta!', sub: 'Canal crescendo 15% vs. mês anterior' },
+      { icon: '🏆', text: 'Top 5 vendedores acima de R$ 70k!', sub: 'Performance excepcional da equipe' },
+      { icon: '📈', text: '+23 pedidos nos últimos 5 minutos!', sub: 'Ritmo acelerado de vendas' }
+    ];
+
+    const DAILY_DATA = [42, 38, 55, 48, 62, 58, 71, 65, 78, 82, 74, 88, 91, 85, 92, 87, 95, 89, 98, 94, 102, 96, 88, 105, 110, 98, 115, 108, 112, 120, 118];
+
+    /* ── Formatters ── */
+    function fmtMoney(n) {
+      return 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function fmtPct(n) {
+      return Math.round(n) + '%';
+    }
+
+    function initials(name) {
+      return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    }
+
+    function randomItem(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function randomBetween(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /* ── Clock ── */
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR');
+    }
+
+    /* ── Doughnut charts ── */
+    function createDoughnut(canvasId, pct, color) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      const remaining = Math.max(0, 100 - pct);
+      return new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [pct, remaining],
+            backgroundColor: [color, 'rgba(148, 163, 184, 0.1)'],
+            borderWidth: 0,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          cutout: '72%',
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          animation: { animateRotate: true, duration: 1200 }
+        }
+      });
+    }
+
+    function updateDoughnut(chart, pct) {
+      chart.data.datasets[0].data = [pct, Math.max(0, 100 - pct)];
+      chart.update('active');
+    }
+
+    function refreshOverview() {
+      const pctGeral = Math.min(100, (state.vendasAtuais / config.meta1) * 100);
+      const pctTele = Math.min(100, (state.televendas / (config.meta1 * 0.35)) * 100);
+      const diff = config.meta1 - state.vendasAtuais;
+
+      document.getElementById('pctGeral').textContent = fmtPct(pctGeral);
+      document.getElementById('pctTele').textContent = fmtPct(pctTele);
+      document.getElementById('meta1Val').textContent = fmtMoney(config.meta1);
+      document.getElementById('meta2Val').textContent = fmtMoney(config.meta2);
+      document.getElementById('vendasAtuais').textContent = fmtMoney(state.vendasAtuais);
+      document.getElementById('diferenca').textContent = diff > 0 ? fmtMoney(diff) : '✓ Atingida!';
+      document.getElementById('diferenca').style.color = diff > 0 ? '' : 'var(--green)';
+
+      if (state.charts.geral) updateDoughnut(state.charts.geral, pctGeral);
+      if (state.charts.tele) updateDoughnut(state.charts.tele, pctTele);
+    }
+
+    /* ── Live orders ── */
+    function createOrder() {
+      const rep = randomItem(REPS);
+      const product = randomItem(PRODUCTS);
+      const value = randomBetween(180, 4200);
+      const now = new Date();
+      const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const color = randomItem(AVATAR_COLORS);
+
+      return { rep, product, value, time, color, id: Date.now() + Math.random() };
+    }
+
+    function renderOrder(order) {
+      const el = document.createElement('div');
+      el.className = 'order-item';
+      el.innerHTML = `
+        <div class="order-avatar" style="background:${order.color}">${initials(order.rep)}</div>
+        <div class="order-info">
+          <div class="name">${order.rep}</div>
+          <div class="detail">${order.product}</div>
+        </div>
+        <div>
+          <div class="order-value">${fmtMoney(order.value)}</div>
+          <div class="order-time">${order.time}</div>
+        </div>`;
+      return el;
+    }
+
+    let orders = [];
+    function initOrders() {
+      orders = Array.from({ length: 8 }, () => createOrder());
+      renderOrdersList();
+    }
+
+    function renderOrdersList() {
+      const list = document.getElementById('ordersList');
+      list.innerHTML = '';
+      orders.forEach(o => list.appendChild(renderOrder(o)));
+      document.getElementById('ordersCount').textContent = state.ordersToday + ' pedidos hoje';
+    }
+
+    function addLiveOrder() {
+      const order = createOrder();
+      orders.unshift(order);
+      if (orders.length > 20) orders.pop();
+
+      state.ordersToday++;
+      state.vendasAtuais += order.value;
+      if (Math.random() > 0.4) state.televendas += Math.round(order.value * 0.3);
+
+      const list = document.getElementById('ordersList');
+      const el = renderOrder(order);
+      list.insertBefore(el, list.firstChild);
+      if (list.children.length > 20) list.removeChild(list.lastChild);
+
+      document.getElementById('ordersCount').textContent = state.ordersToday + ' pedidos hoje';
+      refreshOverview();
+    }
+
+    /* ── KPI strip ── */
+    function renderKPIs() {
+      const kpis = [
+        { label: 'Ticket Médio', value: fmtMoney(724), change: '+8.2%', up: true },
+        { label: 'Conversão', value: '34,7%', change: '+2.1pp', up: true },
+        { label: 'Pedidos Hoje', value: state.ordersToday.toLocaleString('pt-BR'), change: '+15%', up: true },
+        { label: 'Novos Clientes', value: '128', change: '+22', up: true },
+        { label: 'Cancelamentos', value: '1,8%', change: '-0.4pp', up: true }
+      ];
+
+      const strip = document.getElementById('kpiStrip');
+      strip.innerHTML = kpis.map(k => `
+        <div class="card kpi-card">
+          <div class="kpi-value">${k.value}</div>
+          <div class="kpi-label">${k.label}</div>
+          <div class="kpi-change ${k.up ? 'up' : 'down'}">${k.change}</div>
+        </div>`).join('');
+    }
+
+    /* ── Regions ── */
+    function renderRegions() {
+      const list = document.getElementById('regionList');
+      list.innerHTML = REGIONS.map(r => `
+        <div class="region-item">
+          <div class="region-header">
+            <span class="region-name">${r.name}</span>
+            <span class="region-pct">${r.pct}%</span>
+          </div>
+          <div class="region-bar">
+            <div class="region-fill" style="width:${r.pct}%;background:${r.color}"></div>
+          </div>
+        </div>`).join('');
+    }
+
+    /* ── Rankings ── */
+    function rankClass(i) {
+      if (i === 0) return 'gold';
+      if (i === 1) return 'silver';
+      if (i === 2) return 'bronze';
+      return 'normal';
+    }
+
+    function renderRankings() {
+      document.getElementById('rankReps').innerHTML = TOP_REPS.map((r, i) => `
+        <div class="rank-item">
+          <div class="rank-pos ${rankClass(i)}">${i + 1}</div>
+          <div class="rank-name">${r.name}</div>
+          <div class="rank-value">${fmtMoney(r.value)}</div>
+        </div>`).join('');
+
+      document.getElementById('rankStates').innerHTML = TOP_STATES.map((s, i) => `
+        <div class="rank-item">
+          <div class="rank-pos ${rankClass(i)}">${i + 1}</div>
+          <div class="rank-name">${s.name}</div>
+          <div class="rank-value">${fmtMoney(s.value)}</div>
+        </div>`).join('');
+    }
+
+    /* ── Daily chart ── */
+    function createDailyChart() {
+      const ctx = document.getElementById('chartDaily').getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 260);
+      gradient.addColorStop(0, 'rgba(34, 197, 94, 0.35)');
+      gradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
+
+      const labels = DAILY_DATA.map((_, i) => (i + 1).toString());
+
+      state.charts.daily = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Vendas (mil R$)',
+            data: DAILY_DATA,
+            borderColor: '#22c55e',
+            backgroundColor: gradient,
+            fill: true,
+            tension: 0.35,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: '#22c55e',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1e293b',
+              titleColor: '#94a3b8',
+              bodyColor: '#f1f5f9',
+              borderColor: 'rgba(148,163,184,0.2)',
+              borderWidth: 1,
+              callbacks: {
+                label: ctx => ' R$ ' + (ctx.parsed.y * 1000).toLocaleString('pt-BR')
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(148,163,184,0.06)' },
+              ticks: { color: '#64748b', maxTicksLimit: 10, font: { size: 10 } }
+            },
+            y: {
+              grid: { color: 'rgba(148,163,184,0.06)' },
+              ticks: {
+                color: '#64748b',
+                font: { size: 10 },
+                callback: v => v + 'k'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /* ── View switching ── */
+    function switchView(view) {
+      state.view = view;
+      document.querySelectorAll('.view-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.view === view);
+      });
+      document.getElementById('panel-overview').classList.toggle('active', view === 'overview');
+      document.getElementById('panel-indicadores').classList.toggle('active', view === 'indicadores');
+      state.rotateElapsed = 0;
+    }
+
+    document.querySelectorAll('.view-tab').forEach(tab => {
+      tab.addEventListener('click', () => switchView(tab.dataset.view));
+    });
+
+    /* ── Auto-rotate ── */
+    const ROTATE_TICK = 100;
+    let rotateTimer = null;
+
+    function startRotate() {
+      if (rotateTimer) clearInterval(rotateTimer);
+      rotateTimer = setInterval(() => {
+        if (!state.rotateEnabled || state.paused) return;
+
+        state.rotateElapsed += ROTATE_TICK;
+        const total = config.rotateSec * 1000;
+        const pct = Math.min(100, (state.rotateElapsed / total) * 100);
+        document.getElementById('rotateProgress').style.width = pct + '%';
+
+        if (state.rotateElapsed >= total) {
+          const next = state.view === 'overview' ? 'indicadores' : 'overview';
+          switchView(next);
+        }
+      }, ROTATE_TICK);
+    }
+
+    document.getElementById('pauseBtn').addEventListener('click', function () {
+      state.paused = !state.paused;
+      this.textContent = state.paused ? '▶' : '⏸';
+      this.classList.toggle('active', state.paused);
+    });
+
+    document.getElementById('rotateToggle').addEventListener('click', function () {
+      state.rotateEnabled = !state.rotateEnabled;
+      this.classList.toggle('active', state.rotateEnabled);
+      if (!state.rotateEnabled) {
+        document.getElementById('rotateProgress').style.width = '0%';
+        state.rotateElapsed = 0;
+      }
+    });
+
+    /* ── Motivational popup ── */
+    let motivTimeout = null;
+
+    function showMotivation() {
+      const m = randomItem(MOTIVATIONS);
+      document.getElementById('motivIcon').textContent = m.icon;
+      document.getElementById('motivText').textContent = m.text;
+      document.getElementById('motivSub').textContent = m.sub;
+      const popup = document.getElementById('motivPopup');
+      popup.classList.add('show');
+      clearTimeout(motivTimeout);
+      motivTimeout = setTimeout(() => popup.classList.remove('show'), 6000);
+    }
+
+    document.getElementById('motivClose').addEventListener('click', () => {
+      document.getElementById('motivPopup').classList.remove('show');
+    });
+
+    function scheduleMotivation() {
+      const delay = randomBetween(25000, 55000);
+      setTimeout(() => {
+        showMotivation();
+        scheduleMotivation();
+      }, delay);
+    }
+
+    /* ── Admin panel ── */
+    function openAdmin() {
+      document.getElementById('cfgMeta1').value = config.meta1;
+      document.getElementById('cfgMeta2').value = config.meta2;
+      document.getElementById('cfgCompany').value = config.company;
+      document.getElementById('cfgRotate').value = config.rotateSec;
+      document.getElementById('adminOverlay').classList.add('open');
+    }
+
+    function closeAdmin() {
+      document.getElementById('adminOverlay').classList.remove('open');
+    }
+
+    document.getElementById('adminOpen').addEventListener('click', openAdmin);
+    document.getElementById('adminCancel').addEventListener('click', closeAdmin);
+    document.getElementById('adminOverlay').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeAdmin();
+    });
+
+    document.getElementById('adminSave').addEventListener('click', () => {
+      config.meta1 = parseInt(document.getElementById('cfgMeta1').value) || defaultConfig.meta1;
+      config.meta2 = parseInt(document.getElementById('cfgMeta2').value) || defaultConfig.meta2;
+      config.company = document.getElementById('cfgCompany').value || defaultConfig.company;
+      config.rotateSec = parseInt(document.getElementById('cfgRotate').value) || defaultConfig.rotateSec;
+      saveConfig(config);
+      document.querySelector('.logo-sub').textContent = config.company;
+      refreshOverview();
+      closeAdmin();
+    });
+
+    /* ── Subtle region animation ── */
+    function animateRegions() {
+      REGIONS.forEach(r => {
+        r.pct = Math.min(99, Math.max(40, r.pct + randomBetween(-2, 3)));
+      });
+      renderRegions();
+    }
+
+    /* ── Init ── */
+    function init() {
+      document.querySelector('.logo-sub').textContent = config.company;
+
+      state.charts.geral = createDoughnut('chartGeral', 0, '#22c55e');
+      state.charts.tele = createDoughnut('chartTele', 0, '#8b5cf6');
+
+      refreshOverview();
+      initOrders();
+      renderKPIs();
+      renderRegions();
+      renderRankings();
+      createDailyChart();
+
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      startRotate();
+
+      function scheduleOrder() {
+        addLiveOrder();
+        setTimeout(scheduleOrder, randomBetween(3000, 5000));
+      }
+      setTimeout(scheduleOrder, 3500);
+
+      setInterval(animateRegions, 15000);
+      setInterval(renderKPIs, 8000);
+
+      setTimeout(showMotivation, 8000);
+      scheduleMotivation();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+</body>
+</html>

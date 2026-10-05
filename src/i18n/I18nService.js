@@ -7,7 +7,7 @@ import { TRANSLATIONS } from './translations.js';
 import { LANG_TOGGLE_INNER } from '../utils/langToggleMarkup.js';
 
 const STORAGE_KEY = 'portfolio-lang';
-const DEFAULT_LOCALE = 'en';
+const DEFAULT_LOCALE = 'pt';
 
 /** @type {I18nService|null} */
 let sharedInstance = null;
