@@ -13,5 +13,5 @@ Language: pt-BR, en
 
 /* NOTICE */
 Portfolio demos are educational showcases by Brayan Rosa da Silveira.
-Not affiliated with Netflix, Atlassian/Trello, Nintendo, or other trademark holders.
+Not affiliated with third-party trademark holders. Demos use original portfolio branding.
 Third-party trademarks remain property of their respective owners.

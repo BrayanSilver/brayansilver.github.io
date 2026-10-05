@@ -70,6 +70,9 @@ export function categorizeProject(project) {
 
   if (
     title.includes('netflix') ||
+    title.includes('novastream') ||
+    title.includes('boardflow') ||
+    title.includes('pixel hop') ||
     title.includes('streaming') ||
     (tech.includes('next.js') &&
       (tech.includes('nestjs') || tech.includes('socket.io')))

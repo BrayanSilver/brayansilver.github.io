@@ -81,8 +81,8 @@
     {
       "id": 28,
       "pasta": "projeto28",
-      "titulo": "Trello Clone — Kanban Boards",
-      "descricao": "Trello-style task management: boards, Kanban lists, drag-and-drop cards, detail modal with labels, checklists, dates, and members. Demonstrates REST CRUD, frontend state, and productivity UX. Next.js + NestJS.",
+      "titulo": "BoardFlow — Kanban Boards",
+      "descricao": "Task management with Kanban boards: lists, drag-and-drop cards, detail modal with labels, checklists, dates, and members. Demonstrates REST CRUD, frontend state, and productivity UX. Next.js + NestJS. Original portfolio demo — not affiliated with any third-party brand.",
       "tecnologias": "React, Next.js, TypeScript, NestJS, Tailwind CSS",
       "link": "https://trello-kanban-three.vercel.app",
       "github": "https://github.com/BrayanSilver/TRELLO_KANBAN",
@@ -119,8 +119,8 @@
     {
       "id": 30,
       "pasta": "projeto30",
-      "titulo": "Netflix Streaming — UI Clone",
-      "descricao": "Streaming platform UI built with React 19 and Vite: faithful visual rebuild of the Netflix experience. Hero banner, horizontal carousels by category, Top 10 ranking, hover previews, detail modal, search, and 24 mock titles with SVG posters — frontend-focused portfolio piece.",
+      "titulo": "NovaStream — Streaming UI",
+      "descricao": "Streaming platform UI built with React 19 and Vite: hero banner, category carousels, Top 10 ranking, hover previews, detail modal, search, and 24 fictional titles with SVG posters. Frontend-focused portfolio piece — original branding and mock content, not affiliated with commercial streaming services.",
       "tecnologias": "React, Vite, JavaScript, Lucide React, CSS3",
       "link": "https://netflix-streaming.vercel.app",
       "github": "https://github.com/BrayanSilver/NETFLIX_STREAMING",
@@ -250,8 +250,8 @@
     {
       "id": 17,
       "pasta": "projeto17",
-      "titulo": "Mario Platformer",
-      "descricao": "Mario-style platformer built with React. Jump across platforms, collect coins, defeat enemies, and maximize your score. Lives system, realistic physics, and smooth animations.",
+      "titulo": "Pixel Hop — Platformer",
+      "descricao": "2D platformer built with React. Jump across platforms, collect coins, defeat enemies, and maximize your score. Lives system, physics, and smooth animations. Original portfolio demo.",
       "tecnologias": "React, JavaScript, Canvas API, HTML, CSS",
       "link": "projetos/mario-platformer.html",
       "github": "",
