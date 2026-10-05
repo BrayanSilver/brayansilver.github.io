@@ -37,14 +37,10 @@ export function isCollaborationProject(project) {
     title.includes('e-book') ||
     title.includes('ebook') ||
     title.includes('rf consultoria') ||
-    title.includes("l'essentiel") ||
-    title.includes('slipper') ||
     link.includes('lumisoft.lumicenter') ||
     link.includes('lojaonline.lumicenter') ||
     link.includes('iluminacaopratica.lumicenter') ||
-    link.includes('rfconsultoriaalimentos') ||
-    link.includes('slipper-world') ||
-    link.includes('beauty-afinity')
+    link.includes('rfconsultoriaalimentos')
   );
 }
 
