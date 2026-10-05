@@ -7,7 +7,7 @@ import { API_PATHS, DEFAULTS, personalInfoPath, projectsPath } from '../config/c
 import { PortfolioModel, Project } from '../models/PortfolioModel.js';
 
 /** Bump when JSON/assets change to bust CDN/browser cache without Date.now() */
-const DATA_VERSION = '20261005e';
+const DATA_VERSION = '20261005f';
 
 /**
  * Serviço de acesso a dados do portfólio (simula uma API REST via fetch).

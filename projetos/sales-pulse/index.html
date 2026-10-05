@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SalesPulse — Dashboard de Vendas</title>
+  <title>SalesPulse · Nexus Retail — Dashboard de Vendas</title>
   <meta name="description" content="Demo de portfólio — dashboard de vendas fictício com dados simulados da Nexus Retail. Projeto demonstrativo, sem conexão a sistemas reais.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,66 +27,74 @@
       --rose-dim: rgba(244, 63, 94, 0.15);
       --amber: #f59e0b;
       --cyan: #06b6d4;
-      --radius: 16px;
+      --sky: #38bdf8;
+      --radius: 12px;
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
       --font: 'Inter', system-ui, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { font-size: 15px; scroll-behavior: smooth; }
-
-    body {
+    html, body {
+      height: 100%;
+      overflow: hidden;
       font-family: var(--font);
       background: var(--bg-deep);
       color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+      font-size: 14px;
       background-image:
         radial-gradient(ellipse 80% 50% at 20% -10%, rgba(34, 197, 94, 0.08), transparent),
         radial-gradient(ellipse 60% 40% at 90% 10%, rgba(139, 92, 246, 0.1), transparent),
         radial-gradient(ellipse 50% 30% at 50% 100%, rgba(6, 182, 212, 0.06), transparent);
     }
 
+    .app {
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
     /* ── Header ── */
     .header {
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 1.5rem;
+      padding: 0.55rem 1rem;
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(12px);
-      background: rgba(10, 22, 40, 0.85);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background: rgba(10, 22, 40, 0.9);
+      gap: 0.5rem;
       flex-wrap: wrap;
-      gap: 0.75rem;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
+      min-width: 0;
     }
 
     .logo-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: linear-gradient(135deg, var(--green), var(--violet));
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: #fff;
+      flex-shrink: 0;
     }
 
     .logo-text {
-      font-size: 1.35rem;
+      font-size: 1.05rem;
       font-weight: 800;
       letter-spacing: -0.02em;
+      line-height: 1.1;
       background: linear-gradient(90deg, #fff 60%, var(--green));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -94,131 +102,35 @@
     }
 
     .logo-sub {
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       color: var(--text-dim);
       font-weight: 500;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
 
     .header-center {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.65rem;
       flex-wrap: wrap;
-    }
-
-    .clock {
-      font-variant-numeric: tabular-nums;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .view-tabs {
-      display: flex;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 3px;
-      position: relative;
-    }
-
-    .view-tab {
-      padding: 0.45rem 1.1rem;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-family: var(--font);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 9px;
-      transition: all 0.25s;
-      position: relative;
-      z-index: 1;
-    }
-
-    .view-tab.active {
-      color: #fff;
-      background: rgba(34, 197, 94, 0.2);
-      box-shadow: 0 0 12px rgba(34, 197, 94, 0.15);
-    }
-
-    .rotate-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .ctrl-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      transition: all 0.2s;
-      font-size: 0.9rem;
     }
-
-    .ctrl-btn:hover { background: var(--bg-card-hover); color: var(--text); }
-    .ctrl-btn.active { color: var(--green); border-color: rgba(34, 197, 94, 0.4); }
-
-    .progress-wrap {
-      width: 80px;
-      height: 4px;
-      background: rgba(148, 163, 184, 0.15);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--green), var(--violet));
-      border-radius: 4px;
-      transition: width 0.1s linear;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .admin-btn {
-      padding: 0.4rem 0.85rem;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-muted);
-      font-family: var(--font);
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .admin-btn:hover { color: var(--text); border-color: var(--border-bright); }
 
     .live-badge {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      font-weight: 600;
+      gap: 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 700;
       color: var(--green);
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
 
     .live-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--green);
       animation: pulse 1.5s infinite;
@@ -229,151 +141,317 @@
       50% { opacity: 0.5; transform: scale(0.85); }
     }
 
-    /* ── Main layout ── */
+    .clock {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .view-tabs {
+      display: flex;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2px;
+    }
+
+    .view-tab {
+      padding: 0.35rem 0.85rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .view-tab.active {
+      color: #fff;
+      background: rgba(34, 197, 94, 0.2);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.12);
+    }
+
+    .rotate-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .ctrl-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 0.82rem;
+    }
+
+    .ctrl-btn:hover { background: var(--bg-card-hover); color: var(--text); }
+    .ctrl-btn.active { color: var(--green); border-color: rgba(34, 197, 94, 0.4); }
+
+    .progress-wrap {
+      width: 64px;
+      height: 3px;
+      background: rgba(148, 163, 184, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--violet));
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+
+    .admin-btn {
+      padding: 0.35rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .admin-btn:hover { color: var(--text); border-color: var(--border-bright); }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 22, 40, 0.75);
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .filter-group label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    .filter-select {
+      appearance: none;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.35rem 1.6rem 0.35rem 0.55rem;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.4rem center;
+      min-width: 0;
+    }
+
+    .filter-select:hover, .filter-select:focus {
+      border-color: var(--border-bright);
+      outline: none;
+    }
+
+    .filter-clear {
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.68rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .filter-clear:hover { color: var(--rose); border-color: rgba(244, 63, 94, 0.35); }
+
+    .filter-badge {
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      background: var(--violet-dim);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: var(--violet);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-left: auto;
+    }
+
+    .filter-badge.visible { display: inline-flex; }
+
+    .demo-banner {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      background: rgba(15, 23, 42, 0.6);
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Main ── */
     .main {
-      padding: 1.25rem 1.5rem 2rem;
-      max-width: 1600px;
-      margin: 0 auto;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0.55rem 0.75rem 0.65rem;
     }
 
     .view-panel {
       display: none;
-      animation: fadeIn 0.4s ease;
+      height: 100%;
+      animation: fadeIn 0.35s ease;
     }
 
-    .view-panel.active { display: block; }
+    .view-panel.active {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Glass card ── */
+    /* ── Cards ── */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       backdrop-filter: blur(16px);
       box-shadow: var(--shadow);
-      padding: 1.25rem;
-      transition: border-color 0.2s;
+      padding: 0.65rem 0.75rem;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
     }
-
-    .card:hover { border-color: var(--border-bright); }
 
     .card-title {
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       color: var(--text-dim);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.45rem;
+      flex-shrink: 0;
     }
 
-    /* ── Visão Geral grid ── */
+    /* ── Overview grid ── */
     .overview-grid {
+      flex: 1;
+      min-height: 0;
       display: grid;
-      grid-template-columns: 1.05fr 1.05fr 1.2fr;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto 1fr 1fr;
       grid-template-areas:
-        "geral tele metas"
-        "orders bars side";
-      gap: 1rem;
-      align-items: stretch;
+        "kpi kpi kpi kpi"
+        "geral tele bars bars"
+        "metas orders bars bars";
+      gap: 0.5rem;
     }
 
+    .kpi-strip { grid-area: kpi; }
     .card-geral { grid-area: geral; }
     .card-tele { grid-area: tele; }
     .card-metas { grid-area: metas; }
     .orders-card { grid-area: orders; }
     .bars-card { grid-area: bars; }
-    .side-card { grid-area: side; }
 
-    .chart-card {
-      display: flex;
-      flex-direction: column;
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .kpi-card {
+      padding: 0.55rem 0.65rem;
+      flex-direction: row;
       align-items: center;
-      min-height: 260px;
+      justify-content: space-between;
+      gap: 0.5rem;
     }
 
-    .bars-card {
-      display: flex;
-      flex-direction: column;
-      min-height: 340px;
-    }
+    .kpi-card .kpi-info { min-width: 0; }
 
-    .bars-card .chart-container {
-      flex: 1;
-      min-height: 260px;
-      height: auto;
-    }
-
-    .side-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      min-height: 340px;
-    }
-
-    .side-metric {
-      flex: 1;
-      padding: 0.9rem 1rem;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.55);
-      border: 1px solid var(--border);
-    }
-
-    .side-metric .label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-    }
-
-    .side-metric .value {
-      font-size: 1.35rem;
+    .kpi-value {
+      font-size: 1.15rem;
       font-weight: 800;
       font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .side-metric .hint {
-      font-size: 0.72rem;
+    .kpi-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--text-dim);
-      margin-top: 0.25rem;
+      margin-top: 0.1rem;
     }
 
-    .side-metric.accent-cyan .value { color: var(--cyan); }
-    .side-metric.accent-amber .value { color: var(--amber); }
-    .side-metric.accent-green .value { color: var(--green); }
-    .side-metric.accent-violet .value { color: var(--violet); }
-
-    .channel-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem 1rem;
-      margin-top: 0.35rem;
+    .kpi-change {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.15rem 0.4rem;
+      border-radius: 6px;
+      flex-shrink: 0;
     }
 
-    .channel-legend span {
-      display: inline-flex;
+    .kpi-change.up { color: var(--green); background: var(--green-dim); }
+    .kpi-change.down { color: var(--rose); background: var(--rose-dim); }
+    .kpi-change.neutral { color: var(--amber); background: rgba(245, 158, 11, 0.12); }
+
+    .chart-card {
       align-items: center;
-      gap: 0.35rem;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-
-    .channel-legend i {
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      display: inline-block;
+      justify-content: center;
     }
 
     .doughnut-wrap {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
     }
 
     .doughnut-center {
@@ -387,28 +465,31 @@
     }
 
     .doughnut-pct {
-      font-size: 1.75rem;
+      font-size: 1.35rem;
       font-weight: 800;
       line-height: 1;
     }
 
     .doughnut-label {
-      font-size: 0.68rem;
+      font-size: 0.58rem;
       color: var(--text-muted);
-      margin-top: 0.25rem;
+      margin-top: 0.15rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
+      text-align: center;
+      max-width: 80px;
     }
 
     .meta-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+      gap: 0.4rem;
+      flex-shrink: 0;
     }
 
     .meta-card {
-      padding: 1rem;
-      border-radius: 12px;
+      padding: 0.5rem 0.55rem;
+      border-radius: 8px;
       border: 1px solid var(--border);
     }
 
@@ -416,319 +497,460 @@
     .meta-card.m2 { background: var(--violet-dim); border-color: rgba(139, 92, 246, 0.25); }
 
     .meta-card .label {
-      font-size: 0.68rem;
+      font-size: 0.58rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.35rem;
+      letter-spacing: 0.05em;
     }
 
     .meta-card.m1 .label { color: var(--green); }
     .meta-card.m2 .label { color: var(--violet); }
 
     .meta-card .value {
-      font-size: 1.35rem;
+      font-size: 0.95rem;
       font-weight: 800;
       font-variant-numeric: tabular-nums;
+      margin-top: 0.15rem;
     }
 
     .meta-card .sub {
-      font-size: 0.72rem;
+      font-size: 0.58rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
     }
 
     .summary-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-top: 0.75rem;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+      flex-shrink: 0;
     }
 
     .summary-item {
-      padding: 0.85rem;
-      border-radius: 12px;
+      padding: 0.45rem 0.5rem;
+      border-radius: 8px;
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid var(--border);
     }
 
-    .summary-item .label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
-    .summary-item .value { font-size: 1.2rem; font-weight: 700; margin-top: 0.25rem; }
-    .summary-item.gap .value { color: var(--rose); }
-    .summary-item.sales .value { color: var(--green); }
-
-    /* ── Live orders ── */
-    .orders-card {
-      display: flex;
-      flex-direction: column;
-      max-height: none;
-      min-height: 340px;
+    .summary-item .label {
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
+
+    .summary-item .value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-top: 0.15rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .summary-item.sales .value { color: var(--green); }
+    .summary-item.gap .value { color: var(--rose); }
+
+    .mini-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+      margin-top: auto;
+      padding-top: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .mini-metric {
+      padding: 0.35rem 0.45rem;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid var(--border);
+    }
+
+    .mini-metric .label {
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mini-metric .value {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    .mini-metric.cyan .value { color: var(--cyan); }
+    .mini-metric.amber .value { color: var(--amber); }
+
+    .bars-card {
+      min-height: 0;
+    }
+
+    .chart-container {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+
+    .channel-legend {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .channel-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+    }
+
+    .channel-legend i {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* ── Orders ── */
+    .orders-card {
+      min-height: 0;
     }
 
     .orders-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.35rem;
+      flex-shrink: 0;
     }
 
     .orders-count {
-      font-size: 0.72rem;
+      font-size: 0.62rem;
       color: var(--green);
       font-weight: 600;
     }
 
     .orders-list {
       flex: 1;
-      overflow-y: auto;
       min-height: 0;
-    }
-      flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.35rem;
       scrollbar-width: thin;
-      scrollbar-color: rgba(148,163,184,0.3) transparent;
+      scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+    }
+
+    .orders-list::-webkit-scrollbar { width: 4px; }
+    .orders-list::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 4px;
     }
 
     .order-item {
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: 0.65rem;
+      gap: 0.45rem;
       align-items: center;
-      padding: 0.65rem 0.75rem;
-      border-radius: 10px;
+      padding: 0.4rem 0.45rem;
+      border-radius: 8px;
       background: rgba(15, 23, 42, 0.5);
       border: 1px solid var(--border);
       animation: slideIn 0.35s ease;
     }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-12px); }
+      from { opacity: 0; transform: translateX(-8px); }
       to { opacity: 1; transform: translateX(0); }
     }
 
     .order-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
+      font-size: 0.58rem;
       font-weight: 700;
       color: #fff;
     }
 
-    .order-info .name { font-size: 0.82rem; font-weight: 600; }
-    .order-info .detail { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem; }
-    .order-value { font-size: 0.85rem; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
-    .order-time { font-size: 0.65rem; color: var(--text-dim); text-align: right; }
-
-    /* ── Indicadores ── */
-    .kpi-strip {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .kpi-card {
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .kpi-card .kpi-value {
-      font-size: 1.5rem;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .kpi-card .kpi-label {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-top: 0.25rem;
-    }
-
-    .kpi-card .kpi-change {
+    .order-info .name {
       font-size: 0.72rem;
       font-weight: 600;
-      margin-top: 0.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .kpi-change.up { color: var(--green); }
-    .kpi-change.down { color: var(--rose); }
+    .order-info .detail {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
+    .order-value {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--green);
+      text-align: right;
+    }
+
+    .order-time {
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      text-align: right;
+    }
+
+    .order-tags {
+      display: flex;
+      gap: 0.2rem;
+      margin-top: 0.1rem;
+    }
+
+    .order-tag {
+      font-size: 0.52rem;
+      padding: 0.05rem 0.25rem;
+      border-radius: 4px;
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text-muted);
+    }
+
+    /* ── Indicadores ── */
     .indicadores-grid {
+      flex: 1;
+      min-height: 0;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1rem;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      grid-template-rows: 1fr;
+      gap: 0.5rem;
     }
 
-    .region-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .region-list {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
 
-    .region-item .region-header {
+    .region-item { flex-shrink: 0; }
+
+    .region-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.35rem;
-      font-size: 0.82rem;
+      margin-bottom: 0.25rem;
     }
 
-    .region-item .region-name { font-weight: 600; }
-    .region-item .region-pct { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .region-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .region-pct {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--green);
+    }
 
     .region-bar {
-      height: 8px;
+      height: 6px;
       background: rgba(148, 163, 184, 0.12);
-      border-radius: 8px;
+      border-radius: 4px;
       overflow: hidden;
     }
 
     .region-fill {
       height: 100%;
-      border-radius: 8px;
-      transition: width 1s ease;
+      border-radius: 4px;
+      transition: width 0.6s ease;
     }
 
-    .chart-container { position: relative; height: 260px; }
+    .rankings-split {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      overflow: hidden;
+    }
 
-    .rank-list { display: flex; flex-direction: column; gap: 0.55rem; }
+    .rank-col {
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
 
     .rank-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      gap: 0.4rem;
       align-items: center;
-      gap: 0.65rem;
-      padding: 0.55rem 0.65rem;
-      border-radius: 10px;
+      padding: 0.35rem 0.4rem;
+      border-radius: 7px;
       background: rgba(15, 23, 42, 0.45);
       border: 1px solid var(--border);
     }
 
     .rank-pos {
-      width: 26px;
-      height: 26px;
-      border-radius: 7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 800;
-      flex-shrink: 0;
+      background: rgba(148, 163, 184, 0.15);
+      color: var(--text-muted);
     }
 
-    .rank-pos.gold { background: rgba(245, 158, 11, 0.2); color: var(--amber); }
-    .rank-pos.silver { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
-    .rank-pos.bronze { background: rgba(180, 83, 9, 0.2); color: #d97706; }
-    .rank-pos.normal { background: rgba(100, 116, 139, 0.15); color: var(--text-dim); }
+    .rank-pos.gold { background: rgba(245, 158, 11, 0.25); color: var(--amber); }
+    .rank-pos.silver { background: rgba(148, 163, 184, 0.25); color: #cbd5e1; }
+    .rank-pos.bronze { background: rgba(180, 83, 9, 0.25); color: #d97706; }
 
-    .rank-name { flex: 1; font-size: 0.82rem; font-weight: 600; }
-    .rank-value { font-size: 0.82rem; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
-
-    .rankings-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    .rank-name {
+      font-size: 0.68rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* ── Motivational popup ── */
+    .rank-value {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .sub-title {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    /* ── Toast ── */
     .motiv-popup {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 200;
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(139, 92, 246, 0.15));
-      border: 1px solid rgba(34, 197, 94, 0.3);
+      bottom: 1rem;
+      right: 1rem;
+      max-width: 320px;
+      padding: 0.85rem 1rem;
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid var(--border-bright);
       border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      max-width: 340px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
       transform: translateY(120%);
       opacity: 0;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 200;
     }
 
     .motiv-popup.show {
       transform: translateY(0);
       opacity: 1;
-      pointer-events: auto;
     }
-
-    .motiv-popup .motiv-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
-    .motiv-popup .motiv-text { font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
-    .motiv-popup .motiv-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem; }
 
     .motiv-close {
       position: absolute;
-      top: 0.5rem;
-      right: 0.65rem;
+      top: 0.4rem;
+      right: 0.5rem;
       background: none;
       border: none;
       color: var(--text-dim);
-      cursor: pointer;
       font-size: 1.1rem;
+      cursor: pointer;
       line-height: 1;
     }
 
-    /* ── Admin panel ── */
+    .motiv-icon { font-size: 1.4rem; margin-bottom: 0.35rem; }
+
+    .motiv-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .motiv-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Admin overlay ── */
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(4px);
-      z-index: 300;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
     }
 
-    .overlay.open { display: flex; }
+    .overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     .admin-panel {
       background: #111827;
       border: 1px solid var(--border-bright);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      padding: 1.25rem;
+      width: min(400px, 92vw);
+      box-shadow: var(--shadow);
     }
 
     .admin-panel h2 {
-      font-size: 1.1rem;
-      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
     }
 
-    .admin-panel .admin-desc {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      margin-bottom: 1.25rem;
+    .admin-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.45;
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-muted);
+      margin-bottom: 0.3rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.35rem;
+      letter-spacing: 0.04em;
     }
 
     .form-group input {
       width: 100%;
-      padding: 0.6rem 0.75rem;
-      border-radius: 10px;
+      padding: 0.5rem 0.65rem;
+      border-radius: 8px;
       border: 1px solid var(--border);
       background: rgba(15, 23, 42, 0.8);
       color: var(--text);
@@ -744,27 +966,19 @@
     .admin-actions {
       display: flex;
       gap: 0.5rem;
-      margin-top: 1.25rem;
+      justify-content: flex-end;
+      margin-top: 1rem;
     }
 
     .btn {
-      flex: 1;
-      padding: 0.65rem;
-      border-radius: 10px;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
       border: none;
       font-family: var(--font);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
     }
-
-    .btn-primary {
-      background: var(--green);
-      color: #0a1628;
-    }
-
-    .btn-primary:hover { filter: brightness(1.1); }
 
     .btn-ghost {
       background: transparent;
@@ -772,236 +986,263 @@
       color: var(--text-muted);
     }
 
-    .btn-ghost:hover { color: var(--text); }
-
-    .demo-banner {
-      text-align: center;
-      padding: 0.4rem;
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      background: rgba(15, 23, 42, 0.5);
-      border-bottom: 1px solid var(--border);
-      letter-spacing: 0.03em;
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), #16a34a);
+      color: #fff;
     }
 
     /* ── Responsive ── */
-    @media (max-width: 1200px) {
+    @media (max-width: 1099px) {
+      html, body {
+        height: auto;
+        overflow: auto;
+      }
+
+      .app {
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+      }
+
+      .main {
+        overflow: visible;
+        flex: none;
+        min-height: auto;
+      }
+
+      .view-panel.active {
+        display: block;
+        height: auto;
+      }
+
       .overview-grid {
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
         grid-template-areas:
+          "kpi kpi"
           "geral tele"
           "metas metas"
           "bars bars"
-          "orders side";
+          "orders orders";
       }
-      .orders-card { max-height: 420px; }
-      .indicadores-grid { grid-template-columns: 1fr 1fr; }
-      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
-    }
 
-    @media (max-width: 768px) {
-      .header { padding: 0.85rem 1rem; }
-      .main { padding: 1rem; }
-      .overview-grid {
+      .kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .indicadores-grid {
         grid-template-columns: 1fr;
-        grid-template-areas:
-          "geral"
-          "tele"
-          "metas"
-          "bars"
-          "side"
-          "orders";
+        grid-template-rows: auto;
       }
-      .meta-cards { grid-template-columns: 1fr; }
-      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
-      .indicadores-grid { grid-template-columns: 1fr; }
-      .rankings-split { grid-template-columns: 1fr; }
-      .doughnut-wrap { width: 170px; height: 170px; }
-      .motiv-popup { right: 1rem; left: 1rem; max-width: none; }
-      .logo-text { font-size: 1.15rem; }
-      .orders-card { max-height: 380px; }
+
+      .doughnut-wrap { width: 160px; height: 160px; }
+      .orders-card { min-height: 280px; }
+      .bars-card { min-height: 280px; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
+      .header { padding: 0.5rem 0.65rem; }
+      .filter-bar { padding: 0.4rem 0.65rem; }
+      .filter-group { flex: 1 1 45%; }
+      .filter-select { width: 100%; }
+      .filter-badge { margin-left: 0; width: 100%; justify-content: center; }
+      .overview-grid { grid-template-columns: 1fr; grid-template-areas: "kpi" "geral" "tele" "metas" "bars" "orders"; }
       .kpi-strip { grid-template-columns: 1fr; }
-      .summary-row { grid-template-columns: 1fr; }
-      .view-tab { padding: 0.4rem 0.75rem; font-size: 0.75rem; }
+      .meta-cards, .summary-row, .mini-metrics { grid-template-columns: 1fr; }
+      .rankings-split { grid-template-columns: 1fr; }
+      .motiv-popup { left: 0.65rem; right: 0.65rem; max-width: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="demo-banner">
-    Demo de portfólio · Nexus Retail · Dados 100% fictícios · Sem conexão a sistemas reais
+  <div class="app">
+    <div class="demo-banner">Demo de portfólio · Nexus Retail · Dados 100% fictícios · Sem conexão a sistemas reais</div>
+
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">SP</div>
+        <div>
+          <div class="logo-text">SalesPulse</div>
+          <div class="logo-sub" id="companyName">Nexus Retail</div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+        <div class="clock" id="clock">--:--:--</div>
+        <div class="view-tabs">
+          <button class="view-tab active" data-view="overview">Visão Geral</button>
+          <button class="view-tab" data-view="indicadores">Indicadores</button>
+        </div>
+        <div class="rotate-controls">
+          <button class="ctrl-btn" id="pauseBtn" title="Pausar">⏸</button>
+          <button class="ctrl-btn active" id="rotateToggle" title="Rotação automática">🔄</button>
+          <div class="progress-wrap"><div class="progress-bar" id="rotateProgress"></div></div>
+        </div>
+      </div>
+
+      <button class="admin-btn" id="adminOpen">⚙ Config</button>
+    </header>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="filterPeriodo">Período</label>
+        <select class="filter-select" id="filterPeriodo">
+          <option value="hoje">Hoje</option>
+          <option value="7d">7 dias</option>
+          <option value="mes" selected>Mês atual</option>
+          <option value="trimestre">Trimestre</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filterFilial">Filial</label>
+        <select class="filter-select" id="filterFilial">
+          <option value="todas" selected>Todas</option>
+          <option value="sp">São Paulo</option>
+          <option value="curitiba">Curitiba</option>
+          <option value="bh">Belo Horizonte</option>
+          <option value="recife">Recife</option>
+          <option value="poa">Porto Alegre</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filterCanal">Canal</label>
+        <select class="filter-select" id="filterCanal">
+          <option value="todos" selected>Todos</option>
+          <option value="ecommerce">E-commerce</option>
+          <option value="televendas">Televendas</option>
+          <option value="loja">Loja Física</option>
+          <option value="marketplace">Marketplace</option>
+          <option value="parceiros">Parceiros</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filterVendedor">Vendedor</label>
+        <select class="filter-select" id="filterVendedor">
+          <option value="todos" selected>Todos</option>
+        </select>
+      </div>
+      <button class="filter-clear" id="filterClear">Limpar filtros</button>
+      <span class="filter-badge" id="filterBadge">● Filtros ativos</span>
+    </div>
+
+    <main class="main">
+      <section class="view-panel active" id="panel-overview">
+        <div class="overview-grid">
+          <div class="kpi-strip" id="kpiStripOverview"></div>
+
+          <div class="card chart-card card-geral">
+            <div class="card-title">Resultado Geral</div>
+            <div class="doughnut-wrap">
+              <canvas id="chartGeral"></canvas>
+              <div class="doughnut-center">
+                <div class="doughnut-pct" id="pctGeral">0%</div>
+                <div class="doughnut-label">da meta</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card chart-card card-tele">
+            <div class="card-title">Televendas</div>
+            <div class="doughnut-wrap">
+              <canvas id="chartTele"></canvas>
+              <div class="doughnut-center">
+                <div class="doughnut-pct" id="pctTele">0%</div>
+                <div class="doughnut-label">canal tele</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card bars-card">
+            <div class="card-title">Meta vs Realizado por Canal</div>
+            <div class="chart-container">
+              <canvas id="chartBars"></canvas>
+            </div>
+            <div class="channel-legend">
+              <span><i style="background:#22c55e"></i> Meta</span>
+              <span><i style="background:#38bdf8"></i> Realizado</span>
+            </div>
+          </div>
+
+          <div class="card card-metas">
+            <div class="card-title">Metas &amp; Vendas</div>
+            <div class="meta-cards">
+              <div class="meta-card m1">
+                <div class="label">Meta 1</div>
+                <div class="value" id="meta1Val">R$ 0</div>
+                <div class="sub">Objetivo principal</div>
+              </div>
+              <div class="meta-card m2">
+                <div class="label">Meta 2</div>
+                <div class="value" id="meta2Val">R$ 0</div>
+                <div class="sub">Stretch goal</div>
+              </div>
+            </div>
+            <div class="summary-row">
+              <div class="summary-item sales">
+                <div class="label">Vendas</div>
+                <div class="value" id="vendasAtuais">R$ 0</div>
+              </div>
+              <div class="summary-item gap">
+                <div class="label">Gap Meta 1</div>
+                <div class="value" id="diferenca">R$ 0</div>
+              </div>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric cyan">
+                <div class="label">Conversão</div>
+                <div class="value" id="miniConv">0%</div>
+              </div>
+              <div class="mini-metric amber">
+                <div class="label">Pedidos/h</div>
+                <div class="value" id="miniPace">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card orders-card">
+            <div class="orders-header">
+              <div class="card-title" style="margin:0">Pedidos em Tempo Real</div>
+              <div class="orders-count" id="ordersCount">0 pedidos</div>
+            </div>
+            <div class="orders-list" id="ordersList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-panel" id="panel-indicadores">
+        <div class="indicadores-grid">
+          <div class="card">
+            <div class="card-title">Progresso por Regional</div>
+            <div class="region-list" id="regionList"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" id="dailyTitle">Evolução Diária</div>
+            <div class="chart-container">
+              <canvas id="chartDaily"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Rankings</div>
+            <div class="rankings-split">
+              <div>
+                <div class="sub-title">Top 5 Vendedores</div>
+                <div class="rank-col" id="rankReps"></div>
+              </div>
+              <div>
+                <div class="sub-title">Top 5 Estados</div>
+                <div class="rank-col" id="rankStates"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <header class="header">
-    <div class="logo">
-      <div class="logo-icon">SP</div>
-      <div>
-        <div class="logo-text">SalesPulse</div>
-        <div class="logo-sub">Nexus Retail</div>
-      </div>
-    </div>
-
-    <div class="header-center">
-      <div class="live-badge"><span class="live-dot"></span> Ao vivo</div>
-      <div class="clock" id="clock">--:--:--</div>
-      <div class="view-tabs">
-        <button class="view-tab active" data-view="overview">Visão Geral</button>
-        <button class="view-tab" data-view="indicadores">Indicadores</button>
-      </div>
-      <div class="rotate-controls">
-        <button class="ctrl-btn" id="pauseBtn" title="Pausar rotação">⏸</button>
-        <button class="ctrl-btn active" id="rotateToggle" title="Alternar rotação automática">🔄</button>
-        <div class="progress-wrap"><div class="progress-bar" id="rotateProgress"></div></div>
-      </div>
-    </div>
-
-    <div class="header-actions">
-      <button class="admin-btn" id="adminOpen">⚙ Config</button>
-    </div>
-  </header>
-
-  <main class="main">
-
-    <!-- ═══ VISÃO GERAL ═══ -->
-    <section class="view-panel active" id="panel-overview">
-      <div class="overview-grid">
-
-        <div class="card chart-card card-geral">
-          <div class="card-title">Resultado Geral</div>
-          <div class="doughnut-wrap">
-            <canvas id="chartGeral"></canvas>
-            <div class="doughnut-center">
-              <div class="doughnut-pct" id="pctGeral">0%</div>
-              <div class="doughnut-label">da meta total</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card chart-card card-tele">
-          <div class="card-title">Televendas</div>
-          <div class="doughnut-wrap">
-            <canvas id="chartTele"></canvas>
-            <div class="doughnut-center">
-              <div class="doughnut-pct" id="pctTele">0%</div>
-              <div class="doughnut-label">canal televendas</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card card-metas">
-          <div class="card-title">Metas &amp; Vendas</div>
-          <div class="meta-cards">
-            <div class="meta-card m1">
-              <div class="label">Meta 1</div>
-              <div class="value" id="meta1Val">R$ 0</div>
-              <div class="sub">Objetivo principal</div>
-            </div>
-            <div class="meta-card m2">
-              <div class="label">Meta 2</div>
-              <div class="value" id="meta2Val">R$ 0</div>
-              <div class="sub">Objetivo stretch</div>
-            </div>
-          </div>
-          <div class="summary-row">
-            <div class="summary-item sales">
-              <div class="label">Vendas Atuais</div>
-              <div class="value" id="vendasAtuais">R$ 0</div>
-            </div>
-            <div class="summary-item gap">
-              <div class="label">Diferença p/ Meta 1</div>
-              <div class="value" id="diferenca">R$ 0</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card orders-card">
-          <div class="orders-header">
-            <div class="card-title" style="margin:0">Pedidos em Tempo Real</div>
-            <div class="orders-count" id="ordersCount">0 pedidos hoje</div>
-          </div>
-          <div class="orders-list" id="ordersList"></div>
-        </div>
-
-        <div class="card bars-card">
-          <div class="card-title">Vendas por Canal — Mês</div>
-          <div class="chart-container">
-            <canvas id="chartBars"></canvas>
-          </div>
-          <div class="channel-legend">
-            <span><i style="background:#22c55e"></i> Meta do canal</span>
-            <span><i style="background:#38bdf8"></i> Realizado</span>
-          </div>
-        </div>
-
-        <div class="card side-card">
-          <div class="card-title">Indicadores Rápidos</div>
-          <div class="side-metric accent-cyan">
-            <div class="label">Ticket Médio</div>
-            <div class="value" id="sideTicket">R$ 0</div>
-            <div class="hint" id="sideTicketHint">vs. mês anterior</div>
-          </div>
-          <div class="side-metric accent-amber">
-            <div class="label">Taxa de Conversão</div>
-            <div class="value" id="sideConv">0%</div>
-            <div class="hint">visitas → pedidos</div>
-          </div>
-          <div class="side-metric accent-green">
-            <div class="label">Top Produto</div>
-            <div class="value" id="sideTop" style="font-size:1.05rem">—</div>
-            <div class="hint" id="sideTopHint">maior faturamento</div>
-          </div>
-          <div class="side-metric accent-violet">
-            <div class="label">Pedidos / Hora</div>
-            <div class="value" id="sidePace">0</div>
-            <div class="hint">ritmo médio hoje</div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ═══ INDICADORES ═══ -->
-    <section class="view-panel" id="panel-indicadores">
-
-      <div class="kpi-strip" id="kpiStrip"></div>
-
-      <div class="indicadores-grid">
-
-        <div class="card">
-          <div class="card-title">Progresso por Regional</div>
-          <div class="region-list" id="regionList"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Evolução Diária — Outubro 2025</div>
-          <div class="chart-container">
-            <canvas id="chartDaily"></canvas>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Rankings</div>
-          <div class="rankings-split">
-            <div>
-              <div class="card-title" style="margin-bottom:0.5rem">Top 5 Vendedores</div>
-              <div class="rank-list" id="rankReps"></div>
-            </div>
-            <div>
-              <div class="card-title" style="margin-bottom:0.5rem">Top 5 Estados</div>
-              <div class="rank-list" id="rankStates"></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Motivational popup -->
   <div class="motiv-popup" id="motivPopup">
     <button class="motiv-close" id="motivClose">&times;</button>
     <div class="motiv-icon" id="motivIcon">🚀</div>
@@ -1009,25 +1250,24 @@
     <div class="motiv-sub" id="motivSub"></div>
   </div>
 
-  <!-- Admin panel -->
   <div class="overlay" id="adminOverlay">
     <div class="admin-panel">
-      <h2>Configurações (Demo)</h2>
-      <p class="admin-desc">Painel local com localStorage — sem API ou senha. Ajuste metas fictícias para personalizar a demo.</p>
+      <h2>Configurações</h2>
+      <p class="admin-desc">Painel local com localStorage — sem API. Ajuste metas fictícias para personalizar a demo.</p>
       <div class="form-group">
-        <label>Meta 1 (R$)</label>
+        <label for="cfgMeta1">Meta 1 (R$)</label>
         <input type="number" id="cfgMeta1" value="850000">
       </div>
       <div class="form-group">
-        <label>Meta 2 (R$)</label>
+        <label for="cfgMeta2">Meta 2 (R$)</label>
         <input type="number" id="cfgMeta2" value="1000000">
       </div>
       <div class="form-group">
-        <label>Nome da Empresa</label>
+        <label for="cfgCompany">Empresa</label>
         <input type="text" id="cfgCompany" value="Nexus Retail">
       </div>
       <div class="form-group">
-        <label>Intervalo de rotação (seg)</label>
+        <label for="cfgRotate">Rotação (seg)</label>
         <input type="number" id="cfgRotate" value="12" min="5" max="60">
       </div>
       <div class="admin-actions">
@@ -1041,14 +1281,8 @@
   (function () {
     'use strict';
 
-    /* ── Config & state ── */
     const STORAGE_KEY = 'salespulse_demo_config';
-    const defaultConfig = {
-      meta1: 850000,
-      meta2: 1000000,
-      company: 'Nexus Retail',
-      rotateSec: 12
-    };
+    const defaultConfig = { meta1: 850000, meta2: 1000000, company: 'Nexus Retail', rotateSec: 12 };
 
     function loadConfig() {
       try {
@@ -1057,28 +1291,21 @@
       } catch { return { ...defaultConfig }; }
     }
 
-    function saveConfig(cfg) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
-    }
+    function saveConfig(cfg) { localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg)); }
 
     let config = loadConfig();
 
-    let state = {
-      vendasAtuais: 612450,
-      televendas: 198320,
-      ordersToday: 847,
-      view: 'overview',
-      rotateEnabled: true,
-      paused: false,
-      rotateElapsed: 0,
-      charts: {}
-    };
-
-    /* ── Mock data ── */
     const REPS = [
-      'Ana Costa', 'Bruno Lima', 'Carla Mendes', 'Diego Souza', 'Elena Rocha',
-      'Felipe Alves', 'Gabriela Nunes', 'Henrique Dias', 'Isabela Freitas', 'João Pereira',
-      'Karina Barbosa', 'Lucas Martins', 'Mariana Teixeira', 'Nicolas Ribeiro', 'Olivia Campos'
+      { id: 'ana', name: 'Ana Costa', share: 0.11, filial: 'sp' },
+      { id: 'bruno', name: 'Bruno Lima', share: 0.10, filial: 'sp' },
+      { id: 'carla', name: 'Carla Mendes', share: 0.12, filial: 'curitiba' },
+      { id: 'diego', name: 'Diego Souza', share: 0.09, filial: 'bh' },
+      { id: 'elena', name: 'Elena Rocha', share: 0.10, filial: 'recife' },
+      { id: 'felipe', name: 'Felipe Alves', share: 0.08, filial: 'poa' },
+      { id: 'gabi', name: 'Gabriela Nunes', share: 0.09, filial: 'sp' },
+      { id: 'henrique', name: 'Henrique Dias', share: 0.11, filial: 'bh' },
+      { id: 'isa', name: 'Isabela Freitas', share: 0.10, filial: 'curitiba' },
+      { id: 'joao', name: 'João Pereira', share: 0.10, filial: 'recife' }
     ];
 
     const PRODUCTS = [
@@ -1086,7 +1313,31 @@
       'Combo Família', 'Upgrade Elite', 'Licença Enterprise', 'Bundle Starter'
     ];
 
-    const REGIONS = [
+    const CANAIS = [
+      { key: 'ecommerce', name: 'E-commerce', share: 0.28 },
+      { key: 'televendas', name: 'Televendas', share: 0.22 },
+      { key: 'loja', name: 'Loja Física', share: 0.18 },
+      { key: 'marketplace', name: 'Marketplace', share: 0.20 },
+      { key: 'parceiros', name: 'Parceiros', share: 0.12 }
+    ];
+
+    const FILIAIS = {
+      todas: { label: 'Todas', scale: 1, city: null },
+      sp: { label: 'São Paulo', scale: 0.38, city: 'SP' },
+      curitiba: { label: 'Curitiba', scale: 0.14, city: 'PR' },
+      bh: { label: 'Belo Horizonte', scale: 0.16, city: 'MG' },
+      recife: { label: 'Recife', scale: 0.12, city: 'PE' },
+      poa: { label: 'Porto Alegre', scale: 0.11, city: 'RS' }
+    };
+
+    const PERIODOS = {
+      hoje: { label: 'Hoje', scale: 0.038, days: 1 },
+      '7d': { label: '7 dias', scale: 0.22, days: 7 },
+      mes: { label: 'Mês atual', scale: 1, days: 31 },
+      trimestre: { label: 'Trimestre', scale: 2.85, days: 90 }
+    };
+
+    const REGIONS_BASE = [
       { name: 'Sudeste', pct: 78, color: '#22c55e' },
       { name: 'Sul', pct: 85, color: '#8b5cf6' },
       { name: 'Nordeste', pct: 62, color: '#06b6d4' },
@@ -1094,84 +1345,135 @@
       { name: 'Norte', pct: 54, color: '#f43f5e' }
     ];
 
-    const TOP_REPS = [
-      { name: 'Carla Mendes', value: 98400 },
-      { name: 'Bruno Lima', value: 87200 },
-      { name: 'Ana Costa', value: 81500 },
-      { name: 'Diego Souza', value: 76800 },
-      { name: 'Elena Rocha', value: 72100 }
+    const STATES_BASE = [
+      { name: 'São Paulo', share: 0.40 },
+      { name: 'Minas Gerais', share: 0.21 },
+      { name: 'Rio de Janeiro', share: 0.18 },
+      { name: 'Paraná', share: 0.14 },
+      { name: 'Bahia', share: 0.12 }
     ];
 
-    const TOP_STATES = [
-      { name: 'São Paulo', value: 245000 },
-      { name: 'Minas Gerais', value: 128000 },
-      { name: 'Rio de Janeiro', value: 112000 },
-      { name: 'Paraná', value: 89000 },
-      { name: 'Bahia', value: 76000 }
-    ];
-
-    const CHANNELS = [
-      { name: 'E-commerce', meta: 280000, real: 246800 },
-      { name: 'Televendas', meta: 220000, real: 198320 },
-      { name: 'Loja Física', meta: 160000, real: 98450 },
-      { name: 'Marketplace', meta: 120000, real: 112400 },
-      { name: 'Parceiros', meta: 70000, real: 59030 }
-    ];
-
-    const TOP_PRODUCT = { name: 'Plano Anual Pro', value: 148900 };
-
-    const AVATAR_COLORS = ['#22c55e','#8b5cf6','#06b6d4','#f59e0b','#f43f5e','#ec4899','#6366f1'];
+    const DAILY_BASE = [42, 38, 55, 48, 62, 58, 71, 65, 78, 82, 74, 88, 91, 85, 92, 87, 95, 89, 98, 94, 102, 96, 88, 105, 110, 98, 115, 108, 112, 120, 118];
 
     const MOTIVATIONS = [
-      { icon: '🚀', text: 'Meta batida em SP! Time imbatível!', sub: 'Sudeste lidera com 78% da meta' },
-      { icon: '🔥', text: 'Carla Mendes acaba de fechar R$ 12.400!', sub: 'Recorde pessoal do mês' },
-      { icon: '💪', text: 'Faltam R$ 237k — vamos buscar juntos!', sub: 'Cada venda conta agora' },
-      { icon: '⭐', text: 'Televendas em 82% da meta!', sub: 'Canal crescendo 15% vs. mês anterior' },
-      { icon: '🏆', text: 'Top 5 vendedores acima de R$ 70k!', sub: 'Performance excepcional da equipe' },
-      { icon: '📈', text: '+23 pedidos nos últimos 5 minutos!', sub: 'Ritmo acelerado de vendas' }
+      { icon: '🚀', text: 'Meta batida em SP! Time imbatível!', sub: 'Sudeste lidera o ranking regional' },
+      { icon: '🔥', text: 'Carla Mendes fechou R$ 12.400!', sub: 'Recorde pessoal do período' },
+      { icon: '💪', text: 'Faltam poucos mil — vamos buscar juntos!', sub: 'Cada venda conta agora' },
+      { icon: '⭐', text: 'Televendas acima de 80% da meta!', sub: 'Canal em forte crescimento' },
+      { icon: '🏆', text: 'Top 5 vendedores acima da média!', sub: 'Performance excepcional da equipe' },
+      { icon: '📈', text: 'Ritmo acelerado de pedidos!', sub: 'Últimos minutos com pico de vendas' }
     ];
 
-    const DAILY_DATA = [42, 38, 55, 48, 62, 58, 71, 65, 78, 82, 74, 88, 91, 85, 92, 87, 95, 89, 98, 94, 102, 96, 88, 105, 110, 98, 115, 108, 112, 120, 118];
+    const AVATAR_COLORS = ['#22c55e', '#8b5cf6', '#06b6d4', '#f59e0b', '#f43f5e', '#ec4899', '#6366f1'];
 
-    /* ── Formatters ── */
+    const BASE_VENDAS_MES = 887400;
+    const BASE_PEDIDOS_MES = 1247;
+    const BASE_TICKET = 712;
+
+    let state = {
+      view: 'overview',
+      rotateEnabled: true,
+      paused: false,
+      rotateElapsed: 0,
+      charts: {},
+      liveVendas: 0,
+      livePedidos: 0,
+      liveTele: 0,
+      orders: [],
+      filters: { periodo: 'mes', filial: 'todas', canal: 'todos', vendedor: 'todos' }
+    };
+
     function fmtMoney(n) {
-      return 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+      return 'R$ ' + Math.round(n).toLocaleString('pt-BR');
     }
 
-    function fmtPct(n) {
-      return Math.round(n) + '%';
-    }
+    function fmtPct(n) { return Math.round(n) + '%'; }
 
     function initials(name) {
       return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
     }
 
-    function randomItem(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+    function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function randomBetween(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function getFilterScale() {
+      const p = PERIODOS[state.filters.periodo].scale;
+      const f = FILIAIS[state.filters.filial].scale;
+      let c = 1;
+      if (state.filters.canal !== 'todos') {
+        const ch = CANAIS.find(x => x.key === state.filters.canal);
+        c = ch ? ch.share * 3.2 : 0.25;
+      }
+      let v = 1;
+      if (state.filters.vendedor !== 'todos') {
+        const rep = REPS.find(r => r.id === state.filters.vendedor);
+        v = rep ? rep.share * 4.5 : 0.1;
+      }
+      return p * f * c * v;
     }
 
-    function randomBetween(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    function getScaledData() {
+      const scale = getFilterScale();
+      const meta1 = config.meta1 * scale;
+      const meta2 = config.meta2 * scale;
+      const vendas = BASE_VENDAS_MES * scale + state.liveVendas;
+      const pedidos = Math.max(1, Math.round(BASE_PEDIDOS_MES * scale + state.livePedidos));
+      const ticket = pedidos > 0 ? vendas / pedidos : BASE_TICKET;
+      const metaPct = meta1 > 0 ? Math.min(120, (vendas / meta1) * 100) : 0;
+
+      const channels = CANAIS.map(ch => {
+        let chScale = scale;
+        if (state.filters.canal !== 'todos' && state.filters.canal !== ch.key) chScale *= 0.08;
+        if (state.filters.canal === ch.key) chScale *= 2.8;
+        const meta = config.meta1 * ch.share * PERIODOS[state.filters.periodo].scale * FILIAIS[state.filters.filial].scale *
+          (state.filters.vendedor !== 'todos' ? (REPS.find(r => r.id === state.filters.vendedor)?.share || 0.1) * 4.5 : 1);
+        const real = meta * (0.72 + ch.share * 0.35 + Math.sin(ch.key.length) * 0.05) + (ch.key === 'televendas' ? state.liveTele : 0);
+        return { ...ch, meta: Math.round(meta), real: Math.round(Math.min(real, meta * 1.08)) };
+      });
+
+      const televendas = channels.find(c => c.key === 'televendas');
+      const teleReal = televendas ? televendas.real : vendas * 0.22;
+      const teleMeta = televendas ? televendas.meta : meta1 * 0.22;
+
+      return { scale, meta1, meta2, vendas, pedidos, ticket, metaPct, channels, teleReal, teleMeta };
     }
 
-    /* ── Clock ── */
+    function isFilterActive() {
+      return state.filters.periodo !== 'mes' ||
+        state.filters.filial !== 'todas' ||
+        state.filters.canal !== 'todos' ||
+        state.filters.vendedor !== 'todos';
+    }
+
+    function updateFilterBadge() {
+      document.getElementById('filterBadge').classList.toggle('visible', isFilterActive());
+    }
+
+    function populateVendedorSelect() {
+      const sel = document.getElementById('filterVendedor');
+      REPS.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.textContent = r.name;
+        sel.appendChild(opt);
+      });
+    }
+
     function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR');
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString('pt-BR');
     }
 
-    /* ── Doughnut charts ── */
     function createDoughnut(canvasId, pct, color) {
       const ctx = document.getElementById(canvasId).getContext('2d');
-      const remaining = Math.max(0, 100 - pct);
+      const clamped = Math.min(100, Math.max(0, pct));
       return new Chart(ctx, {
         type: 'doughnut',
         data: {
           datasets: [{
-            data: [pct, remaining],
+            data: [clamped, Math.max(0, 100 - clamped)],
             backgroundColor: [color, 'rgba(148, 163, 184, 0.1)'],
             borderWidth: 0,
-            borderRadius: 4
+            borderRadius: 3
           }]
         },
         options: {
@@ -1179,73 +1481,85 @@
           responsive: true,
           maintainAspectRatio: true,
           plugins: { legend: { display: false }, tooltip: { enabled: false } },
-          animation: { animateRotate: true, duration: 1200 }
+          animation: { duration: 900 }
         }
       });
     }
 
     function updateDoughnut(chart, pct) {
-      chart.data.datasets[0].data = [pct, Math.max(0, 100 - pct)];
+      const clamped = Math.min(100, Math.max(0, pct));
+      chart.data.datasets[0].data = [clamped, Math.max(0, 100 - clamped)];
       chart.update('active');
     }
 
+    function renderKPIOverview() {
+      const d = getScaledData();
+      const changeVendas = state.filters.periodo === 'hoje' ? '+12%' : '+8,4%';
+      const kpis = [
+        { label: 'Vendas', value: fmtMoney(d.vendas), change: changeVendas, type: 'up' },
+        { label: 'Meta %', value: fmtPct(d.metaPct), change: d.metaPct >= 100 ? 'Atingida' : '-' + fmtPct(100 - d.metaPct), type: d.metaPct >= 100 ? 'up' : 'neutral' },
+        { label: 'Ticket Médio', value: fmtMoney(d.ticket), change: '+5,2%', type: 'up' },
+        { label: 'Pedidos', value: d.pedidos.toLocaleString('pt-BR'), change: '+14%', type: 'up' }
+      ];
+      document.getElementById('kpiStripOverview').innerHTML = kpis.map(k => `
+        <div class="card kpi-card">
+          <div class="kpi-info">
+            <div class="kpi-value">${k.value}</div>
+            <div class="kpi-label">${k.label}</div>
+          </div>
+          <div class="kpi-change ${k.type}">${k.change}</div>
+        </div>`).join('');
+    }
+
     function refreshOverview() {
-      const pctGeral = Math.min(100, (state.vendasAtuais / config.meta1) * 100);
-      const pctTele = Math.min(100, (state.televendas / (config.meta1 * 0.35)) * 100);
-      const diff = config.meta1 - state.vendasAtuais;
+      const d = getScaledData();
+      const pctGeral = d.metaPct;
+      const pctTele = d.teleMeta > 0 ? Math.min(100, (d.teleReal / d.teleMeta) * 100) : 0;
+      const diff = d.meta1 - d.vendas;
 
       document.getElementById('pctGeral').textContent = fmtPct(pctGeral);
       document.getElementById('pctTele').textContent = fmtPct(pctTele);
-      document.getElementById('meta1Val').textContent = fmtMoney(config.meta1);
-      document.getElementById('meta2Val').textContent = fmtMoney(config.meta2);
-      document.getElementById('vendasAtuais').textContent = fmtMoney(state.vendasAtuais);
-      document.getElementById('diferenca').textContent = diff > 0 ? fmtMoney(diff) : '✓ Atingida!';
-      document.getElementById('diferenca').style.color = diff > 0 ? '' : 'var(--green)';
+      document.getElementById('meta1Val').textContent = fmtMoney(d.meta1);
+      document.getElementById('meta2Val').textContent = fmtMoney(d.meta2);
+      document.getElementById('vendasAtuais').textContent = fmtMoney(d.vendas);
+      const diffEl = document.getElementById('diferenca');
+      diffEl.textContent = diff > 0 ? fmtMoney(diff) : '✓ Atingida!';
+      diffEl.style.color = diff > 0 ? '' : 'var(--green)';
+
+      document.getElementById('miniConv').textContent = (3.1 + d.metaPct * 0.008).toFixed(1) + '%';
+      document.getElementById('miniPace').textContent = Math.max(1, Math.round(d.pedidos / Math.max(1, PERIODOS[state.filters.periodo].days * 0.4)));
 
       if (state.charts.geral) updateDoughnut(state.charts.geral, pctGeral);
       if (state.charts.tele) updateDoughnut(state.charts.tele, pctTele);
-      updateSideMetrics();
-      if (state.charts.bars) updateBarsChart();
-    }
-
-    function updateSideMetrics() {
-      const ticket = Math.round(state.vendasAtuais / Math.max(1, state.ordersToday));
-      const conv = (3.2 + Math.random() * 0.6).toFixed(1);
-      const pace = Math.max(1, Math.round(state.ordersToday / 9));
-      document.getElementById('sideTicket').textContent = fmtMoney(ticket);
-      document.getElementById('sideTicketHint').textContent = '+8% vs. mês anterior';
-      document.getElementById('sideConv').textContent = conv + '%';
-      document.getElementById('sideTop').textContent = TOP_PRODUCT.name;
-      document.getElementById('sideTopHint').textContent = fmtMoney(TOP_PRODUCT.value) + ' no mês';
-      document.getElementById('sidePace').textContent = pace;
+      if (state.charts.bars) updateBarsChart(d.channels);
+      renderKPIOverview();
+      renderOrdersList();
     }
 
     function createBarsChart() {
-      const el = document.getElementById('chartBars');
-      if (!el) return;
-      const ctx = el.getContext('2d');
+      const ctx = document.getElementById('chartBars').getContext('2d');
       state.charts.bars = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: CHANNELS.map(c => c.name),
+          labels: CANAIS.map(c => c.name),
           datasets: [
             {
               label: 'Meta',
-              data: CHANNELS.map(c => c.meta),
+              data: [],
               backgroundColor: 'rgba(34, 197, 94, 0.28)',
               borderColor: 'rgba(34, 197, 94, 0.55)',
               borderWidth: 1,
-              borderRadius: 6,
-              barPercentage: 0.7,
-              categoryPercentage: 0.7
+              borderRadius: 5,
+              barPercentage: 0.65,
+              categoryPercentage: 0.75
             },
             {
               label: 'Realizado',
-              data: CHANNELS.map(c => c.real),
+              data: [],
               backgroundColor: 'rgba(56, 189, 248, 0.85)',
-              borderRadius: 6,
-              barPercentage: 0.7,
-              categoryPercentage: 0.7
+              borderRadius: 5,
+              barPercentage: 0.65,
+              categoryPercentage: 0.75
             }
           ]
         },
@@ -1260,22 +1574,20 @@
               bodyColor: '#f1f5f9',
               borderColor: 'rgba(148,163,184,0.2)',
               borderWidth: 1,
-              callbacks: {
-                label: (ctx) => ` ${ctx.dataset.label}: ${fmtMoney(ctx.parsed.y)}`
-              }
+              callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmtMoney(ctx.parsed.y)}` }
             }
           },
           scales: {
             x: {
               grid: { display: false },
-              ticks: { color: '#94a3b8', font: { size: 11, weight: '600' } }
+              ticks: { color: '#94a3b8', font: { size: 10, weight: '600' } }
             },
             y: {
               grid: { color: 'rgba(148,163,184,0.08)' },
               ticks: {
                 color: '#64748b',
-                font: { size: 10 },
-                callback: (v) => 'R$ ' + (v / 1000).toFixed(0) + 'k'
+                font: { size: 9 },
+                callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k'
               }
             }
           }
@@ -1283,24 +1595,41 @@
       });
     }
 
-    function updateBarsChart() {
-      CHANNELS.forEach(c => {
-        c.real = Math.max(c.real * 0.97, Math.min(c.meta * 1.05, c.real + randomBetween(-2500, 4200)));
-      });
-      state.charts.bars.data.datasets[1].data = CHANNELS.map(c => Math.round(c.real));
+    function updateBarsChart(channels) {
+      const ch = channels || getScaledData().channels;
+      state.charts.bars.data.datasets[0].data = ch.map(c => c.meta);
+      state.charts.bars.data.datasets[1].data = ch.map(c => c.real);
       state.charts.bars.update('none');
     }
 
-    /* ── Live orders ── */
+    function orderMatchesFilters(order) {
+      if (state.filters.filial !== 'todas' && order.filial !== state.filters.filial) return false;
+      if (state.filters.canal !== 'todos' && order.canal !== state.filters.canal) return false;
+      if (state.filters.vendedor !== 'todos' && order.repId !== state.filters.vendedor) return false;
+      return true;
+    }
+
     function createOrder() {
       const rep = randomItem(REPS);
+      const canal = randomItem(CANAIS);
+      const filialKey = rep.filial;
       const product = randomItem(PRODUCTS);
       const value = randomBetween(180, 4200);
       const now = new Date();
       const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      const color = randomItem(AVATAR_COLORS);
-
-      return { rep, product, value, time, color, id: Date.now() + Math.random() };
+      return {
+        rep: rep.name,
+        repId: rep.id,
+        product,
+        value,
+        time,
+        color: randomItem(AVATAR_COLORS),
+        canal: canal.key,
+        canalName: canal.name,
+        filial: filialKey,
+        filialName: FILIAIS[filialKey].label,
+        id: Date.now() + Math.random()
+      };
     }
 
     function renderOrder(order) {
@@ -1311,6 +1640,10 @@
         <div class="order-info">
           <div class="name">${order.rep}</div>
           <div class="detail">${order.product}</div>
+          <div class="order-tags">
+            <span class="order-tag">${order.canalName}</span>
+            <span class="order-tag">${order.filialName}</span>
+          </div>
         </div>
         <div>
           <div class="order-value">${fmtMoney(order.value)}</div>
@@ -1319,118 +1652,112 @@
       return el;
     }
 
-    let orders = [];
     function initOrders() {
-      orders = Array.from({ length: 8 }, () => createOrder());
+      state.orders = Array.from({ length: 12 }, createOrder);
       renderOrdersList();
     }
 
     function renderOrdersList() {
       const list = document.getElementById('ordersList');
+      const filtered = state.orders.filter(orderMatchesFilters).slice(0, 18);
       list.innerHTML = '';
-      orders.forEach(o => list.appendChild(renderOrder(o)));
-      document.getElementById('ordersCount').textContent = state.ordersToday + ' pedidos hoje';
+      filtered.forEach(o => list.appendChild(renderOrder(o)));
+      const d = getScaledData();
+      document.getElementById('ordersCount').textContent = d.pedidos.toLocaleString('pt-BR') + ' pedidos · ' + PERIODOS[state.filters.periodo].label;
     }
 
     function addLiveOrder() {
+      if (state.paused) return;
       const order = createOrder();
-      orders.unshift(order);
-      if (orders.length > 20) orders.pop();
+      state.orders.unshift(order);
+      if (state.orders.length > 40) state.orders.pop();
 
-      state.ordersToday++;
-      state.vendasAtuais += order.value;
-      if (Math.random() > 0.4) state.televendas += Math.round(order.value * 0.3);
+      if (orderMatchesFilters(order)) {
+        state.liveVendas += order.value;
+        state.livePedidos += 1;
+        if (order.canal === 'televendas') state.liveTele += order.value;
+      }
 
       const list = document.getElementById('ordersList');
-      const el = renderOrder(order);
-      list.insertBefore(el, list.firstChild);
-      if (list.children.length > 20) list.removeChild(list.lastChild);
+      if (orderMatchesFilters(order)) {
+        const el = renderOrder(order);
+        list.insertBefore(el, list.firstChild);
+        while (list.children.length > 18) list.removeChild(list.lastChild);
+      }
 
-      document.getElementById('ordersCount').textContent = state.ordersToday + ' pedidos hoje';
       refreshOverview();
     }
 
-    /* ── KPI strip ── */
-    function renderKPIs() {
-      const kpis = [
-        { label: 'Ticket Médio', value: fmtMoney(724), change: '+8.2%', up: true },
-        { label: 'Conversão', value: '34,7%', change: '+2.1pp', up: true },
-        { label: 'Pedidos Hoje', value: state.ordersToday.toLocaleString('pt-BR'), change: '+15%', up: true },
-        { label: 'Novos Clientes', value: '128', change: '+22', up: true },
-        { label: 'Cancelamentos', value: '1,8%', change: '-0.4pp', up: true }
-      ];
-
-      const strip = document.getElementById('kpiStrip');
-      strip.innerHTML = kpis.map(k => `
-        <div class="card kpi-card">
-          <div class="kpi-value">${k.value}</div>
-          <div class="kpi-label">${k.label}</div>
-          <div class="kpi-change ${k.up ? 'up' : 'down'}">${k.change}</div>
-        </div>`).join('');
-    }
-
-    /* ── Regions ── */
     function renderRegions() {
+      const scale = getFilterScale();
+      const filialBoost = state.filters.filial === 'sp' ? 8 : state.filters.filial === 'todas' ? 0 : -4;
       const list = document.getElementById('regionList');
-      list.innerHTML = REGIONS.map(r => `
-        <div class="region-item">
-          <div class="region-header">
-            <span class="region-name">${r.name}</span>
-            <span class="region-pct">${r.pct}%</span>
-          </div>
-          <div class="region-bar">
-            <div class="region-fill" style="width:${r.pct}%;background:${r.color}"></div>
-          </div>
-        </div>`).join('');
-    }
-
-    /* ── Rankings ── */
-    function rankClass(i) {
-      if (i === 0) return 'gold';
-      if (i === 1) return 'silver';
-      if (i === 2) return 'bronze';
-      return 'normal';
+      list.innerHTML = REGIONS_BASE.map(r => {
+        const pct = Math.min(99, Math.max(35, Math.round(r.pct * (0.85 + scale * 0.2) + filialBoost + randomBetween(-2, 2))));
+        return `
+          <div class="region-item">
+            <div class="region-header">
+              <span class="region-name">${r.name}</span>
+              <span class="region-pct">${pct}%</span>
+            </div>
+            <div class="region-bar">
+              <div class="region-fill" style="width:${pct}%;background:${r.color}"></div>
+            </div>
+          </div>`;
+      }).join('');
     }
 
     function renderRankings() {
-      document.getElementById('rankReps').innerHTML = TOP_REPS.map((r, i) => `
-        <div class="rank-item">
-          <div class="rank-pos ${rankClass(i)}">${i + 1}</div>
-          <div class="rank-name">${r.name}</div>
-          <div class="rank-value">${fmtMoney(r.value)}</div>
-        </div>`).join('');
+      const d = getScaledData();
+      const repScale = state.filters.vendedor !== 'todos' ? 0.15 : 1;
+      const reps = [...REPS]
+        .map(r => ({
+          name: r.name,
+          value: Math.round(d.vendas * r.share * repScale * (state.filters.vendedor === r.id ? 6 : 1))
+        }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 5);
 
-      document.getElementById('rankStates').innerHTML = TOP_STATES.map((s, i) => `
-        <div class="rank-item">
-          <div class="rank-pos ${rankClass(i)}">${i + 1}</div>
-          <div class="rank-name">${s.name}</div>
-          <div class="rank-value">${fmtMoney(s.value)}</div>
-        </div>`).join('');
+      const states = STATES_BASE.map(s => ({
+        name: s.name,
+        value: Math.round(d.vendas * s.share * (state.filters.filial !== 'todas' ? 0.55 : 1))
+      })).sort((a, b) => b.value - a.value);
+
+      function rankHtml(items) {
+        return items.map((r, i) => {
+          const cls = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal';
+          return `
+            <div class="rank-item">
+              <div class="rank-pos ${cls}">${i + 1}</div>
+              <div class="rank-name">${r.name}</div>
+              <div class="rank-value">${fmtMoney(r.value)}</div>
+            </div>`;
+        }).join('');
+      }
+
+      document.getElementById('rankReps').innerHTML = rankHtml(reps);
+      document.getElementById('rankStates').innerHTML = rankHtml(states);
     }
 
-    /* ── Daily chart ── */
     function createDailyChart() {
       const ctx = document.getElementById('chartDaily').getContext('2d');
-      const gradient = ctx.createLinearGradient(0, 0, 0, 260);
+      const gradient = ctx.createLinearGradient(0, 0, 0, 200);
       gradient.addColorStop(0, 'rgba(34, 197, 94, 0.35)');
       gradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
-
-      const labels = DAILY_DATA.map((_, i) => (i + 1).toString());
 
       state.charts.daily = new Chart(ctx, {
         type: 'line',
         data: {
-          labels,
+          labels: DAILY_BASE.map((_, i) => String(i + 1)),
           datasets: [{
             label: 'Vendas (mil R$)',
-            data: DAILY_DATA,
+            data: [],
             borderColor: '#22c55e',
             backgroundColor: gradient,
             fill: true,
             tension: 0.35,
             pointRadius: 0,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: '#22c55e',
+            pointHoverRadius: 4,
             borderWidth: 2
           }]
         },
@@ -1445,45 +1772,89 @@
               bodyColor: '#f1f5f9',
               borderColor: 'rgba(148,163,184,0.2)',
               borderWidth: 1,
-              callbacks: {
-                label: ctx => ' R$ ' + (ctx.parsed.y * 1000).toLocaleString('pt-BR')
-              }
+              callbacks: { label: ctx => ' R$ ' + (ctx.parsed.y * 1000).toLocaleString('pt-BR') }
             }
           },
           scales: {
             x: {
               grid: { color: 'rgba(148,163,184,0.06)' },
-              ticks: { color: '#64748b', maxTicksLimit: 10, font: { size: 10 } }
+              ticks: { color: '#64748b', maxTicksLimit: 10, font: { size: 9 } }
             },
             y: {
               grid: { color: 'rgba(148,163,184,0.06)' },
-              ticks: {
-                color: '#64748b',
-                font: { size: 10 },
-                callback: v => v + 'k'
-              }
+              ticks: { color: '#64748b', font: { size: 9 }, callback: v => v + 'k' }
             }
           }
         }
       });
     }
 
-    /* ── View switching ── */
+    function updateDailyChart() {
+      const scale = getFilterScale();
+      const days = PERIODOS[state.filters.periodo].days;
+      const slice = DAILY_BASE.slice(0, Math.min(days, DAILY_BASE.length));
+      const data = slice.map(v => Math.round(v * scale * 4.2));
+      state.charts.daily.data.labels = slice.map((_, i) => String(i + 1));
+      state.charts.daily.data.datasets[0].data = data;
+      state.charts.daily.update('none');
+
+      const monthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+      const now = new Date();
+      document.getElementById('dailyTitle').textContent =
+        'Evolução Diária — ' + PERIODOS[state.filters.periodo].label + ' · ' + monthNames[now.getMonth()] + ' ' + now.getFullYear();
+    }
+
+    function refreshIndicadores() {
+      renderRegions();
+      renderRankings();
+      updateDailyChart();
+    }
+
+    function refreshAll() {
+      updateFilterBadge();
+      refreshOverview();
+      refreshIndicadores();
+    }
+
+    function applyFilters() {
+      state.filters = {
+        periodo: document.getElementById('filterPeriodo').value,
+        filial: document.getElementById('filterFilial').value,
+        canal: document.getElementById('filterCanal').value,
+        vendedor: document.getElementById('filterVendedor').value
+      };
+      state.liveVendas = 0;
+      state.livePedidos = 0;
+      state.liveTele = 0;
+      refreshAll();
+    }
+
+    function clearFilters() {
+      document.getElementById('filterPeriodo').value = 'mes';
+      document.getElementById('filterFilial').value = 'todas';
+      document.getElementById('filterCanal').value = 'todos';
+      document.getElementById('filterVendedor').value = 'todos';
+      applyFilters();
+    }
+
+    ['filterPeriodo', 'filterFilial', 'filterCanal', 'filterVendedor'].forEach(id => {
+      document.getElementById(id).addEventListener('change', applyFilters);
+    });
+    document.getElementById('filterClear').addEventListener('click', clearFilters);
+
     function switchView(view) {
       state.view = view;
-      document.querySelectorAll('.view-tab').forEach(t => {
-        t.classList.toggle('active', t.dataset.view === view);
-      });
+      document.querySelectorAll('.view-tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
       document.getElementById('panel-overview').classList.toggle('active', view === 'overview');
       document.getElementById('panel-indicadores').classList.toggle('active', view === 'indicadores');
       state.rotateElapsed = 0;
+      document.getElementById('rotateProgress').style.width = '0%';
     }
 
     document.querySelectorAll('.view-tab').forEach(tab => {
       tab.addEventListener('click', () => switchView(tab.dataset.view));
     });
 
-    /* ── Auto-rotate ── */
     const ROTATE_TICK = 100;
     let rotateTimer = null;
 
@@ -1491,15 +1862,11 @@
       if (rotateTimer) clearInterval(rotateTimer);
       rotateTimer = setInterval(() => {
         if (!state.rotateEnabled || state.paused) return;
-
         state.rotateElapsed += ROTATE_TICK;
         const total = config.rotateSec * 1000;
-        const pct = Math.min(100, (state.rotateElapsed / total) * 100);
-        document.getElementById('rotateProgress').style.width = pct + '%';
-
+        document.getElementById('rotateProgress').style.width = Math.min(100, (state.rotateElapsed / total) * 100) + '%';
         if (state.rotateElapsed >= total) {
-          const next = state.view === 'overview' ? 'indicadores' : 'overview';
-          switchView(next);
+          switchView(state.view === 'overview' ? 'indicadores' : 'overview');
         }
       }, ROTATE_TICK);
     }
@@ -1519,7 +1886,6 @@
       }
     });
 
-    /* ── Motivational popup ── */
     let motivTimeout = null;
 
     function showMotivation() {
@@ -1530,7 +1896,7 @@
       const popup = document.getElementById('motivPopup');
       popup.classList.add('show');
       clearTimeout(motivTimeout);
-      motivTimeout = setTimeout(() => popup.classList.remove('show'), 6000);
+      motivTimeout = setTimeout(() => popup.classList.remove('show'), 5500);
     }
 
     document.getElementById('motivClose').addEventListener('click', () => {
@@ -1538,14 +1904,12 @@
     });
 
     function scheduleMotivation() {
-      const delay = randomBetween(25000, 55000);
       setTimeout(() => {
-        showMotivation();
+        if (!state.paused) showMotivation();
         scheduleMotivation();
-      }, delay);
+      }, randomBetween(28000, 52000));
     }
 
-    /* ── Admin panel ── */
     function openAdmin() {
       document.getElementById('cfgMeta1').value = config.meta1;
       document.getElementById('cfgMeta2').value = config.meta2;
@@ -1570,53 +1934,44 @@
       config.company = document.getElementById('cfgCompany').value || defaultConfig.company;
       config.rotateSec = parseInt(document.getElementById('cfgRotate').value) || defaultConfig.rotateSec;
       saveConfig(config);
-      document.querySelector('.logo-sub').textContent = config.company;
-      refreshOverview();
+      document.getElementById('companyName').textContent = config.company;
+      refreshAll();
       closeAdmin();
     });
 
-    /* ── Subtle region animation ── */
-    function animateRegions() {
-      REGIONS.forEach(r => {
-        r.pct = Math.min(99, Math.max(40, r.pct + randomBetween(-2, 3)));
-      });
-      renderRegions();
-    }
-
-    /* ── Init ── */
     function init() {
-      document.querySelector('.logo-sub').textContent = config.company;
+      document.getElementById('companyName').textContent = config.company;
+      populateVendedorSelect();
 
       state.charts.geral = createDoughnut('chartGeral', 0, '#22c55e');
       state.charts.tele = createDoughnut('chartTele', 0, '#8b5cf6');
       createBarsChart();
-
-      refreshOverview();
-      initOrders();
-      renderKPIs();
-      renderRegions();
-      renderRankings();
       createDailyChart();
+
+      initOrders();
+      refreshAll();
 
       updateClock();
       setInterval(updateClock, 1000);
-
       startRotate();
 
       function scheduleOrder() {
         addLiveOrder();
-        setTimeout(scheduleOrder, randomBetween(3000, 5000));
+        if (!state.paused) {
+          setTimeout(scheduleOrder, randomBetween(3500, 6000));
+        } else {
+          setTimeout(scheduleOrder, 800);
+        }
       }
-      setTimeout(scheduleOrder, 3500);
+      setTimeout(scheduleOrder, 4000);
 
-      setInterval(animateRegions, 15000);
-      setInterval(renderKPIs, 8000);
       setInterval(() => {
-        if (state.charts.bars) updateBarsChart();
-        updateSideMetrics();
-      }, 9000);
+        if (!state.paused) {
+          renderRegions();
+        }
+      }, 14000);
 
-      setTimeout(showMotivation, 8000);
+      setTimeout(showMotivation, 9000);
       scheduleMotivation();
     }
 
