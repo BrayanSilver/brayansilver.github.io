@@ -268,7 +268,7 @@
             h1 {
                 font-size: 1.5rem;
             }
-            .input-container {
+            .input-group {
                 flex-direction: column;
                 gap: 10px;
             }
@@ -277,11 +277,37 @@
             }
         }
         @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                overflow-x: hidden;
+            }
             .container {
                 padding: 15px;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 1.35rem;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            input, .add-btn {
+                width: 100%;
+                min-height: 44px;
+                font-size: 0.95rem;
             }
             .todo-item {
+                flex-wrap: wrap;
                 padding: 12px;
+            }
+            .delete-btn {
+                width: 100%;
+                min-height: 44px;
+                margin-top: 4px;
+            }
+            .stats {
+                font-size: 0.9rem;
+                padding: 14px;
             }
         }
     </style>

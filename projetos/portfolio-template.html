@@ -81,6 +81,40 @@
             border-radius: 20px;
             color: #22d3ee;
         }
+        @media (max-width: 480px) {
+            body {
+                overflow-x: hidden;
+            }
+            .container {
+                padding: 12px;
+                max-width: 100%;
+            }
+            header {
+                padding: 32px 12px;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .section {
+                padding: 32px 12px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .project-card {
+                padding: 16px;
+            }
+            .skills {
+                gap: 8px;
+            }
+            .skill {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>

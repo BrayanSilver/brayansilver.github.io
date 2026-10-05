@@ -328,7 +328,7 @@
 
   .modal-shell {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(220px, 42vh) minmax(0, 1fr);
+    grid-template-rows: minmax(160px, min(28vh, 220px)) minmax(0, 1fr);
     min-height: 0;
     max-height: inherit;
   }
@@ -337,17 +337,27 @@
   .modal-media--empty {
     border-right: none;
     border-bottom: 1px solid rgba(197, 205, 216, 0.08);
-    min-height: 220px;
+    min-height: 160px;
+    max-height: min(28vh, 220px);
   }
 
   .modal-panel {
     border-left: none;
     min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .modal-panel-scroll {
     padding-top: 1.35rem;
     padding-right: 1.25rem;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .modal-action-btn {
+    min-width: 0;
   }
 
   .modal-close {
@@ -365,7 +375,13 @@
 
 @media (max-width: 480px) {
   .modal-shell {
-    grid-template-rows: minmax(200px, 38vh) minmax(0, 1fr);
+    grid-template-rows: minmax(140px, min(24vh, 180px)) minmax(0, 1fr);
+  }
+
+  .modal-media,
+  .modal-media--empty {
+    min-height: 140px;
+    max-height: min(24vh, 180px);
   }
 
   .modal-actions {
@@ -374,6 +390,7 @@
 
   .modal-action-btn {
     width: 100%;
+    min-width: 0;
   }
 
   .modal-title {

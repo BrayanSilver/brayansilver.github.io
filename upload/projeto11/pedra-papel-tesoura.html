@@ -162,14 +162,40 @@
             }
         }
         @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                overflow-x: hidden;
+            }
             .container {
-                padding: 20px;
+                padding: 16px;
+                max-width: 100%;
             }
             h1 {
                 font-size: 1.5rem;
             }
+            .score-board {
+                padding: 14px;
+            }
+            .score-value {
+                font-size: 1.5rem;
+            }
+            .choices {
+                flex-direction: row;
+                gap: 10px;
+            }
             .choice-btn {
+                width: 90px;
+                height: 90px;
                 font-size: 2rem;
+                min-height: 44px;
+            }
+            .result {
+                font-size: 1.1rem;
+                padding: 14px;
+            }
+            .reset-btn {
+                width: 100%;
+                min-height: 44px;
             }
         }
     </style>

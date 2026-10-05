@@ -102,6 +102,44 @@
             text-align: center;
             color: #666;
         }
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                overflow-x: hidden;
+            }
+            .container {
+                padding: 16px;
+                border-radius: 14px;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 1.35rem;
+                margin-bottom: 14px;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            input, .add-btn {
+                width: 100%;
+                min-height: 44px;
+                font-size: 0.95rem;
+            }
+            .add-btn {
+                padding: 12px;
+            }
+            .todo-item {
+                flex-wrap: wrap;
+                padding: 12px;
+            }
+            .delete-btn {
+                width: 100%;
+                min-height: 44px;
+                margin-top: 4px;
+            }
+            .stats {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>

@@ -7,6 +7,7 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
+  padding-top: env(safe-area-inset-top);
   transition: background var(--transition-base), border-color var(--transition-base), backdrop-filter var(--transition-base);
 }
 
@@ -278,5 +279,7 @@ nav.scrolled {
 
   .mobile-menu {
     display: flex;
+    padding-top: calc(4.5rem + env(safe-area-inset-top));
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
   }
 }

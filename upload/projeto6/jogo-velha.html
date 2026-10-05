@@ -179,6 +179,14 @@
             }
         }
         @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                overflow-x: hidden;
+            }
+            .container {
+                padding: 16px;
+                max-width: 100%;
+            }
             h1 {
                 font-size: 1.5rem;
             }
@@ -186,8 +194,18 @@
                 font-size: 2rem;
             }
             .board {
-                gap: 10px;
-                padding: 15px;
+                gap: 6px;
+                padding: 12px;
+                margin: 20px 0;
+                max-width: 100%;
+            }
+            .status {
+                font-size: 0.95rem;
+                padding: 10px;
+            }
+            .reset-btn {
+                width: 100%;
+                min-height: 44px;
             }
         }
     </style>

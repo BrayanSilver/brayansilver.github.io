@@ -161,11 +161,37 @@
             }
         }
         @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                overflow-x: hidden;
+            }
             .container {
-                padding: 20px;
+                padding: 16px;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 1.35rem;
+            }
+            input, select {
+                min-height: 44px;
+                font-size: 0.95rem;
             }
             .qr-container {
                 min-height: 180px;
+                padding: 12px;
+                overflow: hidden;
+            }
+            .qr-container canvas,
+            .qr-container img {
+                max-width: 100%;
+                height: auto !important;
+            }
+            .buttons {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+                min-height: 44px;
             }
         }
     </style>

@@ -381,15 +381,19 @@
 /* Mobile */
 @media (max-width: 640px) {
   #projects {
-    padding: var(--section-py) var(--page-px);
+    padding: var(--section-py) max(0.75rem, env(safe-area-inset-right)) var(--section-py) max(0.75rem, env(safe-area-inset-left));
   }
 
   .project-category-title {
     font-size: 1rem;
   }
 
+  .project-carousel {
+    padding: 0;
+  }
+
   .project-carousel .carousel-viewport {
-    padding: 0.25rem 2.5rem;
+    padding: 0.25rem 2.75rem;
   }
 
   .project-carousel .carousel-btn {
@@ -398,15 +402,15 @@
   }
 
   .project-carousel .carousel-btn--prev {
-    left: -0.1rem;
+    left: 0.15rem;
   }
 
   .project-carousel .carousel-btn--next {
-    right: -0.1rem;
+    right: 0.15rem;
   }
 
   .project-card--carousel {
-    flex: 0 0 min(270px, 82vw);
+    flex: 0 0 min(270px, calc(100vw - 5.5rem));
     max-width: none;
   }
 
@@ -420,7 +424,11 @@
 }
 
 @media (max-width: 380px) {
+  .project-carousel .carousel-viewport {
+    padding: 0.25rem 2.5rem;
+  }
+
   .project-card--carousel {
-    flex: 0 0 84vw;
+    flex: 0 0 calc(100vw - 5rem);
   }
 }

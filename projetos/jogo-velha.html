@@ -91,6 +91,37 @@
         .reset-btn:hover {
             transform: scale(1.1);
         }
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                overflow-x: hidden;
+            }
+            .container {
+                padding: 16px;
+                border-radius: 14px;
+                max-width: 100%;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .board {
+                gap: 6px;
+                margin: 20px 0;
+                max-width: 100%;
+            }
+            .cell {
+                font-size: 2rem;
+                border-width: 2px;
+            }
+            .status {
+                font-size: 1rem;
+                margin: 14px 0;
+            }
+            .reset-btn {
+                width: 100%;
+                min-height: 44px;
+            }
+        }
     </style>
 </head>
 <body>
