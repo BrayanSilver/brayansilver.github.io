@@ -4,6 +4,7 @@
  */
 
 import { DataService } from '../services/DataService.js';
+import { HeroScene3D } from '../services/HeroScene3D.js';
 import { HeroView } from '../views/HeroView.js';
 import { AboutView } from '../views/AboutView.js';
 import { SkillsView } from '../views/SkillsView.js';
@@ -14,8 +15,12 @@ import { ContactView } from '../views/ContactView.js';
 import { ModalView } from '../views/ModalView.js';
 import { NavigationController } from './NavigationController.js';
 import { getI18n } from '../i18n/I18nService.js';
+import { initCardTilt } from '../utils/cardTilt.js';
 
 export class PortfolioController {
+  /** @type {(() => void)|null} */
+  #disposeTilt = null;
+
   constructor() {
     this.i18n = getI18n();
     this.dataService = new DataService();
@@ -28,6 +33,7 @@ export class PortfolioController {
     this.contactView = new ContactView();
     this.modalView = new ModalView();
     this.navController = new NavigationController();
+    this.heroScene = new HeroScene3D();
     /** @type {import('../models/PortfolioModel.js').PortfolioModel|null} */
     this.model = null;
   }
@@ -39,7 +45,18 @@ export class PortfolioController {
       this.loadAndRender();
     });
     this.navController.init(this.i18n);
+    this.#initHeroScene();
     await this.loadAndRender();
+  }
+
+  #initHeroScene() {
+    const mount = document.getElementById('heroScene');
+    if (!mount) return;
+    try {
+      this.heroScene.init(mount);
+    } catch (err) {
+      console.warn('[App] Hero 3D indisponível:', err);
+    }
   }
 
   /** Carrega dados e renderiza todas as views */
@@ -57,6 +74,9 @@ export class PortfolioController {
 
     // Dispara evento para reveal animations em conteúdo dinâmico
     window.dispatchEvent(new CustomEvent('portfolio:rendered'));
+
+    this.#disposeTilt?.();
+    this.#disposeTilt = initCardTilt();
 
     // Guarda referência para modal
     this.rawProjects = rawProjects;

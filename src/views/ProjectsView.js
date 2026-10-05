@@ -1,6 +1,6 @@
 /**
  * @file ProjectsView.js
- * @description View de projetos — 2 destaques no topo + carrosséis por categoria.
+ * @description View de projetos — destaques no topo + carrosséis por categoria.
  */
 
 import { setHTML } from '../utils/dom.js';
@@ -9,7 +9,7 @@ import { isGameProject, isExternalUrl } from '../utils/helpers.js';
 import { PROJECT_CATEGORIES, groupProjectsByCategory } from '../utils/projectCategories.js';
 import { getI18n } from '../i18n/I18nService.js';
 
-const FEATURED_COUNT = 2;
+const FEATURED_COUNT = 3;
 
 export class ProjectsView {
   /**

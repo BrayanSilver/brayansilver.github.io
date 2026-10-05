@@ -57,6 +57,8 @@ export function categorizeProject(project) {
     link.includes('mario') ||
     link.includes('shooter') ||
     link.includes('racing') ||
+    link.includes('drift') ||
+    link.includes('orbit') ||
     link.includes('pedra-papel')
   ) {
     return 'games';

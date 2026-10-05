@@ -2,7 +2,7 @@
  * Footer
  */
 footer {
-  padding: 4rem 1.5rem 2rem;
+  padding: clamp(3rem, 6vw, 4.5rem) var(--page-px) 2rem;
   border-top: 1px solid rgba(148, 163, 184, 0.08);
   background: var(--bg-surface);
 }
@@ -14,8 +14,8 @@ footer {
 
 .footer-content {
   display: grid;
-  grid-template-columns: 1.5fr repeat(3, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: 1.6fr repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.75rem);
   margin-bottom: 3rem;
 }
 
@@ -54,13 +54,13 @@ footer {
 
 .newsletter-input:focus {
   outline: none;
-  border-color: var(--accent-emerald);
+  border-color: var(--accent-gold);
 }
 
 .newsletter-btn {
   padding: 0.65rem 1.25rem;
   background: var(--gradient-primary);
-  color: #fff;
+  color: #0a0b0f;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.875rem;
@@ -83,7 +83,7 @@ footer {
 }
 
 .back-to-top:hover {
-  color: var(--accent-emerald-light);
+  color: var(--accent-gold-light);
 }
 
 .footer-title {
@@ -110,7 +110,7 @@ footer {
 }
 
 .footer-links a:hover {
-  color: var(--accent-emerald-light);
+  color: var(--accent-gold-light);
 }
 
 .footer-social {
@@ -125,7 +125,7 @@ footer {
 }
 
 .social-icon:hover {
-  color: var(--accent-emerald-light);
+  color: var(--accent-gold-light);
 }
 
 .footer-bottom {
@@ -141,7 +141,7 @@ footer {
 }
 
 .heart {
-  color: #38bdf8;
+  color: #e4c878;
 }
 
 @media (max-width: 900px) {

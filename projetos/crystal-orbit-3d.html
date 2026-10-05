@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BT25CCMCL8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BT25CCMCL8');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Crystal Orbit 3D | Dev Brayan</title>
+  <meta name="description" content="Crystal Orbit 3D — colete cristais e destrua asteroides em Three.js. Por Dev Brayan.">
+  <meta name="theme-color" content="#06070b">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06070b; --gold: #e4c878; --platinum: #c5cdd8; --text: #f4f1ea; --muted: #8a847a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
+      font-family: 'Outfit', sans-serif; touch-action: none; user-select: none;
+    }
+    #game { position: fixed; inset: 0; }
+    #game canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+    .hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: clamp(0.85rem, 3vw, 1.35rem); gap: 1rem;
+    }
+    .brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(0.95rem, 2.5vw, 1.15rem); }
+    .brand span {
+      background: linear-gradient(90deg, #e4c878, #c5cdd8);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stats { display: flex; gap: 0.65rem; }
+    .stat {
+      min-width: 4.5rem; padding: 0.45rem 0.7rem; border-radius: 12px;
+      background: rgba(6, 7, 11, 0.55); border: 1px solid rgba(197, 205, 216, 0.14);
+      backdrop-filter: blur(10px); text-align: right;
+    }
+    .stat label {
+      display: block; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); font-weight: 600;
+    }
+    .stat strong { font-size: 1.05rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+    .hint {
+      position: absolute; left: 50%; bottom: 1.5rem; transform: translateX(-50%);
+      font-size: 0.8rem; color: var(--muted); text-align: center; transition: opacity 0.4s;
+    }
+    .hint.hidden { opacity: 0; }
+    .overlay {
+      position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem; background: rgba(4, 5, 8, 0.72); backdrop-filter: blur(12px);
+    }
+    .overlay.hidden { display: none; }
+    .card {
+      width: min(420px, 100%); padding: clamp(1.5rem, 4vw, 2.25rem); border-radius: 24px;
+      background: linear-gradient(165deg, rgba(22, 26, 36, 0.98), rgba(10, 12, 18, 0.98));
+      border: 1px solid rgba(197, 205, 216, 0.12); text-align: center;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+    }
+    .card h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.55rem, 5vw, 2rem); margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #e4c878, #e8ecf1);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .card p { color: var(--muted); line-height: 1.6; margin-bottom: 1.15rem; font-size: 0.95rem; }
+    .card .result { font-size: 1.35rem; font-weight: 700; color: var(--gold); margin-bottom: 0.35rem; }
+    .card .best { font-size: 0.85rem; color: var(--platinum); margin-bottom: 1.25rem; }
+    .btn {
+      display: inline-flex; width: 100%; justify-content: center; padding: 0.9rem 1.25rem;
+      border: none; border-radius: 14px; font: inherit; font-weight: 700; cursor: pointer;
+      background: linear-gradient(135deg, #a8893a, #e4c878 50%, #c5cdd8); color: #0a0b0f;
+      box-shadow: 0 8px 28px rgba(201, 168, 76, 0.28);
+    }
+    .link-back { display: inline-block; margin-top: 1rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    .link-back:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div id="game"></div>
+  <div class="hud">
+    <div class="top-bar">
+      <div class="brand">Crystal <span>Orbit 3D</span></div>
+      <div class="stats">
+        <div class="stat"><label>Score</label><strong id="scoreVal">0</strong></div>
+        <div class="stat"><label>Lives</label><strong id="livesVal">3</strong></div>
+        <div class="stat"><label>Best</label><strong id="bestVal">0</strong></div>
+      </div>
+    </div>
+    <p class="hint" id="hint">Arraste para orbitar · Clique / toque para disparar</p>
+  </div>
+
+  <div class="overlay" id="startOverlay">
+    <div class="card">
+      <h1>Crystal Orbit 3D</h1>
+      <p>Gire ao redor do núcleo, destrua asteroides e colete cristais de platina. Três vidas — quanto mais sobrevive, mais rápido fica.</p>
+      <button type="button" class="btn" id="startBtn">Jogar</button>
+      <a class="link-back" href="../index.html#projects">← Voltar ao portfólio</a>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="overOverlay">
+    <div class="card">
+      <h1>Game Over</h1>
+      <p class="result" id="finalScore">0</p>
+      <p class="best" id="finalBest">Recorde: 0</p>
+      <button type="button" class="btn" id="retryBtn">Jogar de novo</button>
+      <a class="link-back" href="../index.html#projects">← Voltar ao portfólio</a>
+    </div>
+  </div>
+
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+
+    const KEY = 'crystal-orbit-3d-best';
+    const el = {
+      game: document.getElementById('game'),
+      score: document.getElementById('scoreVal'),
+      lives: document.getElementById('livesVal'),
+      best: document.getElementById('bestVal'),
+      hint: document.getElementById('hint'),
+      start: document.getElementById('startOverlay'),
+      over: document.getElementById('overOverlay'),
+      startBtn: document.getElementById('startBtn'),
+      retryBtn: document.getElementById('retryBtn'),
+      finalScore: document.getElementById('finalScore'),
+      finalBest: document.getElementById('finalBest'),
+    };
+
+    let best = Number(localStorage.getItem(KEY) || 0);
+    el.best.textContent = String(best);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x06070b, 0.035);
+    scene.background = new THREE.Color(0x06070b);
+
+    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 200);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    el.game.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xc5cdd8, 0.4));
+    const keyLight = new THREE.DirectionalLight(0xe4c878, 1.2);
+    keyLight.position.set(5, 8, 4);
+    scene.add(keyLight);
+    scene.add(new THREE.PointLight(0xc9a84c, 1.5, 40).translateX(0).translateY(2));
+
+    const core = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.2, 1),
+      new THREE.MeshStandardMaterial({
+        color: 0xe4c878, metalness: 0.95, roughness: 0.15, emissive: 0x2a2208, flatShading: true,
+      })
+    );
+    scene.add(core);
+
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(4.2, 0.04, 12, 100),
+      new THREE.MeshStandardMaterial({ color: 0xc5cdd8, metalness: 0.9, roughness: 0.25, transparent: true, opacity: 0.5 })
+    );
+    ring.rotation.x = Math.PI / 2.4;
+    scene.add(ring);
+
+    const starsGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(200 * 3);
+    for (let i = 0; i < 200; i++) {
+      starPos[i * 3] = (Math.random() - 0.5) * 80;
+      starPos[i * 3 + 1] = (Math.random() - 0.5) * 60;
+      starPos[i * 3 + 2] = (Math.random() - 0.5) * 80;
+    }
+    starsGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    scene.add(new THREE.Points(starsGeo, new THREE.PointsMaterial({ color: 0xc5cdd8, size: 0.06, transparent: true, opacity: 0.55 })));
+
+    const bullets = [];
+    const rocks = [];
+    const crystals = [];
+    const rockGeo = new THREE.DodecahedronGeometry(0.55, 0);
+    const rockMat = new THREE.MeshStandardMaterial({ color: 0x6a5530, metalness: 0.5, roughness: 0.45, flatShading: true });
+    const crystalGeo = new THREE.OctahedronGeometry(0.35, 0);
+    const crystalMat = new THREE.MeshStandardMaterial({
+      color: 0xc5cdd8, emissive: 0x2a3340, metalness: 0.9, roughness: 0.15,
+    });
+    const bulletGeo = new THREE.SphereGeometry(0.12, 8, 8);
+    const bulletMat = new THREE.MeshBasicMaterial({ color: 0xe4c878 });
+
+    const state = {
+      running: false,
+      score: 0,
+      lives: 3,
+      yaw: 0.4,
+      pitch: 0.35,
+      targetYaw: 0.4,
+      targetPitch: 0.35,
+      radius: 11,
+      spawnTimer: 0,
+      fireCool: 0,
+      dragging: false,
+      pointerStartX: 0,
+      pointerStartY: 0,
+      lastX: 0,
+      lastY: 0,
+      hintHidden: false,
+      clock: new THREE.Clock(),
+    };
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+
+    function resize() {
+      const w = innerWidth, h = innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+    }
+    addEventListener('resize', resize);
+    resize();
+
+    function clearList(list) {
+      list.forEach((m) => scene.remove(m));
+      list.length = 0;
+    }
+
+    function spawnRock() {
+      const rock = new THREE.Mesh(rockGeo, rockMat.clone());
+      const a = Math.random() * Math.PI * 2;
+      const elev = (Math.random() - 0.5) * 1.2;
+      const r = 7 + Math.random() * 5;
+      rock.position.set(Math.cos(a) * r, elev * 3, Math.sin(a) * r);
+      rock.userData.vel = rock.position.clone().normalize().multiplyScalar(-1.6 - Math.random());
+      rock.userData.spin = new THREE.Vector3(Math.random(), Math.random(), Math.random());
+      scene.add(rock);
+      rocks.push(rock);
+    }
+
+    function spawnCrystal() {
+      const c = new THREE.Mesh(crystalGeo, crystalMat);
+      const a = Math.random() * Math.PI * 2;
+      const r = 5 + Math.random() * 4;
+      c.position.set(Math.cos(a) * r, (Math.random() - 0.5) * 3, Math.sin(a) * r);
+      c.userData.bob = Math.random() * 10;
+      scene.add(c);
+      crystals.push(c);
+    }
+
+    function fire() {
+      if (!state.running || state.fireCool > 0) return;
+      state.fireCool = 0.18;
+      const dir = new THREE.Vector3();
+      camera.getWorldDirection(dir);
+      const bullet = new THREE.Mesh(bulletGeo, bulletMat);
+      bullet.position.copy(camera.position).add(dir.clone().multiplyScalar(1.2));
+      bullet.userData.vel = dir.multiplyScalar(28);
+      scene.add(bullet);
+      bullets.push(bullet);
+      if (!state.hintHidden) {
+        state.hintHidden = true;
+        el.hint.classList.add('hidden');
+      }
+    }
+
+    function resetGame() {
+      clearList(bullets); clearList(rocks); clearList(crystals);
+      state.score = 0; state.lives = 3; state.spawnTimer = 0; state.fireCool = 0;
+      state.hintHidden = false;
+      el.hint.classList.remove('hidden');
+      el.score.textContent = '0';
+      el.lives.textContent = '3';
+      for (let i = 0; i < 5; i++) spawnRock();
+      for (let i = 0; i < 3; i++) spawnCrystal();
+    }
+
+    function endGame() {
+      state.running = false;
+      if (state.score > best) {
+        best = state.score;
+        localStorage.setItem(KEY, String(best));
+        el.best.textContent = String(best);
+      }
+      el.finalScore.textContent = `Score: ${state.score}`;
+      el.finalBest.textContent = `Recorde: ${best}`;
+      el.over.classList.remove('hidden');
+    }
+
+    function startGame() {
+      el.start.classList.add('hidden');
+      el.over.classList.add('hidden');
+      resetGame();
+      state.running = true;
+      state.clock.start();
+    }
+
+    el.startBtn.addEventListener('click', startGame);
+    el.retryBtn.addEventListener('click', startGame);
+
+    el.game.addEventListener('pointerdown', (e) => {
+      state.dragging = true;
+      state.pointerStartX = e.clientX;
+      state.pointerStartY = e.clientY;
+      state.lastX = e.clientX;
+      state.lastY = e.clientY;
+      el.game.setPointerCapture?.(e.pointerId);
+    });
+    el.game.addEventListener('pointermove', (e) => {
+      if (!state.dragging) return;
+      const dx = e.clientX - state.lastX;
+      const dy = e.clientY - state.lastY;
+      state.lastX = e.clientX;
+      state.lastY = e.clientY;
+      state.targetYaw -= dx * 0.005;
+      state.targetPitch = Math.max(-0.9, Math.min(1.1, state.targetPitch + dy * 0.004));
+    });
+    el.game.addEventListener('pointerup', (e) => {
+      const moved = Math.hypot(e.clientX - state.pointerStartX, e.clientY - state.pointerStartY);
+      if (state.dragging && moved < 12) fire();
+      state.dragging = false;
+    });
+    el.game.addEventListener('pointerleave', () => { state.dragging = false; });
+
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') { e.preventDefault(); fire(); }
+      if (e.code === 'Enter' && !state.running) startGame();
+      if (e.code === 'ArrowLeft') state.targetYaw += 0.12;
+      if (e.code === 'ArrowRight') state.targetYaw -= 0.12;
+      if (e.code === 'ArrowUp') state.targetPitch = Math.max(-0.9, state.targetPitch - 0.08);
+      if (e.code === 'ArrowDown') state.targetPitch = Math.min(1.1, state.targetPitch + 0.08);
+    });
+
+    function hitTest(a, b, dist) {
+      return a.position.distanceTo(b.position) < dist;
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const dt = Math.min(state.clock.getDelta(), 0.05);
+      const t = state.clock.elapsedTime;
+
+      state.yaw += (state.targetYaw - state.yaw) * 0.12;
+      state.pitch += (state.targetPitch - state.pitch) * 0.12;
+      camera.position.set(
+        Math.cos(state.yaw) * Math.cos(state.pitch) * state.radius,
+        Math.sin(state.pitch) * state.radius * 0.85 + 1.5,
+        Math.sin(state.yaw) * Math.cos(state.pitch) * state.radius
+      );
+      camera.lookAt(0, 0.4, 0);
+
+      core.rotation.y = t * 0.35;
+      core.rotation.x = t * 0.15;
+      ring.rotation.z = t * 0.1;
+
+      if (state.running) {
+        state.fireCool = Math.max(0, state.fireCool - dt);
+        state.spawnTimer -= dt;
+        if (state.spawnTimer <= 0) {
+          spawnRock();
+          if (Math.random() < 0.45) spawnCrystal();
+          state.spawnTimer = Math.max(0.55, 1.4 - state.score * 0.008);
+        }
+
+        for (let i = bullets.length - 1; i >= 0; i--) {
+          const b = bullets[i];
+          b.position.addScaledVector(b.userData.vel, dt);
+          if (b.position.length() > 40) {
+            scene.remove(b); bullets.splice(i, 1); continue;
+          }
+          for (let j = rocks.length - 1; j >= 0; j--) {
+            if (hitTest(b, rocks[j], 0.85)) {
+              scene.remove(rocks[j]); rocks.splice(j, 1);
+              scene.remove(b); bullets.splice(i, 1);
+              state.score += 10;
+              el.score.textContent = String(state.score);
+              break;
+            }
+          }
+        }
+
+        for (let i = rocks.length - 1; i >= 0; i--) {
+          const r = rocks[i];
+          r.position.addScaledVector(r.userData.vel, dt * (1 + state.score * 0.004));
+          r.rotation.x += r.userData.spin.x * dt;
+          r.rotation.y += r.userData.spin.y * dt;
+          if (r.position.length() < 1.8) {
+            scene.remove(r); rocks.splice(i, 1);
+            state.lives -= 1;
+            el.lives.textContent = String(state.lives);
+            core.scale.setScalar(1.15);
+            setTimeout(() => core.scale.setScalar(1), 120);
+            if (state.lives <= 0) endGame();
+          }
+        }
+
+        for (let i = crystals.length - 1; i >= 0; i--) {
+          const c = crystals[i];
+          c.rotation.y += dt * 2;
+          c.position.y += Math.sin(t * 2 + c.userData.bob) * 0.004;
+          // collect by shooting or proximity to camera
+          let collected = camera.position.distanceTo(c.position) < 2.2;
+          if (!collected) {
+            for (const b of bullets) {
+              if (hitTest(b, c, 0.7)) { collected = true; break; }
+            }
+          }
+          if (collected) {
+            scene.remove(c); crystals.splice(i, 1);
+            state.score += 25;
+            el.score.textContent = String(state.score);
+          }
+        }
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

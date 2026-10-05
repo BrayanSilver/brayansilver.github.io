@@ -197,6 +197,36 @@
       ]
     },
     {
+      "id": 31,
+      "pasta": "projeto31",
+      "titulo": "Neon Drift 3D",
+      "descricao": "Endless runner in Three.js. Switch lanes, jump over neon obstacles, collect platinum orbs, and chase your high score in a gold-lit 3D track.",
+      "tecnologias": "Three.js, JavaScript, WebGL, HTML, CSS",
+      "link": "projetos/neon-drift-3d.html",
+      "github": "",
+      "imagens": [
+        "neon-drift-cover.jpg"
+      ],
+      "loadedImages": [
+        "upload/projeto31/neon-drift-cover.jpg"
+      ]
+    },
+    {
+      "id": 32,
+      "pasta": "projeto32",
+      "titulo": "Crystal Orbit 3D",
+      "descricao": "Orbital arena in Three.js. Rotate around a gold crystal core, shoot asteroids, collect platinum gems, and survive as the pace ramps up.",
+      "tecnologias": "Three.js, JavaScript, WebGL, HTML, CSS",
+      "link": "projetos/crystal-orbit-3d.html",
+      "github": "",
+      "imagens": [
+        "crystal-orbit-cover.jpg"
+      ],
+      "loadedImages": [
+        "upload/projeto32/crystal-orbit-cover.jpg"
+      ]
+    },
+    {
       "id": 7,
       "pasta": "projeto7",
       "titulo": "Modern Calculator",

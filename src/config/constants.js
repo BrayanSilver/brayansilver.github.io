@@ -87,4 +87,5 @@ export const PROJECT_OVERLAY_CLASSES = [
 /** Palavras-chave que identificam projetos interativos (jogos) */
 export const GAME_KEYWORDS = [
   'jogo', 'game', 'shooter', 'velha', 'memoria', 'pedra', 'racing', 'mario',
+  'drift', 'neon-drift', 'orbit', 'crystal-orbit',
 ];

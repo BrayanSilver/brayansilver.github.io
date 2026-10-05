@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BT25CCMCL8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BT25CCMCL8');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Neon Drift 3D | Dev Brayan</title>
+  <meta name="description" content="Neon Drift 3D — endless runner em Three.js. Desvie dos blocos, colete orbs e bata seu recorde. Por Dev Brayan.">
+  <meta name="author" content="Brayan Rosa da Silveira - Dev Brayan">
+  <meta name="theme-color" content="#06070b">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06070b;
+      --gold: #e4c878;
+      --gold-dim: #c9a84c;
+      --platinum: #c5cdd8;
+      --text: #f4f1ea;
+      --muted: #8a847a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #game {
+      position: fixed;
+      inset: 0;
+    }
+    #game canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hud {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: clamp(0.85rem, 3vw, 1.35rem);
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    }
+    .brand span {
+      background: linear-gradient(90deg, #e4c878, #c5cdd8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stats {
+      display: flex;
+      gap: 0.65rem;
+    }
+    .stat {
+      min-width: 4.5rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 12px;
+      background: rgba(6, 7, 11, 0.55);
+      border: 1px solid rgba(197, 205, 216, 0.14);
+      backdrop-filter: blur(10px);
+      text-align: right;
+    }
+    .stat label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .stat strong {
+      font-size: 1.05rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--gold);
+    }
+
+    .hint {
+      position: absolute;
+      left: 50%;
+      bottom: clamp(5.5rem, 14vh, 7rem);
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      opacity: 0.85;
+      transition: opacity 0.4s ease;
+    }
+    .hint.hidden { opacity: 0; }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background: rgba(4, 5, 8, 0.72);
+      backdrop-filter: blur(12px);
+      pointer-events: auto;
+    }
+    .overlay.hidden { display: none; }
+
+    .card {
+      width: min(420px, 100%);
+      padding: clamp(1.5rem, 4vw, 2.25rem);
+      border-radius: 24px;
+      background: linear-gradient(165deg, rgba(22, 26, 36, 0.98), rgba(10, 12, 18, 0.98));
+      border: 1px solid rgba(197, 205, 216, 0.12);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .card h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.1rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #e4c878, #e8ecf1);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+    }
+    .card .result {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+    .card .best {
+      font-size: 0.85rem;
+      color: var(--platinum);
+      margin-bottom: 1.25rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0.9rem 1.25rem;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, #a8893a, #e4c878 50%, #c5cdd8);
+      color: #0a0b0f;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 28px rgba(201, 168, 76, 0.28);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+
+    .link-back {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .link-back:hover { color: var(--gold); }
+
+    .touch {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 6;
+      display: none;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.6rem;
+      padding: 0.85rem 1rem calc(0.85rem + env(safe-area-inset-bottom));
+      pointer-events: auto;
+      background: linear-gradient(180deg, transparent, rgba(6, 7, 11, 0.75));
+    }
+    .touch button {
+      height: 3.4rem;
+      border-radius: 16px;
+      border: 1px solid rgba(197, 205, 216, 0.18);
+      background: rgba(20, 24, 32, 0.75);
+      color: var(--text);
+      font-size: 1.25rem;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+    }
+    .touch button:active {
+      background: rgba(201, 168, 76, 0.22);
+      border-color: rgba(201, 168, 76, 0.45);
+    }
+
+    @media (pointer: coarse) {
+      .touch { display: grid; }
+      .hint { bottom: 7.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="game" aria-hidden="true"></div>
+
+  <div class="hud">
+    <div class="top-bar">
+      <div class="brand">Neon <span>Drift 3D</span></div>
+      <div class="stats">
+        <div class="stat">
+          <label>Score</label>
+          <strong id="scoreVal">0</strong>
+        </div>
+        <div class="stat">
+          <label>Best</label>
+          <strong id="bestVal">0</strong>
+        </div>
+      </div>
+    </div>
+    <p class="hint" id="hint">← → / A D para mudar de faixa · Espaço para pular</p>
+  </div>
+
+  <div class="touch" id="touch">
+    <button type="button" id="btnLeft" aria-label="Esquerda">◀</button>
+    <button type="button" id="btnJump" aria-label="Pular">▲</button>
+    <button type="button" id="btnRight" aria-label="Direita">▶</button>
+  </div>
+
+  <div class="overlay" id="startOverlay">
+    <div class="card">
+      <h1>Neon Drift 3D</h1>
+      <p>Endless runner em Three.js. Desvie dos blocos dourados, colete orbs de platina e sobreviva o máximo possível.</p>
+      <button type="button" class="btn" id="startBtn">Jogar</button>
+      <a class="link-back" href="../index.html#projects">← Voltar ao portfólio</a>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="overOverlay">
+    <div class="card">
+      <h1>Game Over</h1>
+      <p class="result" id="finalScore">0</p>
+      <p class="best" id="finalBest">Recorde: 0</p>
+      <button type="button" class="btn" id="retryBtn">Jogar de novo</button>
+      <a class="link-back" href="../index.html#projects">← Voltar ao portfólio</a>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+
+    const LANES = [-2.4, 0, 2.4];
+    const STORAGE_KEY = 'neon-drift-3d-best';
+
+    const el = {
+      game: document.getElementById('game'),
+      score: document.getElementById('scoreVal'),
+      best: document.getElementById('bestVal'),
+      hint: document.getElementById('hint'),
+      start: document.getElementById('startOverlay'),
+      over: document.getElementById('overOverlay'),
+      startBtn: document.getElementById('startBtn'),
+      retryBtn: document.getElementById('retryBtn'),
+      finalScore: document.getElementById('finalScore'),
+      finalBest: document.getElementById('finalBest'),
+      btnLeft: document.getElementById('btnLeft'),
+      btnRight: document.getElementById('btnRight'),
+      btnJump: document.getElementById('btnJump'),
+    };
+
+    let best = Number(localStorage.getItem(STORAGE_KEY) || 0);
+    el.best.textContent = String(best);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x06070b, 0.045);
+    scene.background = new THREE.Color(0x06070b);
+
+    const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 120);
+    camera.position.set(0, 5.2, 9.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    el.game.appendChild(renderer.domElement);
+
+    const hemi = new THREE.HemisphereLight(0xc5cdd8, 0x1a1520, 0.55);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xe4c878, 1.15);
+    key.position.set(4, 10, 6);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    scene.add(key);
+    const rim = new THREE.PointLight(0xc9a84c, 1.4, 30);
+    rim.position.set(-3, 3, 2);
+    scene.add(rim);
+
+    // Track
+    const trackMat = new THREE.MeshStandardMaterial({
+      color: 0x12151d,
+      metalness: 0.65,
+      roughness: 0.4,
+    });
+    const track = new THREE.Mesh(new THREE.PlaneGeometry(10, 220), trackMat);
+    track.rotation.x = -Math.PI / 2;
+    track.position.z = -70;
+    track.receiveShadow = true;
+    scene.add(track);
+
+    const lineMat = new THREE.MeshBasicMaterial({ color: 0xc9a84c, transparent: true, opacity: 0.35 });
+    [-1.2, 1.2].forEach((x) => {
+      const line = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.02, 220), lineMat);
+      line.position.set(x, 0.02, -70);
+      scene.add(line);
+    });
+
+    // Side rails
+    const railMat = new THREE.MeshStandardMaterial({ color: 0x1c2030, metalness: 0.8, roughness: 0.35 });
+    [-5.1, 5.1].forEach((x) => {
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.5, 220), railMat);
+      rail.position.set(x, 0.25, -70);
+      scene.add(rail);
+    });
+
+    // Player
+    const player = new THREE.Group();
+    const body = new THREE.Mesh(
+      new THREE.BoxGeometry(1.05, 0.7, 1.35),
+      new THREE.MeshStandardMaterial({ color: 0xe4c878, metalness: 0.85, roughness: 0.22 })
+    );
+    body.castShadow = true;
+    body.position.y = 0.45;
+    player.add(body);
+    const canopy = new THREE.Mesh(
+      new THREE.BoxGeometry(0.7, 0.35, 0.7),
+      new THREE.MeshStandardMaterial({ color: 0xc5cdd8, metalness: 0.9, roughness: 0.15, transparent: true, opacity: 0.85 })
+    );
+    canopy.position.set(0, 0.9, -0.1);
+    canopy.castShadow = true;
+    player.add(canopy);
+    const glow = new THREE.PointLight(0xe4c878, 1.2, 6);
+    glow.position.y = 0.6;
+    player.add(glow);
+    scene.add(player);
+
+    // Particles under player
+    const thrusterGeo = new THREE.BufferGeometry();
+    const thrusterCount = 24;
+    const thrusterPos = new Float32Array(thrusterCount * 3);
+    thrusterGeo.setAttribute('position', new THREE.BufferAttribute(thrusterPos, 3));
+    const thrusters = new THREE.Points(
+      thrusterGeo,
+      new THREE.PointsMaterial({ color: 0xe4c878, size: 0.08, transparent: true, opacity: 0.7 })
+    );
+    scene.add(thrusters);
+
+    const obstacles = [];
+    const orbs = [];
+    const obstacleGeo = new THREE.BoxGeometry(1.4, 1.4, 1.4);
+    const obstacleMat = new THREE.MeshStandardMaterial({ color: 0x8a6a2a, metalness: 0.7, roughness: 0.35 });
+    const orbGeo = new THREE.IcosahedronGeometry(0.38, 0);
+    const orbMat = new THREE.MeshStandardMaterial({
+      color: 0xc5cdd8,
+      emissive: 0x3a4250,
+      metalness: 0.9,
+      roughness: 0.2,
+    });
+
+    const state = {
+      running: false,
+      lane: 1,
+      targetX: 0,
+      y: 0,
+      vy: 0,
+      grounded: true,
+      speed: 22,
+      distance: 0,
+      score: 0,
+      orbBonus: 0,
+      spawnZ: -40,
+      nextSpawn: 0,
+      hintHidden: false,
+      clock: new THREE.Clock(),
+    };
+
+    function resize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function clearEntities() {
+      [...obstacles, ...orbs].forEach((m) => {
+        scene.remove(m);
+      });
+      obstacles.length = 0;
+      orbs.length = 0;
+    }
+
+    function spawnWave() {
+      const z = state.spawnZ - 18 - Math.random() * 8;
+      state.spawnZ = z;
+
+      const blocked = new Set();
+      const count = Math.random() < 0.35 ? 2 : 1;
+      for (let i = 0; i < count; i++) {
+        let lane = Math.floor(Math.random() * 3);
+        let guard = 0;
+        while (blocked.has(lane) && guard++ < 5) lane = Math.floor(Math.random() * 3);
+        blocked.add(lane);
+
+        const mesh = new THREE.Mesh(obstacleGeo, obstacleMat.clone());
+        mesh.material.color.offsetHSL(0, 0, (Math.random() - 0.5) * 0.1);
+        mesh.position.set(LANES[lane], 0.75, z);
+        mesh.castShadow = true;
+        mesh.userData.lane = lane;
+        scene.add(mesh);
+        obstacles.push(mesh);
+      }
+
+      // free lane orb chance
+      const free = [0, 1, 2].filter((l) => !blocked.has(l));
+      if (free.length && Math.random() < 0.7) {
+        const lane = free[Math.floor(Math.random() * free.length)];
+        const orb = new THREE.Mesh(orbGeo, orbMat);
+        orb.position.set(LANES[lane], 1.1, z - 4);
+        orb.userData.lane = lane;
+        scene.add(orb);
+        orbs.push(orb);
+      }
+    }
+
+    function resetGame() {
+      clearEntities();
+      state.lane = 1;
+      state.targetX = LANES[1];
+      state.y = 0;
+      state.vy = 0;
+      state.grounded = true;
+      state.speed = 22;
+      state.distance = 0;
+      state.score = 0;
+      state.orbBonus = 0;
+      state.spawnZ = -30;
+      state.nextSpawn = 0;
+      state.hintHidden = false;
+      el.hint.classList.remove('hidden');
+      el.score.textContent = '0';
+      player.position.set(0, 0, 0);
+      player.rotation.set(0, 0, 0);
+      for (let i = 0; i < 6; i++) spawnWave();
+    }
+
+    function moveLane(dir) {
+      if (!state.running) return;
+      state.lane = Math.max(0, Math.min(2, state.lane + dir));
+      state.targetX = LANES[state.lane];
+      if (!state.hintHidden) {
+        state.hintHidden = true;
+        el.hint.classList.add('hidden');
+      }
+    }
+
+    function jump() {
+      if (!state.running || !state.grounded) return;
+      state.vy = 9.5;
+      state.grounded = false;
+    }
+
+    function endGame() {
+      state.running = false;
+      if (state.score > best) {
+        best = state.score;
+        localStorage.setItem(STORAGE_KEY, String(best));
+        el.best.textContent = String(best);
+      }
+      el.finalScore.textContent = `Score: ${state.score}`;
+      el.finalBest.textContent = `Recorde: ${best}`;
+      el.over.classList.remove('hidden');
+    }
+
+    function startGame() {
+      el.start.classList.add('hidden');
+      el.over.classList.add('hidden');
+      resetGame();
+      state.running = true;
+      state.clock.start();
+    }
+
+    el.startBtn.addEventListener('click', startGame);
+    el.retryBtn.addEventListener('click', startGame);
+    el.btnLeft.addEventListener('click', () => moveLane(-1));
+    el.btnRight.addEventListener('click', () => moveLane(1));
+    el.btnJump.addEventListener('click', jump);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.repeat) return;
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') moveLane(-1);
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') moveLane(1);
+      if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+        e.preventDefault();
+        jump();
+      }
+      if ((e.code === 'Enter' || e.code === 'Space') && !state.running) {
+        if (!el.start.classList.contains('hidden') || !el.over.classList.contains('hidden')) {
+          e.preventDefault();
+          startGame();
+        }
+      }
+    });
+
+    // swipe
+    let touchX = 0;
+    let touchY = 0;
+    window.addEventListener('touchstart', (e) => {
+      touchX = e.changedTouches[0].clientX;
+      touchY = e.changedTouches[0].clientY;
+    }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+      if (!state.running) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) < 30 && Math.abs(dy) < 30) return;
+      if (Math.abs(dx) > Math.abs(dy)) moveLane(dx > 0 ? 1 : -1);
+      else if (dy < 0) jump();
+    }, { passive: true });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const dt = Math.min(state.clock.getDelta(), 0.05);
+
+      if (state.running) {
+        state.speed = Math.min(42, 22 + state.distance * 0.012);
+        state.distance += state.speed * dt;
+        state.score = Math.floor(state.distance) + state.orbBonus;
+        el.score.textContent = String(state.score);
+
+        // spawn
+        state.nextSpawn -= state.speed * dt;
+        if (state.nextSpawn <= 0) {
+          spawnWave();
+          state.nextSpawn = 14 + Math.random() * 6;
+        }
+
+        // move world toward player
+        const move = state.speed * dt;
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+          const o = obstacles[i];
+          o.position.z += move;
+          o.rotation.x += dt * 1.2;
+          o.rotation.y += dt * 0.8;
+          if (o.position.z > 8) {
+            scene.remove(o);
+            obstacles.splice(i, 1);
+            continue;
+          }
+          // collision
+          const nearZ = Math.abs(o.position.z - player.position.z) < 1.1;
+          const nearX = Math.abs(o.position.x - player.position.x) < 1.05;
+          const nearY = state.y < 1.15;
+          if (nearZ && nearX && nearY) endGame();
+        }
+
+        for (let i = orbs.length - 1; i >= 0; i--) {
+          const orb = orbs[i];
+          orb.position.z += move;
+          orb.rotation.y += dt * 3;
+          orb.position.y = 1.1 + Math.sin(performance.now() * 0.006 + i) * 0.15;
+          if (orb.position.z > 8) {
+            scene.remove(orb);
+            orbs.splice(i, 1);
+            continue;
+          }
+          if (
+            Math.abs(orb.position.z - player.position.z) < 0.9 &&
+            Math.abs(orb.position.x - player.position.x) < 0.95 &&
+            Math.abs(orb.position.y - (0.45 + state.y)) < 1.2
+          ) {
+            state.orbBonus += 25;
+            scene.remove(orb);
+            orbs.splice(i, 1);
+          }
+        }
+
+        // player motion
+        player.position.x += (state.targetX - player.position.x) * Math.min(1, dt * 12);
+        state.vy -= 28 * dt;
+        state.y += state.vy * dt;
+        if (state.y <= 0) {
+          state.y = 0;
+          state.vy = 0;
+          state.grounded = true;
+        }
+        player.position.y = state.y;
+        player.rotation.z = (state.targetX - player.position.x) * -0.12;
+        player.rotation.x = state.grounded ? 0 : -0.15;
+
+        // thrusters
+        const pos = thrusters.geometry.attributes.position.array;
+        for (let i = 0; i < thrusterCount; i++) {
+          pos[i * 3] = player.position.x + (Math.random() - 0.5) * 0.5;
+          pos[i * 3 + 1] = 0.15 + Math.random() * 0.2;
+          pos[i * 3 + 2] = player.position.z + 0.9 + Math.random() * 1.2;
+        }
+        thrusters.geometry.attributes.position.needsUpdate = true;
+      }
+
+      camera.position.x += (player.position.x * 0.35 - camera.position.x) * 0.08;
+      camera.position.y = 5.2 + state.y * 0.15;
+      camera.lookAt(player.position.x * 0.4, 1 + state.y * 0.3, player.position.z - 6);
+
+      // idle spin on start screen
+      if (!state.running) {
+        player.rotation.y = Math.sin(performance.now() * 0.001) * 0.15;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    resetGame();
+    animate();
+  </script>
+</body>
+</html>

@@ -55,7 +55,7 @@ button {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.03;
   z-index: 100;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -87,7 +87,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent-emerald-light);
+  color: var(--accent-gold-light);
   margin-bottom: 0.75rem;
 }
 
@@ -124,7 +124,12 @@ button {
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--page-px);
+}
+
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;
 }
 
 .loading-spinner-container {
@@ -137,11 +142,28 @@ button {
   width: 40px;
   height: 40px;
   border: 3px solid var(--bg-elevated);
-  border-top-color: var(--accent-emerald);
+  border-top-color: var(--accent-gold);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .loading-spinner {
+    animation: none;
+    border-top-color: var(--accent-gold);
+  }
 }
