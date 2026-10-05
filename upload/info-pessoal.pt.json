@@ -1,7 +1,7 @@
 {
-  "about": "Sou Brayan Rosa da Silveira, Desenvolvedor Full Stack com foco em desenvolvimento web — sites corporativos, e-commerce, sistemas internos e APIs REST. Escrevo código limpo e escalável e entrego produtos que resolvem problemas reais de negócio.\n\nFormei-me em Análise e Desenvolvimento de Sistemas pelo Centro Universitário Santa Cruz de Curitiba e atualmente curso Gestão da Tecnologia da Informação na mesma instituição. Também possuo certificações em Governança de Dados (ENAP) e Inglês.\n\nAntes de ingressar oficialmente na Lumicenter Lighting, trabalhei dois anos como freelancer, criando sites, aplicações web e automações para clientes. Comecei com estágio em dados e Power BI e evolui para funções full stack — principalmente plataformas web, ferramentas internas e integrações de API.\n\nEstou sempre aprendendo, publicando projetos paralelos e melhorando a forma como desenho APIs, dashboards e interfaces modernas.",
+  "about": "Sou Brayan Rosa da Silveira, Desenvolvedor Full Stack com mais de 4 anos de experiência em programação — sites corporativos, e-commerce, sistemas internos e APIs REST. Escrevo código limpo e escalável e entrego produtos que resolvem problemas reais de negócio.\n\nFormei-me em Análise e Desenvolvimento de Sistemas pelo Centro Universitário Santa Cruz de Curitiba e atualmente curso Gestão da Tecnologia da Informação na mesma instituição. Também possuo certificações em Governança de Dados (ENAP) e Inglês.\n\nAntes de ingressar oficialmente na Lumicenter Lighting, trabalhei dois anos como freelancer, criando sites, aplicações web e automações para clientes. Comecei com estágio em dados e Power BI e evolui para funções full stack — principalmente plataformas web, ferramentas internas e integrações de API.\n\nEstou sempre aprendendo, publicando projetos paralelos e melhorando a forma como desenho APIs, dashboards e interfaces modernas.",
   "heroTitle": "Desenvolvedor",
-  "heroSubtitle": "Full Stack · Aplicações web, integrações e produtos digitais orientados a resultados de negócio",
+  "heroSubtitle": "Full Stack · +4 anos em programação · aplicações web, integrações e produtos digitais orientados a resultados",
   "heroRoles": [
     "Full Stack",
     "React",
@@ -9,7 +9,13 @@
     "APIs REST"
   ],
   "foto": "brayan.webp",
-  "stats": [],
+  "stats": [
+    {
+      "label": "Anos de experiência",
+      "value": 4,
+      "suffix": "+"
+    }
+  ],
   "skills": {
     "hard": [
       "JavaScript",
