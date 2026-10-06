@@ -1,52 +1,12 @@
-# https://brayansilver.github.io/robots.txt
-# Portfolio — Brayan Rosa da Silveira (Brayan R. Silveira)
-
 User-agent: *
 Allow: /
-Allow: /index.html
-Allow: /projetos/
-Allow: /upload/
-Allow: /assets/
-Allow: /src/
-Allow: /favicon.svg
-Allow: /sitemap.xml
-Allow: /robots.txt
-Allow: /humans.txt
-
-# Private / tooling — keep out of search indexes
 Disallow: /admin.html
 Disallow: /admin.js
 Disallow: /admin.css
 Disallow: /scripts/
 Disallow: /node_modules/
 Disallow: /.cursor/
-Disallow: /package.json
-Disallow: /package-lock.json
 Disallow: /space-shooter.jsx
 
-# Major crawlers (explicit)
-User-agent: Googlebot
-Allow: /
-Disallow: /admin.html
-Disallow: /admin.js
-Disallow: /admin.css
-Disallow: /scripts/
-Disallow: /node_modules/
-Disallow: /.cursor/
-
-User-agent: Bingbot
-Allow: /
-Disallow: /admin.html
-Disallow: /admin.js
-Disallow: /admin.css
-Disallow: /scripts/
-Disallow: /node_modules/
-Disallow: /.cursor/
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Slurp
-Allow: /
-
 Sitemap: https://brayansilver.github.io/sitemap.xml
+Sitemap: https://brayansilver.github.io/sitemap.txt
