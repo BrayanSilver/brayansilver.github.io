@@ -50,4 +50,3 @@ User-agent: Slurp
 Allow: /
 
 Sitemap: https://brayansilver.github.io/sitemap.xml
-Host: https://brayansilver.github.io
