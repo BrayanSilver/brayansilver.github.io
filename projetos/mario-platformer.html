@@ -177,8 +177,18 @@
             const [score, setScore] = useState(0);
             const [highScore, setHighScore] = useState(0);
             const [lives, setLives] = useState(3);
+            const [level, setLevel] = useState(1);
             const [isMobile, setIsMobile] = useState(false);
             const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+            
+            const LEVEL_CONFIG = [
+                null,
+                { enemies: 4, enemyVx: -1.2, platformCount: 24, platformWidth: 200, gap: 130, heightVar: 70, levelLength: 3400, coinCount: 14 },
+                { enemies: 5, enemyVx: -1.5, platformCount: 22, platformWidth: 175, gap: 155, heightVar: 90, levelLength: 3900, coinCount: 13 },
+                { enemies: 6, enemyVx: -1.8, platformCount: 20, platformWidth: 160, gap: 175, heightVar: 105, levelLength: 4400, coinCount: 12 },
+                { enemies: 7, enemyVx: -2.1, platformCount: 18, platformWidth: 145, gap: 190, heightVar: 115, levelLength: 5000, coinCount: 11 },
+                { enemies: 8, enemyVx: -2.4, platformCount: 16, platformWidth: 120, gap: 210, heightVar: 130, levelLength: 5600, coinCount: 10 }
+            ];
             
             const gameRef = useRef({
                 player: { x: 100, y: 400, width: 40, height: 50, vx: 0, vy: 0, speed: 5, jumpPower: -15, onGround: false, invulnerable: 0 },
@@ -188,7 +198,13 @@
                 particles: [],
                 keys: {},
                 camera: { x: 0, y: 0 },
-                level: 1
+                level: 1,
+                levelEnd: 3400,
+                goal: null,
+                checkpoint: { x: 100, y: 350 },
+                levelMessage: null,
+                levelCompleting: false,
+                respawning: false
             });
 
             // Detect mobile and adjust canvas size
@@ -212,6 +228,10 @@
             }, []);
 
             useEffect(() => {
+                gameRef.current.player.jumpPower = isMobile ? -16 : -15;
+            }, [isMobile]);
+
+            useEffect(() => {
                 try {
                     const saved = localStorage.getItem('pixel-hop-highscore');
                     if (saved) {
@@ -232,61 +252,150 @@
                 }
             };
 
+            const getJumpPower = () => (isMobile ? -16 : -15);
+
+            const findPlatformY = (platforms, x) => {
+                let bestY = 500;
+                platforms.forEach(p => {
+                    if (x >= p.x && x <= p.x + p.width && p.y < bestY) bestY = p.y;
+                });
+                return bestY;
+            };
+
             const initLevel = () => {
                 const game = gameRef.current;
+                const cfg = LEVEL_CONFIG[game.level] || LEVEL_CONFIG[1];
                 game.platforms = [];
                 game.enemies = [];
                 game.coins = [];
                 game.particles = [];
-                
-                // Criar plataformas
-                for (let i = 0; i < 20; i++) {
+                game.levelCompleting = false;
+                game.respawning = false;
+
+                let px = 0;
+                for (let i = 0; i < cfg.platformCount; i++) {
+                    const y = 500 - (i % 3) * (cfg.heightVar * 0.45) - Math.sin(i * 0.6) * (cfg.heightVar * 0.35);
                     game.platforms.push({
-                        x: i * 200,
-                        y: 500 - (i % 3) * 100,
-                        width: 180,
+                        x: px,
+                        y,
+                        width: cfg.platformWidth,
                         height: 20,
-                        color: '#8B4513'
+                        color: i % 2 === 0 ? '#8B4513' : '#A0522D'
                     });
+                    px += cfg.platformWidth + cfg.gap;
                 }
-                
-                // Criar moedas
-                for (let i = 0; i < 15; i++) {
+
+                game.levelEnd = cfg.levelLength;
+                const goalPlatform = game.platforms[game.platforms.length - 1];
+                const goalX = Math.min(cfg.levelLength - 60, goalPlatform.x + goalPlatform.width - 50);
+                const goalY = goalPlatform.y - 100;
+                game.goal = { x: goalX, y: goalY, width: 40, height: 100 };
+
+                const coinSpacing = cfg.levelLength / (cfg.coinCount + 1);
+                for (let i = 0; i < cfg.coinCount; i++) {
+                    const cx = coinSpacing * (i + 1);
+                    const py = findPlatformY(game.platforms, cx);
                     game.coins.push({
-                        x: 150 + i * 250,
-                        y: 300 + Math.sin(i) * 100,
+                        x: cx,
+                        y: py - 60,
                         width: 30,
                         height: 30,
                         collected: false,
                         rotation: 0
                     });
                 }
-                
-                // Criar inimigos
-                for (let i = 0; i < 8; i++) {
+
+                const enemySpacing = cfg.levelLength / (cfg.enemies + 1);
+                for (let i = 0; i < cfg.enemies; i++) {
+                    const ex = enemySpacing * (i + 1);
+                    const ey = findPlatformY(game.platforms, ex) - 35;
                     game.enemies.push({
-                        x: 300 + i * 400,
-                        y: 450,
+                        x: ex,
+                        y: ey,
                         width: 35,
                         height: 35,
-                        vx: -2,
+                        vx: cfg.enemyVx,
+                        vy: 0,
                         direction: -1
                     });
                 }
-                
+
+                const startY = findPlatformY(game.platforms, 100) - game.player.height;
                 game.player.x = 100;
-                game.player.y = 400;
+                game.player.y = startY;
                 game.player.vx = 0;
                 game.player.vy = 0;
-                game.player.invulnerable = 0;
+                game.player.jumpPower = getJumpPower();
+                game.player.invulnerable = 60;
+                game.checkpoint = { x: 100, y: startY };
                 game.camera.x = 0;
             };
+
+            const respawnPlayer = () => {
+                const game = gameRef.current;
+                const { player, checkpoint } = game;
+                player.x = checkpoint.x;
+                player.y = checkpoint.y;
+                player.vx = 0;
+                player.vy = 0;
+                player.invulnerable = 120;
+            };
+
+            const loseLife = useCallback(() => {
+                const game = gameRef.current;
+                if (game.respawning) return;
+                game.respawning = true;
+                setLives(l => {
+                    const newLives = l - 1;
+                    if (newLives <= 0) {
+                        setGameState('gameOver');
+                        setScore(s => {
+                            if (s > highScore) {
+                                setHighScore(s);
+                                saveHighScore(s);
+                            }
+                            return s;
+                        });
+                    } else {
+                        respawnPlayer();
+                    }
+                    setTimeout(() => { game.respawning = false; }, 400);
+                    return newLives;
+                });
+            }, [highScore]);
+
+            const completeLevel = useCallback(() => {
+                const game = gameRef.current;
+                if (game.levelCompleting) return;
+                game.levelCompleting = true;
+                createParticles(game.goal.x + 20, game.goal.y + 50, '#22c55e', 25);
+                setScore(s => s + 500);
+
+                if (game.level >= 5) {
+                    setScore(s => {
+                        if (s > highScore) {
+                            setHighScore(s);
+                            saveHighScore(s);
+                        }
+                        return s;
+                    });
+                    setGameState('victory');
+                    return;
+                }
+
+                game.level += 1;
+                setLevel(game.level);
+                game.levelMessage = { text: `Fase ${game.level}`, timer: 150 };
+                initLevel();
+            }, [highScore]);
 
             const startGame = () => {
                 setGameState('playing');
                 setScore(0);
                 setLives(3);
+                setLevel(1);
                 gameRef.current.level = 1;
+                gameRef.current.levelMessage = null;
                 gameRef.current.player.invulnerable = 0;
                 initLevel();
             };
@@ -373,12 +482,15 @@
                             player.y = platform.y - player.height;
                             player.vy = 0;
                             player.onGround = true;
+                            if (player.x >= game.checkpoint.x - 20) {
+                                game.checkpoint = { x: player.x, y: platform.y - player.height };
+                            }
                         }
                     }
                 });
 
                 // Update camera
-                game.camera.x = player.x - canvas.width / 3;
+                game.camera.x = Math.max(0, player.x - canvas.width / 3);
 
                 // Draw platforms
                 game.platforms.forEach(platform => {
@@ -413,8 +525,8 @@
                         enemy.vy = 0;
                     }
                     
-                    // Change direction at edges
-                    if (enemy.x < game.camera.x - 50 || enemy.x > game.camera.x + canvas.width + 50) {
+                    // Despawn only when far behind camera
+                    if (enemy.x + enemy.width < game.camera.x - 100) {
                         return false;
                     }
                     
@@ -434,24 +546,8 @@
                             setScore(s => s + 50);
                             return false;
                         } else {
-                            // Player hit by enemy
-                            player.invulnerable = 120; // 2 segundos de invulnerabilidade (60 FPS * 2)
-                            setLives(l => {
-                                const newLives = l - 1;
-                                if (newLives <= 0) {
-                                    setGameState('gameOver');
-                                    if (score > highScore) {
-                                        setHighScore(score);
-                                        saveHighScore(score);
-                                    }
-                                }
-                                return newLives;
-                            });
                             createParticles(player.x + player.width / 2, player.y + player.height / 2, '#FF0000', 20);
-                            player.x = 100;
-                            player.y = 400;
-                            player.vx = 0;
-                            player.vy = 0;
+                            loseLife();
                         }
                     }
                     
@@ -523,28 +619,47 @@
                     ctx.fillRect(px + 10, py + 20, 20, 20);
                 }
 
-                // Check if player fell (verificar posição relativa à câmera, não absoluta)
+                // Draw goal flag
+                if (game.goal) {
+                    const gx = game.goal.x - game.camera.x;
+                    const gy = game.goal.y - game.camera.y;
+                    if (gx > -80 && gx < canvas.width + 80) {
+                        ctx.fillStyle = '#555';
+                        ctx.fillRect(gx + 18, gy, 6, game.goal.height);
+                        ctx.fillStyle = '#22c55e';
+                        ctx.fillRect(gx, gy + 8, 22, 18);
+                        ctx.fillStyle = '#16a34a';
+                        ctx.fillRect(gx, gy + 26, 22, 18);
+                        ctx.fillStyle = '#FFD700';
+                        ctx.beginPath();
+                        ctx.arc(gx + 21, gy + 4, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    if (checkCollision(player, game.goal) || player.x + player.width >= game.levelEnd - 40) {
+                        completeLevel();
+                    }
+                }
+
+                // Level transition message
+                if (game.levelMessage && game.levelMessage.timer > 0) {
+                    game.levelMessage.timer--;
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+                    ctx.fillRect(0, canvas.height / 2 - 40, canvas.width, 80);
+                    ctx.fillStyle = '#facc15';
+                    ctx.font = '20px "Press Start 2P", monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(game.levelMessage.text, canvas.width / 2, canvas.height / 2 + 8);
+                    ctx.textAlign = 'left';
+                }
+
+                // Check if player fell
                 const playerScreenY = player.y - game.camera.y;
                 if (playerScreenY > canvas.height + 100) {
-                    setLives(l => {
-                        const newLives = l - 1;
-                        if (newLives <= 0) {
-                            setGameState('gameOver');
-                            if (score > highScore) {
-                                setHighScore(score);
-                                saveHighScore(score);
-                            }
-                        }
-                        return newLives;
-                    });
-                    player.x = 100;
-                    player.y = 400;
-                    player.vx = 0;
-                    player.vy = 0;
+                    loseLife();
                 }
 
                 gameLoopRef.current = requestAnimationFrame(gameLoop);
-            }, [gameState, score, highScore]);
+            }, [gameState, loseLife, completeLevel]);
 
             useEffect(() => {
                 if (gameState === 'playing') {
@@ -612,6 +727,9 @@
                                         <div key={i} style={{ width: '24px', height: '24px', backgroundColor: '#ef4444', border: '2px solid #fca5a5' }} />
                                     ))}
                                 </div>
+                                {gameState === 'playing' && (
+                                    <div style={{ fontSize: '10px', color: '#bfdbfe' }}>Fase {level}/5</div>
+                                )}
                             </div>
                             
                             <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -669,6 +787,7 @@
                                         <p>A/D ou SETAS - Mover</p>
                                         <p>W ou SETA CIMA ou ESPAÇO - Pular</p>
                                         <p>Colete moedas e elimine inimigos!</p>
+                                        <p>Complete 5 fases até a bandeira!</p>
                                     </div>
 
                                     <button
@@ -681,6 +800,53 @@
                                     >
                                         INICIAR
                                     </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Victory Overlay */}
+                        {gameState === 'victory' && (
+                            <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
+                                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
+                                    <h2 style={{ fontSize: '2rem', color: '#22c55e', animation: 'bounce 1s infinite' }}>VITÓRIA!</h2>
+                                    <p style={{ fontSize: '11px', color: '#93c5fd' }}>Você completou todas as 5 fases!</p>
+                                    
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.25rem' }}>
+                                        <div>
+                                            <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '0.25rem' }}>PONTUAÇÃO FINAL</div>
+                                            <div style={{ color: '#facc15' }}>{score}</div>
+                                        </div>
+                                        
+                                        {score === highScore && score > 0 && (
+                                            <div style={{ color: '#facc15', fontSize: '14px', animation: 'bounce 1s infinite' }}>
+                                                🏆 NOVO RECORDE! 🏆
+                                            </div>
+                                        )}
+                                        
+                                        <div>
+                                            <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '0.25rem' }}>RECORDE</div>
+                                            <div style={{ color: '#facc15' }}>{highScore}</div>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem' }}>
+                                        <button
+                                            onClick={startGame}
+                                            style={{ width: '100%', background: 'linear-gradient(to right, #16a34a, #15803d)', color: 'white', padding: '0.75rem 2rem', fontSize: '12px', border: '2px solid white', cursor: 'pointer', transition: 'all 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.transform = 'scale(1.05)'; e.target.style.background = 'linear-gradient(to right, #22c55e, #16a34a)'; }}
+                                            onMouseLeave={(e) => { e.target.style.transform = 'scale(1)'; e.target.style.background = 'linear-gradient(to right, #16a34a, #15803d)'; }}
+                                        >
+                                            JOGAR NOVAMENTE
+                                        </button>
+                                        <button
+                                            onClick={() => setGameState('menu')}
+                                            style={{ width: '100%', backgroundColor: '#b91c1c', color: 'white', padding: '0.75rem 2rem', fontSize: '12px', border: '2px solid #f87171', cursor: 'pointer', transition: 'background-color 0.3s' }}
+                                            onMouseEnter={(e) => { e.target.style.backgroundColor = '#dc2626'; }}
+                                            onMouseLeave={(e) => { e.target.style.backgroundColor = '#b91c1c'; }}
+                                        >
+                                            MENU
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         )}

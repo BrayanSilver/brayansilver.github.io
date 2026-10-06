@@ -87,6 +87,7 @@
     <div class="top-bar">
       <div class="brand">Crystal <span>Orbit 3D</span></div>
       <div class="stats">
+        <div class="stat"><label>Fase</label><strong id="phaseVal">1/5</strong></div>
         <div class="stat"><label>Score</label><strong id="scoreVal">0</strong></div>
         <div class="stat"><label>Lives</label><strong id="livesVal">3</strong></div>
         <div class="stat"><label>Best</label><strong id="bestVal">0</strong></div>
@@ -121,8 +122,12 @@
     import * as THREE from 'three';
 
     const KEY = 'crystal-orbit-3d-best';
+    const PHASE_THRESHOLDS = [0, 30, 80, 150, 250];
+    const TAP_FORGIVENESS = 18;
+
     const el = {
       game: document.getElementById('game'),
+      phase: document.getElementById('phaseVal'),
       score: document.getElementById('scoreVal'),
       lives: document.getElementById('livesVal'),
       best: document.getElementById('bestVal'),
@@ -194,6 +199,7 @@
       running: false,
       score: 0,
       lives: 3,
+      invulnerable: 0,
       yaw: 0.4,
       pitch: 0.35,
       targetYaw: 0.4,
@@ -225,6 +231,31 @@
     function clearList(list) {
       list.forEach((m) => scene.remove(m));
       list.length = 0;
+    }
+
+    function getPhase() {
+      let phase = 1;
+      for (let i = PHASE_THRESHOLDS.length - 1; i >= 0; i--) {
+        if (state.score >= PHASE_THRESHOLDS[i]) {
+          phase = i + 1;
+          break;
+        }
+      }
+      return phase;
+    }
+
+    function updatePhaseHud() {
+      el.phase.textContent = `${getPhase()}/5`;
+    }
+
+    function takeHit() {
+      if (state.invulnerable > 0) return;
+      state.lives -= 1;
+      el.lives.textContent = String(state.lives);
+      state.invulnerable = 1;
+      core.scale.setScalar(1.15);
+      setTimeout(() => core.scale.setScalar(1), 120);
+      if (state.lives <= 0) endGame();
     }
 
     function spawnRock() {
@@ -267,11 +298,12 @@
 
     function resetGame() {
       clearList(bullets); clearList(rocks); clearList(crystals);
-      state.score = 0; state.lives = 3; state.spawnTimer = 0; state.fireCool = 0;
+      state.score = 0; state.lives = 3; state.invulnerable = 0; state.spawnTimer = 0; state.fireCool = 0;
       state.hintHidden = false;
       el.hint.classList.remove('hidden');
       el.score.textContent = '0';
       el.lives.textContent = '3';
+      updatePhaseHud();
       for (let i = 0; i < 5; i++) spawnRock();
       for (let i = 0; i < 3; i++) spawnCrystal();
     }
@@ -318,7 +350,7 @@
     });
     el.game.addEventListener('pointerup', (e) => {
       const moved = Math.hypot(e.clientX - state.pointerStartX, e.clientY - state.pointerStartY);
-      if (state.dragging && moved < 12) fire();
+      if (state.dragging && moved < TAP_FORGIVENESS) fire();
       state.dragging = false;
     });
     el.game.addEventListener('pointerleave', () => { state.dragging = false; });
@@ -357,10 +389,14 @@
       if (state.running) {
         state.fireCool = Math.max(0, state.fireCool - dt);
         state.spawnTimer -= dt;
+        if (state.invulnerable > 0) {
+          state.invulnerable = Math.max(0, state.invulnerable - dt);
+        }
+        updatePhaseHud();
         if (state.spawnTimer <= 0) {
           spawnRock();
           if (Math.random() < 0.45) spawnCrystal();
-          state.spawnTimer = Math.max(0.55, 1.4 - state.score * 0.008);
+          state.spawnTimer = Math.max(0.75, 1.8 - state.score * 0.004);
         }
 
         for (let i = bullets.length - 1; i >= 0; i--) {
@@ -382,16 +418,12 @@
 
         for (let i = rocks.length - 1; i >= 0; i--) {
           const r = rocks[i];
-          r.position.addScaledVector(r.userData.vel, dt * (1 + state.score * 0.004));
+          r.position.addScaledVector(r.userData.vel, dt * (1 + state.score * 0.002));
           r.rotation.x += r.userData.spin.x * dt;
           r.rotation.y += r.userData.spin.y * dt;
           if (r.position.length() < 1.8) {
             scene.remove(r); rocks.splice(i, 1);
-            state.lives -= 1;
-            el.lives.textContent = String(state.lives);
-            core.scale.setScalar(1.15);
-            setTimeout(() => core.scale.setScalar(1), 120);
-            if (state.lives <= 0) endGame();
+            takeHit();
           }
         }
 

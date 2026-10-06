@@ -239,6 +239,14 @@
       <div class="brand">Neon <span>Drift 3D</span></div>
       <div class="stats">
         <div class="stat">
+          <label>Fase</label>
+          <strong id="phaseVal">1/5</strong>
+        </div>
+        <div class="stat">
+          <label>Vidas</label>
+          <strong id="livesVal">3</strong>
+        </div>
+        <div class="stat">
           <label>Score</label>
           <strong id="scoreVal">0</strong>
         </div>
@@ -289,8 +297,12 @@
     const LANES = [-2.4, 0, 2.4];
     const STORAGE_KEY = 'neon-drift-3d-best';
 
+    const PHASE_THRESHOLDS = [0, 200, 500, 1000, 2000];
+
     const el = {
       game: document.getElementById('game'),
+      phase: document.getElementById('phaseVal'),
+      lives: document.getElementById('livesVal'),
       score: document.getElementById('scoreVal'),
       best: document.getElementById('bestVal'),
       hint: document.getElementById('hint'),
@@ -402,6 +414,8 @@
       roughness: 0.2,
     });
 
+    const playerMats = [body.material, canopy.material];
+
     const state = {
       running: false,
       lane: 1,
@@ -409,15 +423,49 @@
       y: 0,
       vy: 0,
       grounded: true,
-      speed: 22,
+      speed: 14,
       distance: 0,
       score: 0,
       orbBonus: 0,
+      lives: 3,
+      invulnerable: 0,
       spawnZ: -40,
-      nextSpawn: 0,
+      nextSpawn: 20,
       hintHidden: false,
       clock: new THREE.Clock(),
     };
+
+    function getPhase() {
+      let phase = 1;
+      for (let i = PHASE_THRESHOLDS.length - 1; i >= 0; i--) {
+        if (state.distance >= PHASE_THRESHOLDS[i]) {
+          phase = i + 1;
+          break;
+        }
+      }
+      return phase;
+    }
+
+    function updatePhaseHud() {
+      el.phase.textContent = `${getPhase()}/5`;
+    }
+
+    function takeHit() {
+      if (state.invulnerable > 0) return;
+      state.lives -= 1;
+      el.lives.textContent = String(state.lives);
+      state.invulnerable = 1.5;
+      if (state.lives <= 0) endGame();
+    }
+
+    function updateInvulnerabilityFlash() {
+      const flashing = state.invulnerable > 0;
+      const opacity = flashing && Math.sin(performance.now() * 0.025) > 0 ? 0.35 : 1;
+      playerMats.forEach((mat) => {
+        mat.transparent = flashing || mat === canopy.material;
+        mat.opacity = mat === canopy.material && !flashing ? 0.85 : opacity;
+      });
+    }
 
     function resize() {
       const w = window.innerWidth;
@@ -442,7 +490,7 @@
       state.spawnZ = z;
 
       const blocked = new Set();
-      const count = Math.random() < 0.35 ? 2 : 1;
+      const count = state.distance < 200 ? 1 : (Math.random() < 0.35 ? 2 : 1);
       for (let i = 0; i < count; i++) {
         let lane = Math.floor(Math.random() * 3);
         let guard = 0;
@@ -477,18 +525,23 @@
       state.y = 0;
       state.vy = 0;
       state.grounded = true;
-      state.speed = 22;
+      state.speed = 14;
       state.distance = 0;
       state.score = 0;
       state.orbBonus = 0;
+      state.lives = 3;
+      state.invulnerable = 0;
       state.spawnZ = -30;
-      state.nextSpawn = 0;
+      state.nextSpawn = 20;
       state.hintHidden = false;
       el.hint.classList.remove('hidden');
       el.score.textContent = '0';
+      el.lives.textContent = '3';
+      updatePhaseHud();
+      updateInvulnerabilityFlash();
       player.position.set(0, 0, 0);
       player.rotation.set(0, 0, 0);
-      for (let i = 0; i < 6; i++) spawnWave();
+      for (let i = 0; i < 2; i++) spawnWave();
     }
 
     function moveLane(dir) {
@@ -560,7 +613,7 @@
       if (!state.running) return;
       const dx = e.changedTouches[0].clientX - touchX;
       const dy = e.changedTouches[0].clientY - touchY;
-      if (Math.abs(dx) < 30 && Math.abs(dy) < 30) return;
+      if (Math.abs(dx) < 50 && Math.abs(dy) < 50) return;
       if (Math.abs(dx) > Math.abs(dy)) moveLane(dx > 0 ? 1 : -1);
       else if (dy < 0) jump();
     }, { passive: true });
@@ -570,16 +623,24 @@
       const dt = Math.min(state.clock.getDelta(), 0.05);
 
       if (state.running) {
-        state.speed = Math.min(42, 22 + state.distance * 0.012);
+        const phase = getPhase();
+        const phaseTighten = (phase - 1) * 1.2;
+        state.speed = Math.min(36, 14 + state.distance * 0.006 + phaseTighten);
         state.distance += state.speed * dt;
         state.score = Math.floor(state.distance) + state.orbBonus;
         el.score.textContent = String(state.score);
+        updatePhaseHud();
+
+        if (state.invulnerable > 0) {
+          state.invulnerable = Math.max(0, state.invulnerable - dt);
+        }
+        updateInvulnerabilityFlash();
 
         // spawn
         state.nextSpawn -= state.speed * dt;
         if (state.nextSpawn <= 0) {
           spawnWave();
-          state.nextSpawn = 14 + Math.random() * 6;
+          state.nextSpawn = Math.max(12, 18 + Math.random() * 8 - (phase - 1) * 1.5);
         }
 
         // move world toward player
@@ -598,7 +659,7 @@
           const nearZ = Math.abs(o.position.z - player.position.z) < 1.1;
           const nearX = Math.abs(o.position.x - player.position.x) < 1.05;
           const nearY = state.y < 1.15;
-          if (nearZ && nearX && nearY) endGame();
+          if (nearZ && nearX && nearY) takeHit();
         }
 
         for (let i = orbs.length - 1; i >= 0; i--) {
