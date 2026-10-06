@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BT25CCMCL8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-BT25CCMCL8');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="y_WRW1U4amvbRyIwiFCrOtW-yBmYSqLVgQRbw11mt-I" />
@@ -280,20 +271,17 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="favicon.svg">
     
-    <!-- Performance Optimizations -->
+    <!-- Performance: fonts deferred; fewer weights -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    
-    <!-- Preload Critical Resources -->
     <link rel="preload" href="assets/css/main.css" as="style">
-    <link rel="preload" href="src/app.js" as="script" crossorigin>
     <link rel="preload" href="upload/info-pessoal.json" as="fetch" crossorigin>
-    
-    <!-- Fonts: Syne (display) + Outfit (body) + Plus Jakarta Sans (logo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-    
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700&family=Syne:wght@700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    </noscript>
+
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -546,5 +534,25 @@
     </footer>
 
     <script type="module" src="src/app.js"></script>
+    <!-- Analytics após conteúdo (não compete com FCP/LCP) -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      function loadGtag() {
+        if (window.__gtagLoaded) return;
+        window.__gtagLoaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BT25CCMCL8';
+        s.async = true;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-BT25CCMCL8', { send_page_view: true });
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGtag, { timeout: 4000 });
+      } else {
+        window.addEventListener('load', function () { setTimeout(loadGtag, 2000); });
+      }
+    </script>
 </body>
 </html>

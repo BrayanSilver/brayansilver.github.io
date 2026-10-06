@@ -40,7 +40,7 @@ export class DataService {
    */
   async #fetchJson(path, fallback) {
     const response = await fetch(`${path}?v=${DATA_VERSION}`, {
-      cache: 'no-store',
+      cache: 'force-cache',
     });
     if (!response.ok) return fallback;
     return response.json();
@@ -76,32 +76,17 @@ export class DataService {
   }
 
   /**
-   * Foto de perfil — paths pré-processados (webp), sem cascata de HEAD.
+   * Foto de perfil — path síncrono (sem HEAD waterfall).
    * @param {string} [photoName]
-   * @returns {Promise<string|null>}
+   * @returns {string}
    */
-  async resolveProfilePhoto(photoName) {
-    const candidates = [];
+  resolveProfilePhoto(photoName) {
     if (photoName) {
-      candidates.push(photoName);
-      if (/\.(jpe?g|png)$/i.test(photoName)) {
-        candidates.push(photoName.replace(/\.(jpe?g|png)$/i, '.webp'));
-      }
+      const name = /\.(jpe?g|png)$/i.test(photoName)
+        ? photoName.replace(/\.(jpe?g|png)$/i, '.webp')
+        : photoName;
+      return `${API_PATHS.photoFolder}${name}`;
     }
-    candidates.push('brayan.webp', 'brayan.jpg', 'foto.webp', 'foto.jpg', 'foto.png');
-
-    const unique = [...new Set(candidates)];
-    for (const name of unique) {
-      const path = `${API_PATHS.photoFolder}${name}`;
-      try {
-        const res = await fetch(path, { method: 'HEAD', cache: 'force-cache' });
-        if (res.ok) return path;
-      } catch {
-        /* próximo */
-      }
-    }
-
-    // Fallback imediato (arquivo esperado no deploy)
     return `${API_PATHS.photoFolder}brayan.webp`;
   }
 }

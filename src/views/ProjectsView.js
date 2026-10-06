@@ -117,9 +117,9 @@ export class ProjectsView {
             alt="${project.title}"
             width="800"
             height="500"
-            loading="${variant === 'featured' && index < 3 ? 'eager' : 'lazy'}"
+            loading="${variant === 'featured' && index === 0 ? 'eager' : 'lazy'}"
             decoding="async"
-            fetchpriority="${variant === 'featured' && index < 3 ? 'high' : 'low'}"
+            fetchpriority="${variant === 'featured' && index === 0 ? 'high' : 'low'}"
           >
           <div class="project-overlay ${overlay}"></div>
           <div class="project-number">${String(index + 1).padStart(2, '0')}</div>

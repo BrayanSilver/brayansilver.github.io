@@ -21,7 +21,7 @@ export class AboutView {
    */
   async render(personalInfo) {
     this.#renderBio(personalInfo.about);
-    await this.#renderPhoto(personalInfo.foto);
+    this.#renderPhoto(personalInfo.foto);
   }
 
   /**
@@ -48,23 +48,22 @@ export class AboutView {
   /**
    * @param {string} [photoName]
    */
-  async #renderPhoto(photoName) {
+  #renderPhoto(photoName) {
     const wrapper = $(SELECTORS.aboutImage);
     if (!wrapper) return;
 
-    const photoPath = await this.dataService.resolveProfilePhoto(photoName);
-
-    if (!photoPath) {
-      wrapper.innerHTML = '';
-      return;
-    }
+    const photoPath = this.dataService.resolveProfilePhoto(photoName);
 
     wrapper.innerHTML = `
-      <img src="${photoPath}" alt="${getI18n().t('about.photoAlt')}" loading="eager" decoding="async" fetchpriority="high" width="640" height="800" class="about-photo">
+      <img src="${photoPath}" alt="${getI18n().t('about.photoAlt')}" loading="lazy" decoding="async" fetchpriority="low" width="640" height="800" class="about-photo">
     `;
 
     const img = wrapper.querySelector('.about-photo');
     img?.addEventListener('error', () => {
+      if (photoPath.endsWith('.webp')) {
+        img.src = photoPath.replace(/\.webp$/i, '.jpg');
+        return;
+      }
       img.remove();
     });
   }

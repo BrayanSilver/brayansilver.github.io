@@ -4,7 +4,6 @@
  */
 
 import { DataService } from '../services/DataService.js';
-import { HeroScene3D } from '../services/HeroScene3D.js';
 import { HeroView } from '../views/HeroView.js';
 import { AboutView } from '../views/AboutView.js';
 import { SkillsView } from '../views/SkillsView.js';
@@ -20,6 +19,8 @@ import { initCardTilt } from '../utils/cardTilt.js';
 export class PortfolioController {
   /** @type {(() => void)|null} */
   #disposeTilt = null;
+  /** @type {{ destroy: () => void }|null} */
+  #heroScene = null;
 
   constructor() {
     this.i18n = getI18n();
@@ -33,7 +34,6 @@ export class PortfolioController {
     this.contactView = new ContactView();
     this.modalView = new ModalView();
     this.navController = new NavigationController();
-    this.heroScene = new HeroScene3D();
     /** @type {import('../models/PortfolioModel.js').PortfolioModel|null} */
     this.model = null;
   }
@@ -45,15 +45,42 @@ export class PortfolioController {
       this.loadAndRender();
     });
     this.navController.init(this.i18n);
-    this.#initHeroScene();
+    // Conteúdo primeiro; Three.js só depois (e só em desktop)
     await this.loadAndRender();
+    this.#scheduleHeroScene();
   }
 
-  #initHeroScene() {
+  /** Three.js é pesado (~1.3 MB) — não carrega no mobile / reduced-motion / Save-Data */
+  #shouldLoadHero3D() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+    if (navigator.connection?.saveData) return false;
+    // Lighthouse mobile e telefones reais: sem WebGL no hero
+    if (window.matchMedia('(max-width: 900px), (pointer: coarse)').matches) return false;
+    return true;
+  }
+
+  #scheduleHeroScene() {
+    if (!this.#shouldLoadHero3D()) return;
+
+    const start = () => {
+      void this.#initHeroScene();
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(start, { timeout: 2500 });
+    } else {
+      setTimeout(start, 1200);
+    }
+  }
+
+  async #initHeroScene() {
     const mount = document.getElementById('heroScene');
-    if (!mount) return;
+    if (!mount || this.#heroScene) return;
+
     try {
-      this.heroScene.init(mount);
+      const { HeroScene3D } = await import('../services/HeroScene3D.js');
+      this.#heroScene = new HeroScene3D();
+      this.#heroScene.init(mount);
     } catch (err) {
       console.warn('[App] Hero 3D indisponível:', err);
     }
@@ -65,20 +92,20 @@ export class PortfolioController {
     const { personalInfo, projects, contact, rawProjects } = this.model;
 
     this.heroView.render(personalInfo);
-    await this.aboutView.render(personalInfo);
+    // About (foto) em paralelo com o resto — não bloqueia projetos
+    const aboutPromise = this.aboutView.render(personalInfo);
     this.skillsView.render(personalInfo.skills, personalInfo.certifications);
     this.experienceView.render(personalInfo.experience);
     this.educationView.render(personalInfo.education);
     this.projectsView.render(projects, (index) => this.openProjectModal(index));
     this.contactView.render(contact);
+    await aboutPromise;
 
-    // Dispara evento para reveal animations em conteúdo dinâmico
     window.dispatchEvent(new CustomEvent('portfolio:rendered'));
 
     this.#disposeTilt?.();
     this.#disposeTilt = initCardTilt();
 
-    // Guarda referência para modal
     this.rawProjects = rawProjects;
   }
 
