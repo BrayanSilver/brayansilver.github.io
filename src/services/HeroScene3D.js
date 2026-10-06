@@ -103,25 +103,6 @@ export class HeroScene3D {
     );
     this.#group.add(shell);
 
-    const torusMat = new THREE.MeshBasicMaterial({
-      color: 0xc5cdd8,
-      transparent: true,
-      opacity: 0.55,
-    });
-    const torus = new THREE.Mesh(new THREE.TorusGeometry(2.15, 0.018, 8, 64), torusMat);
-    torus.rotation.x = Math.PI / 2.6;
-    torus.rotation.y = 0.35;
-    this.#group.add(torus);
-
-    const torus2 = new THREE.Mesh(
-      new THREE.TorusGeometry(2.55, 0.012, 8, 48),
-      torusMat.clone()
-    );
-    torus2.material.opacity = 0.28;
-    torus2.rotation.x = Math.PI / 1.7;
-    torus2.rotation.z = 0.8;
-    this.#group.add(torus2);
-
     const pointsGeo = new THREE.BufferGeometry();
     const count = 48;
     const positions = new Float32Array(count * 3);
@@ -147,7 +128,7 @@ export class HeroScene3D {
     this.#group.add(points);
 
     this.#group.position.set(1.35, 0.1, 0);
-    this.#group.userData = { core, wire, shell, torus, torus2, points };
+    this.#group.userData = { core, wire, shell, points };
   }
 
   #addLights() {
@@ -240,13 +221,11 @@ export class HeroScene3D {
       this.#group.rotation.x = this.#pointer.y * 0.28 + Math.sin(t * 0.35) * 0.06;
       this.#group.position.y = 0.1 + Math.sin(t * 0.5) * 0.1;
 
-      const { core, torus, torus2, points } = this.#group.userData;
+      const { core, points } = this.#group.userData;
       if (core) {
         core.rotation.y = t * 0.7;
         core.rotation.x = t * 0.35;
       }
-      if (torus) torus.rotation.z = t * 0.22;
-      if (torus2) torus2.rotation.z = -t * 0.14;
       if (points) points.rotation.y = t * 0.07;
     } else {
       this.#group.rotation.y = this.#pointer.x * 0.15;
